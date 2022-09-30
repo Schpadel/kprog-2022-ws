@@ -6,11 +6,11 @@ package prog.ex02.solution.printer;
 public class ColorPrinter extends BasePrinter {
 
   public ColorPrinter(String string, boolean b) {
-    super();
+    super(string, b);
   }
 
   @Override
   public boolean hasColor() {
-    return false;
+    return true;
   }
 }

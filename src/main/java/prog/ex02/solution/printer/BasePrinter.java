@@ -6,30 +6,69 @@ import prog.ex02.exercise.printer.Printer;
 /**
  * Realizes a basic Printer implementation.
  */
-public abstract class BasePrinter  implements Printer {
+public abstract class BasePrinter implements Printer {
+
+  protected int numberOfSheetsOfPaper;
+  protected boolean duplex;
+  protected boolean color;
+  protected String name;
+
+  public BasePrinter(String name, boolean duplex) {
+    this.name = name;
+    this.duplex = duplex;
+  }
 
   @Override
   public boolean print(final Document document, final boolean duplex) {
-    return false;
+
+    if (document == null) {
+      return false;
+    }
+
+    if (duplex && !hasDuplex()) {
+      return false;
+    }
+
+    if (document.isColor() && !hasColor()) {
+      return false;
+    }
+
+    if (duplex) {
+      if ((document.getPages() / 2 + document.getPages() % 2) > numberOfSheetsOfPaper) {
+        return false;
+      }
+      numberOfSheetsOfPaper -= (document.getPages() / 2 + document.getPages() % 2);
+      return true;
+    } else {
+      if (document.getPages() > numberOfSheetsOfPaper) {
+        return false;
+      }
+      numberOfSheetsOfPaper -= document.getPages();
+    }
+    return true;
   }
 
   @Override
   public boolean hasDuplex() {
-    return false;
+    return this.duplex;
   }
 
   @Override
   public String getName() {
-    return null;
+    return this.name;
   }
 
   @Override
   public boolean addPaper(final int numberOfSheets) {
+    if (numberOfSheets >= 0) {
+      this.numberOfSheetsOfPaper += numberOfSheets;
+      return true;
+    }
     return false;
   }
 
   @Override
   public int getNumberOfSheetsOfPaper() {
-    return 0;
+    return this.numberOfSheetsOfPaper;
   }
 }
