@@ -10,13 +10,14 @@ public abstract class BasePrinter implements Printer {
 
   protected int numberOfSheetsOfPaper;
   protected boolean duplex;
-  protected boolean color;
   protected String name;
 
   public BasePrinter(String name, boolean duplex) {
     this.name = name;
     this.duplex = duplex;
   }
+
+  public abstract boolean hasColor();
 
   @Override
   public boolean print(final Document document, final boolean duplex) {
