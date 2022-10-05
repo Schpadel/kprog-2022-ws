@@ -6,7 +6,7 @@ package prog.ex03.solution.printer;
 public class ColorPrinter extends BasePrinter {
 
   public ColorPrinter(String string, boolean b) {
-    super();
+    super(string, b);
   }
 
   @Override

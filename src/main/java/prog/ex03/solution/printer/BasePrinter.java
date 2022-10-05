@@ -11,30 +11,70 @@ import prog.ex03.exercise.printer.exceptions.NotEnoughPaperException;
  */
 public abstract class BasePrinter implements Printer {
 
-  @Override
-  public void print(final Document document, final boolean duplex) throws
-          IllegalArgumentException, NotEnoughPaperException,
-          NoDuplexPrinterException, NoColorPrinterException {
+  protected int numberOfSheetsOfPaper;
+  protected boolean duplex;
+  protected String name;
 
+  public BasePrinter(String name, boolean duplex) {
+    this.name = name;
+    this.duplex = duplex;
   }
 
   @Override
+  public void print(final Document document, final boolean duplex) throws
+      IllegalArgumentException, NotEnoughPaperException,
+      NoDuplexPrinterException, NoColorPrinterException {
+
+    if (document == null) {
+      throw new IllegalArgumentException("Document is null!");
+    }
+
+    if (duplex && !hasDuplex()) {
+      throw new NoDuplexPrinterException(
+          "Printer does not support duplex, but duplex is required for this document!");
+    }
+
+    if (document.isColor() && !hasColor()) {
+      throw new NoColorPrinterException(
+          "Document is in color, but this printer does not support color!");
+    }
+
+    if (duplex) {
+      if ((document.getPages() / 2 + document.getPages() % 2) > numberOfSheetsOfPaper) {
+        throw new NotEnoughPaperException("Not enough paper in tray for print!",
+            (document.getPages() / 2 + document.getPages() % 2) - this.numberOfSheetsOfPaper);
+      }
+      numberOfSheetsOfPaper -= (document.getPages() / 2 + document.getPages() % 2);
+    } else {
+      if (document.getPages() > numberOfSheetsOfPaper) {
+        throw new NotEnoughPaperException("Not enough paper in tray for print!",
+            document.getPages() - this.numberOfSheetsOfPaper);
+      }
+      numberOfSheetsOfPaper -= document.getPages();
+    }
+  }
+
+
+  @Override
   public boolean hasDuplex() {
-    return false;
+    return this.duplex;
   }
 
   @Override
   public String getName() {
-    return null;
+    return this.name;
   }
 
   @Override
   public void addPaper(final int numberOfSheets) throws IllegalArgumentException {
-
+    if (numberOfSheets < 0) {
+      throw new IllegalArgumentException("numberOfSheets should be greater of equal 0!");
+    }
+    this.numberOfSheetsOfPaper += numberOfSheets;
   }
 
   @Override
   public int getNumberOfSheetsOfPaper() {
-    return 0;
+    return this.numberOfSheetsOfPaper;
   }
 }
