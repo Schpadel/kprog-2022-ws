@@ -1,5 +1,6 @@
 package prog.ex03.solution.printer;
 
+import java.util.ArrayList;
 import java.util.List;
 import prog.ex03.exercise.printer.Printer;
 import prog.ex03.exercise.printer.PrinterManager;
@@ -13,6 +14,10 @@ import prog.ex03.exercise.printer.exceptions.PrinterNotRegisteredException;
 public class SimplePrinterManager implements PrinterManager {
 
   List<Printer> printerList;
+
+  public SimplePrinterManager() {
+    printerList = new ArrayList<>();
+  }
 
   @Override
   public Printer getPrinter(final String name)
@@ -54,6 +59,7 @@ public class SimplePrinterManager implements PrinterManager {
     } catch (PrinterNotRegisteredException e) {
       if (printer.getName().matches("\\p{Print}+") && !printer.getName().contains(" ")) {
         printerList.add(printer);
+        return;
       }
       throw new IllegalArgumentException("Printer name not valid!");
     }
