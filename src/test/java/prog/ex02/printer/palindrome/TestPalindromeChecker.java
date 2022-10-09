@@ -1,4 +1,4 @@
-package prog.ex01.palindrome;
+package prog.ex02.printer.palindrome;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
