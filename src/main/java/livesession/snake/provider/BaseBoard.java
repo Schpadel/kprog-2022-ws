@@ -17,7 +17,7 @@ public class BaseBoard implements Board {
     board = new BoardState[size][size];
   }
 
-  private void assertSizeIsGreaterThan(final int size, final int minimalBoardsize) {
+  protected void assertSizeIsGreaterThan(final int size, final int minimalBoardsize) {
     if (size < minimalBoardsize) {
       throw new IllegalArgumentException("Board size of " + size + " is smaller than the minimal " +
           "board size of " + minimalBoardsize);

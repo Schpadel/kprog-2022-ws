@@ -10,11 +10,11 @@ public class SimpleSnake implements Snake {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnake.class);
   private final InternalBoard board;
-  private final SimpleSnakeService service;
+  private final ExtendedSnakeService service;
   private final LinkedList<Coordinate> position;
   private Direction direction;
 
-  public SimpleSnake(final SimpleSnakeService service) {
+  public SimpleSnake(final ExtendedSnakeService service) {
     this.service = service;
     board = service.getInternalBoard();
     position = new LinkedList<>();
