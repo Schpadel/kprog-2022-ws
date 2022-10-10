@@ -2,6 +2,8 @@ package livesession.snake.provider;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Direction;
 import livesession.snake.Snake;
@@ -24,13 +26,28 @@ public class SimpleSnake implements Snake {
 
   public Coordinate advance() throws IllegalPositionException {
     // TODO: advance the snake
-    return null;
+    Coordinate coordinate = position.get(0);
+    Coordinate nextCoordinate = coordinate.getNeighbor(this.direction);
+    board.assertPositionIsOnBoard(nextCoordinate.getRow(), nextCoordinate.getRow());
+    if (board.getStateFromPosition(nextCoordinate) == BoardState.FOOD) {
+      Coordinate newElement;
+      Coordinate lastElement = position.get(position.size() - 1);
+      newElement = new Coordinate(lastElement.getRow(), lastElement.getColumn());
+      position.add(newElement);
+      this.service.foodEaten(nextCoordinate);
+    }
+
+    return nextCoordinate;
   }
 
   @Override
   public List<Coordinate> getPosition() {
     // TODO: create cloned data
-    return position;
+    List<Coordinate> newList = new LinkedList<>();
+    for (Coordinate coordinate : position) {
+      newList.add(new Coordinate(coordinate.getRow(), coordinate.getColumn()));
+    }
+    return newList;
   }
 
   @Override

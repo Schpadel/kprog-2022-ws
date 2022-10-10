@@ -45,5 +45,13 @@ public class BaseBoard implements Board {
   }
   protected void assertPositionIsOnBoard(final int row, final int column) {
     // TODO implement it throwing an IllegalArgumentException with the position.
+
+    if (row >= board.length || row < 0) {
+      throw new IllegalArgumentException("Row is " + row + " which exceeds the board size");
+    }
+
+    if (column >= board[row].length || column < 0) {
+      throw new IllegalArgumentException("Column is " + column + " which exceeds the board size");
+    }
   }
 }
