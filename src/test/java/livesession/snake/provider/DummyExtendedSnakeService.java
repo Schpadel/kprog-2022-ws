@@ -48,13 +48,13 @@ public class DummyExtendedSnakeService implements ExtendedSnakeService {
   }
 
   @Override
-  public void addListener(final SnakeListener listener) {
-
+  public boolean addListener(final SnakeListener listener) {
+    return false;
   }
 
   @Override
-  public void removeListener(final SnakeListener listener) {
-
+  public boolean removeListener(final SnakeListener listener) {
+    return false;
   }
 
   @Override
@@ -64,6 +64,11 @@ public class DummyExtendedSnakeService implements ExtendedSnakeService {
 
   @Override
   public Snake getSnake() {
+    return null;
+  }
+
+  @Override
+  public Board getBoard() {
     return null;
   }
 
