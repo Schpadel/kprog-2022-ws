@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import prog.ex05.exercise.masterworker.Master;
 import prog.ex05.exercise.masterworker.Task;
@@ -19,7 +18,7 @@ public class SimpleMaster implements Master {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleMaster.class);
 
-  private List<SimpleWorker> workerList;
+  private Map<String, SimpleWorker> workerMap;
   private Map<Integer, Task> taskMap;
   private ConcurrentLinkedQueue<Task> taskQueue;
 
@@ -34,12 +33,12 @@ public class SimpleMaster implements Master {
     }
     taskQueue = new ConcurrentLinkedQueue<>();
     taskMap = new HashMap<>();
-    workerList = new ArrayList<>();
+    workerMap = new HashMap<>();
 
     for (int i = 0; i < numberOfWorkers; i++) {
       SimpleWorker simpleWorker = new SimpleWorker("SimpleWorker" + i);
       simpleWorker.setQueue(taskQueue);
-      workerList.add(simpleWorker);
+      workerMap.put(simpleWorker.getName(), simpleWorker);
       simpleWorker.start();
     }
 
@@ -75,16 +74,12 @@ public class SimpleMaster implements Master {
 
   @Override
   public int getNumberOfWorkers() {
-    return workerList.size();
+    return workerMap.size();
   }
 
   @Override
   public List<String> getWorkerNames() {
-    List<String> workerNames = new ArrayList<>();
-    for (Worker worker : workerList) {
-      workerNames.add(worker.getName());
-    }
-    return workerNames;
+    return new ArrayList<>(workerMap.keySet());
   }
 
   @Override
@@ -100,7 +95,7 @@ public class SimpleMaster implements Master {
 
   @Override
   public void shutdown() {
-    for (SimpleWorker worker : workerList) {
+    for (SimpleWorker worker : workerMap.values()) {
       worker.terminate();
       try {
         worker.join();
