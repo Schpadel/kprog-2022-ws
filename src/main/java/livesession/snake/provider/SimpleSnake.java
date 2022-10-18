@@ -60,7 +60,7 @@ public class SimpleSnake implements Snake {
       throw new IllegalPositionException(nextCoordinate, BoardState.WALL);
     }
 
-    // Snake moves into snake, does not work yet snake not on field
+    // Snake moves into snake, does not work yet snake not on internal board
     if (board.getStateFromPosition(nextCoordinate) == BoardState.SNAKE) {
       throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
     }

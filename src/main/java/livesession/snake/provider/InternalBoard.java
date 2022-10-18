@@ -21,7 +21,6 @@ public class InternalBoard extends BaseBoard {
       super(size);
       // TODO: Init board with GRASS and WALLs
 
-
     for (int row = 0; row < board.length; row++) {
       for (int col = 0; col < board[row].length; col++) {
         if (row == 0) {
