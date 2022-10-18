@@ -31,6 +31,7 @@ public class SimpleMaster implements Master {
     if (numberOfWorkers < 1) {
       throw new IllegalArgumentException("Number of workers can not be smaller than 1!");
     }
+
     taskQueue = new ConcurrentLinkedQueue<>();
     taskMap = new HashMap<>();
     workerMap = new HashMap<>();
@@ -84,13 +85,7 @@ public class SimpleMaster implements Master {
 
   @Override
   public int getNumberOfQueuedTasks() {
-    int counter = 0;
-    for (Task task : taskMap.values()) {
-      if (task.getState() == TaskState.QUEUED) {
-        counter++;
-      }
-    }
-    return counter;
+    return this.taskQueue.size();
   }
 
   @Override

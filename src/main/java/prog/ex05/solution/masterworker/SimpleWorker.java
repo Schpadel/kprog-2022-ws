@@ -28,25 +28,25 @@ public class SimpleWorker extends Thread implements Worker {
   public void run() {
     while (running) {
 
-      if (!taskQueue.isEmpty()) {
-
-        Task taskToRun = taskQueue.poll();
-        try {
-          taskToRun.setState(TaskState.RUNNING);
-          taskToRun.getRunnable().run();
-        } catch (Exception exception) {
-          taskToRun.crashed(exception);
-          taskToRun.setState(TaskState.CRASHED);
-        }
-        if (taskToRun.getState() == TaskState.RUNNING) {
-          taskToRun.setState(TaskState.SUCCEEDED);
-        }
-      } else {
+      if (taskQueue.isEmpty()) {
         try {
           Thread.sleep(Worker.WAIT_EMPTY_QUEUE);
+          continue;
         } catch (InterruptedException e) {
           System.err.print(e.getMessage());
         }
+      }
+
+      Task taskToRun = taskQueue.poll();
+      try {
+        taskToRun.setState(TaskState.RUNNING);
+        taskToRun.getRunnable().run();
+      } catch (Exception exception) {
+        taskToRun.crashed(exception);
+        taskToRun.setState(TaskState.CRASHED);
+      }
+      if (taskToRun.getState() == TaskState.RUNNING) {
+        taskToRun.setState(TaskState.SUCCEEDED);
       }
     }
   }
