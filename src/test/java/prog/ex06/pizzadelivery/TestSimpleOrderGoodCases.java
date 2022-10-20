@@ -23,8 +23,8 @@ public class TestSimpleOrderGoodCases {
   @Before
   public void setUp() throws Exception {
     SimplePizzaDeliveryService testService = new SimplePizzaDeliveryService();
-    testOrder = new SimpleOrder(testService);
-    comparisonOrder = new SimpleOrder(testService);
+    testOrder = new SimpleOrder();
+    comparisonOrder = new SimpleOrder();
     testPizza = new SimplePizza(PizzaSize.EXTRA_LARGE, 1100);
   }
 

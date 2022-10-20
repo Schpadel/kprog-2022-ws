@@ -46,7 +46,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
 
   @Override
   public int createOrder() {
-    SimpleOrder newOrder = new SimpleOrder(this);
+    SimpleOrder newOrder = new SimpleOrder();
     orderMap.put(newOrder.getOrderId(), newOrder);
     return newOrder.getOrderId();
   }

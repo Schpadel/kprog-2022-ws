@@ -21,15 +21,10 @@ public class SimpleOrder implements Order {
   private int id; //maybe with atomic Integer class to be thread safe
   private Map<Integer, Pizza> pizzaMap;
 
-  private PizzaDeliveryService service;
-
   /**
    * Construct a new SimpleOrder.
-   *
-   * @param service the service to which this order belongs
    */
-  public SimpleOrder(PizzaDeliveryService service) {
-    this.service = service;
+  public SimpleOrder() {
     this.id = idCounter;
     idCounter++;
     pizzaMap = new HashMap<>();
