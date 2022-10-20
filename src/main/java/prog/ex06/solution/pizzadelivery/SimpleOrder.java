@@ -54,9 +54,6 @@ public class SimpleOrder implements Order {
     int value = 0;
     for (Pizza pizza : pizzaMap.values()) {
       value += pizza.getPrice();
-      for (Topping topping : pizza.getToppings()) {
-        value += this.service.getToppingsPriceList().get(topping);
-      }
     }
     return value;
   }

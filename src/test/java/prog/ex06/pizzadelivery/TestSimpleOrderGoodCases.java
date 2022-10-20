@@ -76,12 +76,4 @@ public class TestSimpleOrderGoodCases {
 
     assertEquals(2470, testOrder.getValue());
   }
-
-  @Test
-  public void addPizza() {
-  }
-
-  @Test
-  public void removePizzaWithId() {
-  }
 }

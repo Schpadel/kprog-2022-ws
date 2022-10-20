@@ -55,4 +55,8 @@ public class SimplePizza implements Pizza {
   public int getPrice() {
     return this.price;
   }
+
+  public void setPrice(int price) {
+    this.price = price;
+  }
 }

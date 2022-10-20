@@ -78,12 +78,14 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
   public void addTopping(final int pizzaId, final Topping topping)
       throws IllegalArgumentException, TooManyToppingsException {
 
-    Pizza pizza = findPizzaWithId(pizzaId);
+    SimplePizza pizza = (SimplePizza) findPizzaWithId(pizzaId);
+    int priceBeforeNewTopping = pizza.getPrice();
     if (pizza.getToppings().size() >= MAX_TOPPINGS_PER_PIZZA) {
       throw new TooManyToppingsException(
           topping + " Topping could not be added, because the maximum toppings were reached");
     }
     pizza.getToppings().add(topping);
+    pizza.setPrice(priceBeforeNewTopping + pizzaToppingPriceMap.get(topping));
   }
 
   private Pizza findPizzaWithId(int pizzaId) throws IllegalArgumentException {
@@ -100,14 +102,15 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
   public void removeTopping(final int pizzaId, final Topping topping)
       throws IllegalArgumentException {
 
-    Pizza pizzaFromId = findPizzaWithId(pizzaId);
-
+    SimplePizza pizzaFromId = (SimplePizza) findPizzaWithId(pizzaId);
+    int priceWithTopping = pizzaFromId.getPrice();
     Iterator<Topping> it = pizzaFromId.getToppings().iterator();
 
     while (it.hasNext()) {
       Topping current = it.next();
       if (current == topping) {
         it.remove();
+        pizzaFromId.setPrice(priceWithTopping - pizzaToppingPriceMap.get(topping));
         return;
       }
     }

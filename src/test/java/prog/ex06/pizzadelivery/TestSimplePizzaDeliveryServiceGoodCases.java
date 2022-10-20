@@ -32,7 +32,18 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
   }
 
   @Test
-  public void createOrder() {
+  public void getValueOfOrder() {
+    int orderID = testService.createOrder();
+
+    int mediumPizza = testService.addPizza(orderID, PizzaSize.MEDIUM); // 700
+    try {
+      testService.addTopping(mediumPizza, Topping.TOMATO); // 30
+      testService.addTopping(mediumPizza, Topping.VEGETABLES); // 20
+    } catch (TooManyToppingsException e) {
+      throw new RuntimeException(e);
+    }
+
+    assertEquals(750, testService.getOrder(orderID).getValue());
   }
 
   @Test

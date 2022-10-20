@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import prog.ex06.exercise.pizzadelivery.Order;
+import prog.ex06.exercise.pizzadelivery.PizzaSize;
+import prog.ex06.exercise.pizzadelivery.TooManyToppingsException;
+import prog.ex06.exercise.pizzadelivery.Topping;
 import prog.ex06.solution.pizzadelivery.SimpleOrder;
 import prog.ex06.solution.pizzadelivery.SimplePizzaDeliveryService;
 
@@ -57,6 +60,7 @@ public class TestSimplePizzaDeliveryServiceBadCases {
     SimplePizzaDeliveryService secondTestService = new SimplePizzaDeliveryService();
 
     int firstServiceOrderId = testService.createOrder();
+    int secondServiceOrderId = secondTestService.createOrder();
     try {
       secondTestService.getOrder(firstServiceOrderId);
       fail("There should be no order in the second service, because it was created inside the first service!");
@@ -64,5 +68,44 @@ public class TestSimplePizzaDeliveryServiceBadCases {
       assertTrue(true);
     }
 
+    assertEquals(testService.getOrder(firstServiceOrderId).getOrderId(), firstServiceOrderId);
+
+    // add pizza to order in first service and second service check if they influence each other
+
+    int firstServicePizzaID = testService.addPizza(firstServiceOrderId, PizzaSize.EXTRA_LARGE);
+    int secondServicePizzaID = secondTestService.addPizza(secondServiceOrderId, PizzaSize.SMALL);
+    int secondServicePizzaID2 = secondTestService.addPizza(secondServiceOrderId, PizzaSize.MEDIUM);
+
+    try {
+      testService.addTopping(firstServicePizzaID, Topping.PINEAPPLE);
+      secondTestService.addTopping(secondServicePizzaID, Topping.HAM);
+    } catch (TooManyToppingsException e) {
+      System.out.println(e.getMessage());
+    }
+
+    assertEquals(1, testService.getOrder(firstServiceOrderId).getPizzaList().size());
+    assertEquals(2, secondTestService.getOrder(secondServiceOrderId).getPizzaList().size());
+    assertEquals(Topping.PINEAPPLE, testService.getOrder(firstServiceOrderId).getPizzaList().get(0).getToppings().get(0));
+    assertEquals(Topping.HAM, secondTestService.getOrder(secondServiceOrderId).getPizzaList().get(0).getToppings().get(0));
+
+  }
+
+  @Test
+  public void addTooManyToppings() {
+    int orderId = testService.createOrder();
+    int pizzaId = testService.addPizza(orderId, PizzaSize.LARGE);
+
+    try {
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      testService.addTopping(pizzaId, Topping.HAM);
+      fail("Too many toppings were added, TooManyToppingsException should be thrown!");
+    } catch (TooManyToppingsException e) {
+      assertTrue(true);
+    }
   }
 }
