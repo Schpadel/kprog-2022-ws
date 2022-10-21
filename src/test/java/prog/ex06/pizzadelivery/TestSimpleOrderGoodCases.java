@@ -50,30 +50,4 @@ public class TestSimpleOrderGoodCases {
     assertTrue(testOrder.getPizzaList().size() == 0);
     assertFalse(testOrder.getPizzaList().contains(testPizza));
   }
-
-
-
-  @Test
-  public void getPizzaList() {
-  }
-
-  @Test
-  public void getPizzaMap() {
-  }
-
-  @Test
-  public void getValue() {
-    SimplePizza mediumPizzaWithOneTopping = new SimplePizza(PizzaSize.MEDIUM, 700);
-    mediumPizzaWithOneTopping.getToppings().add(Topping.CHEESE); // cheese price: 60
-
-    SimplePizza smallPizzaWithTwoToppings = new SimplePizza(PizzaSize.SMALL, 500);
-    smallPizzaWithTwoToppings.getToppings().add(Topping.PINEAPPLE); // pineapple price: 90
-    smallPizzaWithTwoToppings.getToppings().add(Topping.VEGETABLES); // vegetables price: 20
-
-    testOrder.addPizza(smallPizzaWithTwoToppings); // price with toppings = 500 + 90 + 20
-    testOrder.addPizza(testPizza); // price: 1100
-    testOrder.addPizza(mediumPizzaWithOneTopping); // price: 760 with topping
-
-    assertEquals(2470, testOrder.getValue());
-  }
 }

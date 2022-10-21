@@ -47,7 +47,32 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
   }
 
   @Test
-  public void addPizza() {
+  public void getValueOfBigOrder() {
+    int orderID = testService.createOrder();
+
+    // add all sizes
+    int smallPizza = testService.addPizza(orderID, PizzaSize.SMALL); //       price: 500
+    int mediumPizza = testService.addPizza(orderID, PizzaSize.MEDIUM); //     price: 700
+    int largePizza = testService.addPizza(orderID, PizzaSize.LARGE); //       price: 900
+    int xlargePizza = testService.addPizza(orderID,PizzaSize.EXTRA_LARGE); // price: 1100
+
+    // add various toppings
+
+    try {
+      testService.addTopping(smallPizza, Topping.TOMATO); //    price: 30
+      testService.addTopping(smallPizza, Topping.PINEAPPLE); // price: 90
+      testService.addTopping(smallPizza, Topping.PINEAPPLE); // price: 90
+      testService.addTopping(smallPizza, Topping.PINEAPPLE); // price: 90
+      testService.addTopping(mediumPizza, Topping.HAM); //      price: 70
+      testService.addTopping(mediumPizza, Topping.HAM); //      price: 70
+      testService.addTopping(mediumPizza, Topping.HAM); //      price: 70
+      testService.addTopping(xlargePizza, Topping.CHEESE); //   price: 60
+      testService.addTopping(xlargePizza, Topping.SEAFOOD); //  price: 150
+      testService.addTopping(xlargePizza, Topping.SALAMI); //   price: 50
+    } catch (TooManyToppingsException e) {
+      System.err.println("Too many toppings added in test!");
+    }
+    assertEquals(3970, testService.getOrder(orderID).getValue());
   }
 
   @Test
