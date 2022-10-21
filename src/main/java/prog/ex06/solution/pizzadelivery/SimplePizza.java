@@ -1,6 +1,7 @@
 package prog.ex06.solution.pizzadelivery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import prog.ex06.exercise.pizzadelivery.Pizza;
 import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
@@ -45,7 +46,7 @@ public class SimplePizza implements Pizza {
 
   @Override
   public List<Topping> getToppings() {
-    return this.toppings;
+   return Collections.unmodifiableList(toppings);
   }
 
   @Override
@@ -58,9 +59,6 @@ public class SimplePizza implements Pizza {
     return this.price;
   }
 
-  public void setPrice(int price) {
-    this.price = price;
-  }
 
   /**
    * add a new topping to the pizza.
