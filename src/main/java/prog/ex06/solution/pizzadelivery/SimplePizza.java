@@ -3,7 +3,9 @@ package prog.ex06.solution.pizzadelivery;
 import java.util.ArrayList;
 import java.util.List;
 import prog.ex06.exercise.pizzadelivery.Pizza;
+import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
 import prog.ex06.exercise.pizzadelivery.PizzaSize;
+import prog.ex06.exercise.pizzadelivery.TooManyToppingsException;
 import prog.ex06.exercise.pizzadelivery.Topping;
 
 /**
@@ -58,5 +60,26 @@ public class SimplePizza implements Pizza {
 
   public void setPrice(int price) {
     this.price = price;
+  }
+
+  /**
+   * add a new topping to the pizza.
+   *
+   * @param topping to be added.
+   * @param price price of the topping.
+   * @throws TooManyToppingsException too many toppings have been added to the pizza.
+   */
+  public void addTopping(Topping topping, int price) throws TooManyToppingsException {
+    if (getToppings().size() >= PizzaDeliveryService.MAX_TOPPINGS_PER_PIZZA) {
+      throw new TooManyToppingsException(
+              topping + " Topping could not be added, because the maximum toppings were reached");
+    }
+    this.toppings.add(topping);
+    this.price += price;
+  }
+
+  public void removeTopping(Topping topping, int price) {
+    this.toppings.remove(topping);
+    this.price -= price;
   }
 }

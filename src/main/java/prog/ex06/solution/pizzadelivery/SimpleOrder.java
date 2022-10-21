@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import prog.ex06.exercise.pizzadelivery.Order;
 import prog.ex06.exercise.pizzadelivery.Pizza;
-import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
-import prog.ex06.exercise.pizzadelivery.Topping;
 
 /**
  * Simple and straight-forward implementation of the Order interface.
@@ -19,7 +17,7 @@ public class SimpleOrder implements Order {
 
   private static int idCounter = 1000;
   private int id; //maybe with atomic Integer class to be thread safe
-  private Map<Integer, Pizza> pizzaMap;
+  private Map<Integer, SimplePizza> pizzaMap;
 
   /**
    * Construct a new SimpleOrder.
@@ -40,7 +38,7 @@ public class SimpleOrder implements Order {
     return new ArrayList<>(pizzaMap.values());
   }
 
-  public Map<Integer, Pizza> getPizzaMap() {
+  public Map<Integer, SimplePizza> getPizzaMap() {
     return this.pizzaMap;
   }
 
@@ -53,7 +51,7 @@ public class SimpleOrder implements Order {
     return value;
   }
 
-  public void addPizza(Pizza pizza) {
+  public void addPizza(SimplePizza pizza) {
     pizzaMap.put(pizza.getPizzaId(), pizza);
   }
 

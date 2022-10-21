@@ -1,10 +1,8 @@
 package prog.ex06.solution.pizzadelivery;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import prog.ex06.exercise.pizzadelivery.Order;
-import prog.ex06.exercise.pizzadelivery.Pizza;
 import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
 import prog.ex06.exercise.pizzadelivery.PizzaSize;
 import prog.ex06.exercise.pizzadelivery.TooManyToppingsException;
@@ -19,6 +17,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
       org.slf4j.LoggerFactory.getLogger(SimplePizzaDeliveryService.class);
 
   private Map<Integer, SimpleOrder> orderMap;
+  private Map<Integer, SimplePizza> pizzaMap;
   private Map<PizzaSize, Integer> pizzaSizePriceMap;
   private Map<Topping, Integer> pizzaToppingPriceMap;
 
@@ -27,6 +26,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
    */
   public SimplePizzaDeliveryService() {
     orderMap = new HashMap<>();
+    pizzaMap = new HashMap<>();
 
     pizzaSizePriceMap = new HashMap<>();
     pizzaSizePriceMap.put(PizzaSize.SMALL, 500);
@@ -58,8 +58,9 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
     }
 
     SimpleOrder relevantOrder = orderMap.get(orderId);
-    Pizza newPizza = new SimplePizza(size, pizzaSizePriceMap.get(size));
+    SimplePizza newPizza = new SimplePizza(size, pizzaSizePriceMap.get(size));
     relevantOrder.addPizza(newPizza);
+    pizzaMap.put(newPizza.getPizzaId(), newPizza);
     return newPizza.getPizzaId();
 
   }
@@ -78,45 +79,31 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
   public void addTopping(final int pizzaId, final Topping topping)
       throws IllegalArgumentException, TooManyToppingsException {
 
-    SimplePizza pizza = (SimplePizza) findPizzaWithId(pizzaId);
-    int priceBeforeNewTopping = pizza.getPrice();
-    if (pizza.getToppings().size() >= MAX_TOPPINGS_PER_PIZZA) {
-      throw new TooManyToppingsException(
-          topping + " Topping could not be added, because the maximum toppings were reached");
+    if (topping == null) {
+      throw new IllegalArgumentException("Topping should not be null!");
     }
-    pizza.getToppings().add(topping);
-    pizza.setPrice(priceBeforeNewTopping + pizzaToppingPriceMap.get(topping));
-  }
 
-  private Pizza findPizzaWithId(int pizzaId) throws IllegalArgumentException {
-    for (SimpleOrder current : orderMap.values()) {
-      if (current.getPizzaMap().containsKey(pizzaId)) {
-        return current.getPizzaMap().get(pizzaId);
-      }
+    if (!pizzaMap.containsKey(pizzaId)) {
+      throw new IllegalArgumentException("Pizza ID: " + pizzaId + " was not found!");
     }
-    throw new IllegalArgumentException(
-        "Pizza with id: " + pizzaId + " was not found in the system.");
+    SimplePizza pizza = pizzaMap.get(pizzaId);
+    pizza.addTopping(topping, pizzaToppingPriceMap.get(topping));
   }
 
   @Override
   public void removeTopping(final int pizzaId, final Topping topping)
       throws IllegalArgumentException {
 
-    SimplePizza pizzaFromId = (SimplePizza) findPizzaWithId(pizzaId);
-    int priceWithTopping = pizzaFromId.getPrice();
-    Iterator<Topping> it = pizzaFromId.getToppings().iterator();
-
-    while (it.hasNext()) {
-      Topping current = it.next();
-      if (current == topping) {
-        it.remove();
-        pizzaFromId.setPrice(priceWithTopping - pizzaToppingPriceMap.get(topping));
-        return;
-      }
+    if (topping == null) {
+      throw new IllegalArgumentException("Topping should not be null!");
     }
 
-    throw new IllegalArgumentException(
-        "Topping: " + topping + " was not found on pizza with id " + pizzaId);
+    if (!pizzaMap.containsKey(pizzaId)) {
+      throw new IllegalArgumentException("Pizza ID: " + pizzaId + " was not found!");
+    }
+
+    SimplePizza pizzaFromId = pizzaMap.get(pizzaId);
+    pizzaFromId.removeTopping(topping, pizzaToppingPriceMap.get(topping));
   }
 
   @Override
