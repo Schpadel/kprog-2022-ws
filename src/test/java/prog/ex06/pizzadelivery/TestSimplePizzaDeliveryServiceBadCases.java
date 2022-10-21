@@ -22,10 +22,10 @@ public class TestSimplePizzaDeliveryServiceBadCases {
   }
 
   @Test
-  public void getOrder() {
+  public void getInvalidOrder() {
     try {
       testService.getOrder(69420);
-      fail("Order does not exist -> throw IllegalArgumentException");
+      fail("Order does not exist, IllegalArgumentException should be thrown");
     } catch (IllegalArgumentException e) {
       assertTrue(true);
     }
@@ -35,7 +35,7 @@ public class TestSimplePizzaDeliveryServiceBadCases {
   public void removeInvalidPizzaIdFromInvalidOrderId() {
     try {
       testService.removePizza(69420, 7777);
-      fail("Order does not exist -> throw IllegalArgumentException");
+      fail("Order does not exist, throw IllegalArgumentException");
     } catch (IllegalArgumentException e) {
       assertTrue(true);
     }
@@ -55,7 +55,6 @@ public class TestSimplePizzaDeliveryServiceBadCases {
 
   @Test
   public void testDuplicateService() {
-    // TODO: more tests
 
     SimplePizzaDeliveryService secondTestService = new SimplePizzaDeliveryService();
 
@@ -79,6 +78,10 @@ public class TestSimplePizzaDeliveryServiceBadCases {
     try {
       testService.addTopping(firstServicePizzaID, Topping.PINEAPPLE);
       secondTestService.addTopping(secondServicePizzaID, Topping.HAM);
+
+      // remove topping then add it again in second service to check if something breaks
+      secondTestService.removeTopping(secondServicePizzaID, Topping.HAM);
+      secondTestService.addTopping(secondServicePizzaID, Topping.HAM);
     } catch (TooManyToppingsException e) {
       System.out.println(e.getMessage());
     }
@@ -87,6 +90,10 @@ public class TestSimplePizzaDeliveryServiceBadCases {
     assertEquals(2, secondTestService.getOrder(secondServiceOrderId).getPizzaList().size());
     assertEquals(Topping.PINEAPPLE, testService.getOrder(firstServiceOrderId).getPizzaList().get(0).getToppings().get(0));
     assertEquals(Topping.HAM, secondTestService.getOrder(secondServiceOrderId).getPizzaList().get(0).getToppings().get(0));
+
+    // check if price calculation is influenced by multiple instances of the service
+    assertEquals(1190, testService.getOrder(firstServiceOrderId).getValue());
+    assertEquals(1270, secondTestService.getOrder(secondServiceOrderId).getValue());
 
   }
 

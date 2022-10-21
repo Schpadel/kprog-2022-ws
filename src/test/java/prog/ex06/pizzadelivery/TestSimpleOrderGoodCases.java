@@ -36,10 +36,13 @@ public class TestSimpleOrderGoodCases {
 
   @Test
   public void emptyOrdersAreDifferent() {
-    assertEquals(0, testOrder.getPizzaList().size());
-    assertEquals(0, comparisonOrder.getPizzaList().size());
     assertNotEquals(testOrder, comparisonOrder);
     assertNotEquals(testOrder.getOrderId(), comparisonOrder.getOrderId());
+  }
+
+  @Test
+  public void emptyOrderReturnsEmptyPizzaList() {
+    assertEquals(0, testOrder.getPizzaList().size());
   }
 
   @Test
@@ -54,6 +57,7 @@ public class TestSimpleOrderGoodCases {
     assertTrue(testOrder.getPizzaList().contains(testPizza));
     testOrder.removePizzaWithId(testPizza.getPizzaId());
     assertEquals(0, testOrder.getPizzaList().size());
+    assertEquals(0, testOrder.getValue());
     assertFalse(testOrder.getPizzaList().contains(testPizza));
   }
 }

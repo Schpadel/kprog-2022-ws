@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
+import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
 import prog.ex06.exercise.pizzadelivery.PizzaSize;
 import prog.ex06.exercise.pizzadelivery.TooManyToppingsException;
 import prog.ex06.exercise.pizzadelivery.Topping;
@@ -27,15 +28,11 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
   public void setUp() throws Exception {
     testService = new SimplePizzaDeliveryService();
     testOrderId = testService.createOrder();
-
-
   }
 
   @Test
-  public void getValueOfOrder() {
-    int orderID = testService.createOrder();
-
-    int mediumPizza = testService.addPizza(orderID, PizzaSize.MEDIUM); // 700
+  public void getValueOfSmallOrder() {
+    int mediumPizza = testService.addPizza(testOrderId, PizzaSize.MEDIUM); // 700
     try {
       testService.addTopping(mediumPizza, Topping.TOMATO); // 30
       testService.addTopping(mediumPizza, Topping.VEGETABLES); // 20
@@ -43,7 +40,7 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
       throw new RuntimeException(e);
     }
 
-    assertEquals(750, testService.getOrder(orderID).getValue());
+    assertEquals(750, testService.getOrder(testOrderId).getValue());
   }
 
   @Test
@@ -77,30 +74,39 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
 
   @Test
   public void removePizza() {
+    int pizzaIDontWant = testService.addPizza(testOrderId, PizzaSize.SMALL);
+    testService.removePizza(testOrderId, pizzaIDontWant);
+    assertEquals(0, testService.getOrder(testOrderId).getPizzaList().size());
   }
 
   @Test
   public void addTopping() {
     int testPizza = testService.addPizza(testOrderId, PizzaSize.MEDIUM);
-
     try {
       this.testService.addTopping(testPizza, Topping.TOMATO);
     } catch (TooManyToppingsException e) {
       System.err.println(e.getMessage());
     }
-
     assertTrue(testService.getOrder(testOrderId).getPizzaList().get(0).getToppings().contains(Topping.TOMATO));
+  }
+
+  @Test
+  public void addExactAmountOfToppings() {
+    int overloadPizza = testService.addPizza(testOrderId, PizzaSize.LARGE);
+
     try {
-      testService.addTopping(testPizza, Topping.CHEESE);
-      testService.addTopping(testPizza, Topping.SALAMI);
-      testService.addTopping(testPizza, Topping.HAM);
-      testService.addTopping(testPizza, Topping.SEAFOOD);
-      testService.addTopping(testPizza, Topping.VEGETABLES);
-      testService.addTopping(testPizza, Topping.PINEAPPLE);
-      fail("Too many toppings exception should be raised here!");
+      testService.addTopping(overloadPizza, Topping.CHEESE);
+      testService.addTopping(overloadPizza, Topping.SALAMI);
+      testService.addTopping(overloadPizza, Topping.HAM);
+      testService.addTopping(overloadPizza, Topping.SEAFOOD);
+      testService.addTopping(overloadPizza, Topping.VEGETABLES);
+      testService.addTopping(overloadPizza, Topping.PINEAPPLE);
+
     } catch (TooManyToppingsException e) {
-      assertTrue(true);
+      fail("Exception should only be thrown if there are more toppings than defined in MAX_TOPPINGS_PER_PIZZA!");
     }
+    assertEquals(
+        PizzaDeliveryService.MAX_TOPPINGS_PER_PIZZA, testService.getOrder(testOrderId).getPizzaList().get(0).getToppings().size());
   }
 
   @Test
@@ -115,10 +121,6 @@ public class TestSimplePizzaDeliveryServiceGoodCases {
 
     assertFalse(testService.getOrder(testOrderId).getPizzaList().get(0).getToppings().contains(Topping.CHEESE));
     assertEquals(2, testService.getOrder(testOrderId).getPizzaList().get(0).getToppings().size());
-  }
-
-  @Test
-  public void getOrder() {
   }
 
   @Test

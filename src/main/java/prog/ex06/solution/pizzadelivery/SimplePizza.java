@@ -13,20 +13,19 @@ import prog.ex06.exercise.pizzadelivery.Topping;
  * Simple and straight-forward implementation of the Pizza interface.
  */
 public class SimplePizza implements Pizza {
-  private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(SimplePizza.class);
 
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(SimplePizza.class);
+  private static int idCounter = 0;
   private List<Topping> toppings;
   private PizzaSize size;
   private int price;
-
-  private static int idCounter = 0;
   private int id; // must be unique
 
   /**
    * Initialize a new pizza with an empty toppings list.
    *
-   * @param size of the pizza
+   * @param size  of the pizza
    * @param price of the pizza
    */
 
@@ -46,7 +45,7 @@ public class SimplePizza implements Pizza {
 
   @Override
   public List<Topping> getToppings() {
-   return Collections.unmodifiableList(toppings);
+    return Collections.unmodifiableList(toppings);
   }
 
   @Override
@@ -64,13 +63,13 @@ public class SimplePizza implements Pizza {
    * add a new topping to the pizza.
    *
    * @param topping to be added.
-   * @param price price of the topping.
+   * @param price   price of the topping.
    * @throws TooManyToppingsException too many toppings have been added to the pizza.
    */
   public void addTopping(Topping topping, int price) throws TooManyToppingsException {
     if (getToppings().size() >= PizzaDeliveryService.MAX_TOPPINGS_PER_PIZZA) {
       throw new TooManyToppingsException(
-              topping + " Topping could not be added, because the maximum toppings were reached");
+          topping + " Topping could not be added, because the maximum toppings were reached");
     }
     this.toppings.add(topping);
     this.price += price;
