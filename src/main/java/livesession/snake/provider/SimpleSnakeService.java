@@ -37,6 +37,18 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void configure(final GameConfiguration configuration) throws
       IllegalConfigurationException {
+    if (configuration.getNumberOfFood() < 0) {
+      throw new IllegalConfigurationException("Number of food should not be < 0!");
+    }
+    if (configuration.getSize() < Board.MINIMAL_BOARD_SIZE) {
+      throw new IllegalConfigurationException("Board size is too small! Minimal size: " + Board.MINIMAL_BOARD_SIZE + " actual size: " +configuration.getSize());
+    }
+
+    if (configuration.getVelocityInMilliSeconds() <= 0) {
+      throw new IllegalConfigurationException("Velocity should not <= 0!");
+    }
+
+    this.gameConfiguration = configuration;
     // TODO: check and save the configuration info.
   }
 
@@ -159,6 +171,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public void foodEaten(final Coordinate coordinate) {
     logger.debug("foodEaten: " + coordinate);
     // TODO: what has to be done when one food has been eaten?
+    this.getInternalBoard().removeFood(coordinate);
   }
 
   @Override
