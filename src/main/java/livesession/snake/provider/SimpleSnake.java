@@ -2,6 +2,7 @@ package livesession.snake.provider;
 
 import java.util.LinkedList;
 import java.util.List;
+import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Direction;
@@ -60,8 +61,8 @@ public class SimpleSnake implements Snake {
       throw new IllegalPositionException(nextCoordinate, BoardState.WALL);
     }
 
-    // Snake moves into snake, does not work yet snake not on internal board
-    if (board.getStateFromPosition(nextCoordinate) == BoardState.SNAKE) {
+    // Snake moves into snake
+    if (service.getExternalBoard().getStateFromPosition(nextCoordinate) == BoardState.SNAKE) {
       throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
     }
 
@@ -71,6 +72,12 @@ public class SimpleSnake implements Snake {
   private BoardState assertNewPositionIsPossible(final Coordinate newHead)
       throws IllegalPositionException {
     // TODO: Check if the position is valid
+    if (this.board.getStateFromPosition(newHead) == BoardState.WALL) {
+      throw new IllegalPositionException(newHead, BoardState.WALL);
+    }
+    if (this.board.getStateFromPosition(newHead) == BoardState.SNAKE) {
+      throw new IllegalPositionException(newHead, BoardState.SNAKE);
+    }
     return null;
   }
 

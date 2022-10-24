@@ -1,6 +1,8 @@
 package livesession.snake.provider;
 
+import java.util.Arrays;
 import java.util.List;
+import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Snake;
@@ -32,8 +34,13 @@ public class ExternalBoard extends BaseBoard {
    */
   private void copyContents(final InternalBoard internalBoard) {
     // TODO: Copy the contents of the internal board
-
-    // TODO: end
+    BoardState[][] copy = new BoardState[internalBoard.size][];
+    int length = internalBoard.board.length;
+    for (int i = 0; i < length; i++) {
+      copy = new BoardState[i][internalBoard.board[i].length];
+      System.arraycopy(internalBoard.board[i], 0, copy[i], 0, internalBoard.board[i].length);
+    }
+    this.board = copy;
   }
 
   /**
@@ -43,7 +50,9 @@ public class ExternalBoard extends BaseBoard {
    */
   private void addSnake(Snake snake) {
     // TODO: Add the snake to the board
-
+    for (Coordinate currentCoordinate : snake.getPosition()) {
+      this.board[currentCoordinate.getRow()][currentCoordinate.getColumn()] = BoardState.SNAKE;
+    }
     // TODO: end
   }
 }

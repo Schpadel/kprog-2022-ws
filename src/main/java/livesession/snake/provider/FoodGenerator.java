@@ -1,6 +1,7 @@
 package livesession.snake.provider;
 
 import java.util.Random;
+import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 
 public class FoodGenerator {
@@ -17,11 +18,18 @@ public class FoodGenerator {
   }
 
   Coordinate placeFood() {
-    Coordinate coordinate = null;
     // TODO: place the food randomly.
 
+    while(true) {
+      Coordinate coordinate = getRandomCoordinate();
+      if (service.getExternalBoard().getStateFromPosition(coordinate) == BoardState.GRASS) {
+        service.getInternalBoard().addFood(coordinate);
+        return coordinate;
+      }
+
+    }
+
     // TODO: end.
-    return coordinate;
 
   }
 
