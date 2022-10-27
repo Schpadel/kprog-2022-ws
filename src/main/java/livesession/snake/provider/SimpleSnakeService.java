@@ -1,5 +1,6 @@
 package livesession.snake.provider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import livesession.snake.Board;
@@ -32,6 +33,9 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    */
   public SimpleSnakeService() {
     // TODO: What to initialize?
+    listeners = new ArrayList<>();
+    snake = new SimpleSnake(this);
+    board = new InternalBoard(10);
   }
 
   @Override

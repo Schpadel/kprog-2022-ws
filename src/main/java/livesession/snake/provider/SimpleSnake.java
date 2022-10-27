@@ -62,10 +62,21 @@ public class SimpleSnake implements Snake {
     }
 
     // Snake moves into snake
+
+    for(Coordinate cord : position) {
+      if (nextCoordinate.equals(cord)) {
+        throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
+      }
+    }
+
+    // Snake did not hit anything adjust body?
+
+
+    /*
     if (service.getExternalBoard().getStateFromPosition(nextCoordinate) == BoardState.SNAKE) {
       throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
     }
-
+    */
     return nextCoordinate;
   }
 
@@ -75,7 +86,7 @@ public class SimpleSnake implements Snake {
     if (this.board.getStateFromPosition(newHead) == BoardState.WALL) {
       throw new IllegalPositionException(newHead, BoardState.WALL);
     }
-    if (this.board.getStateFromPosition(newHead) == BoardState.SNAKE) {
+    if (this.service.getExternalBoard().getStateFromPosition(newHead) == BoardState.SNAKE) {
       throw new IllegalPositionException(newHead, BoardState.SNAKE);
     }
     return null;
