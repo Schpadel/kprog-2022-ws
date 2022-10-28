@@ -1,5 +1,6 @@
 package livesession.snake.provider;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import livesession.snake.Board;
@@ -56,27 +57,22 @@ public class SimpleSnake implements Snake {
       this.service.foodEaten(nextCoordinate);
     }
 
+
+
     // Snake moves into a wall
     if (board.getStateFromPosition(nextCoordinate) == BoardState.WALL) {
       throw new IllegalPositionException(nextCoordinate, BoardState.WALL);
     }
 
     // Snake moves into snake
-
-    for(Coordinate cord : position) {
-      if (nextCoordinate.equals(cord)) {
-        throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
-      }
-    }
-
-    // Snake did not hit anything adjust body?
-
-
-    /*
-    if (service.getExternalBoard().getStateFromPosition(nextCoordinate) == BoardState.SNAKE) {
+    if (position.contains(nextCoordinate)) {
       throw new IllegalPositionException(nextCoordinate, BoardState.SNAKE);
     }
-    */
+
+    // move snake forward
+    position.addFirst(nextCoordinate); // moves to nextCoordinate
+    position.removeLast(); //move forward
+
     return nextCoordinate;
   }
 
