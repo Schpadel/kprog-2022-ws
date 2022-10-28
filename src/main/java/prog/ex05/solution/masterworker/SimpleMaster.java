@@ -53,6 +53,9 @@ public class SimpleMaster implements Master {
     Task taskToBeAdded = new Task(runnable);
     taskMap.put(taskToBeAdded.getId(), taskToBeAdded);
     taskQueue.add(taskToBeAdded);
+    synchronized (taskQueue) {
+      taskQueue.notify();
+    }
     return taskToBeAdded;
   }
 
@@ -92,6 +95,9 @@ public class SimpleMaster implements Master {
   public void shutdown() {
     for (SimpleWorker worker : workerMap.values()) {
       worker.terminate();
+      synchronized (taskQueue) {
+        taskQueue.notifyAll(); // wake up all Threads so they realize they should shut down
+      }
       try {
         worker.join();
       } catch (InterruptedException e) {

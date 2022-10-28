@@ -2,6 +2,7 @@ package prog.ex05.solution.masterworker;
 
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import prog.ex05.exercise.masterworker.Task;
 import prog.ex05.exercise.masterworker.TaskState;
@@ -29,14 +30,12 @@ public class SimpleWorker extends Thread implements Worker {
     while (running) {
 
       if (taskQueue.isEmpty()) {
-        try {
-          Thread.sleep(Worker.WAIT_EMPTY_QUEUE);
+          waitUntilNotified();
+          //Thread.sleep(Worker.WAIT_EMPTY_QUEUE);
           continue;
-        } catch (InterruptedException e) {
-          System.err.print(e.getMessage());
-        }
       }
 
+      System.out.println("Thread " + getName() + " woke up and is now working!");
       Task taskToRun = taskQueue.poll();
       try {
         taskToRun.setState(TaskState.RUNNING);
@@ -49,6 +48,18 @@ public class SimpleWorker extends Thread implements Worker {
         taskToRun.setState(TaskState.SUCCEEDED);
       }
     }
+  }
+
+  private void waitUntilNotified() {
+    synchronized (taskQueue) {
+      try {
+        this.taskQueue.wait();
+      } catch (InterruptedException e) {
+        // Thread was interrupted
+        logger.info("Thread was interrupted!");
+      }
+    }
+
   }
 
   @Override
