@@ -41,8 +41,6 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     for (int i = 0; i < SnakeService.DEFAULT_NUMBER_OF_FOOD; i++) {
       generator.placeFood();
     }
-
-
   }
 
   @Override
