@@ -36,7 +36,13 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     // TODO: What to initialize?
     listeners = new ArrayList<>();
     snake = new SimpleSnake(this);
-    board = new InternalBoard(10);
+    board = new InternalBoard(SnakeService.DEFAULT_SIZE);
+    FoodGenerator generator = new FoodGenerator(this);
+    for (int i = 0; i < SnakeService.DEFAULT_NUMBER_OF_FOOD; i++) {
+      generator.placeFood();
+    }
+
+
   }
 
   @Override
@@ -65,6 +71,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   @Override
   public void reset() {
     // TODO: reset for a new game
+    new SimpleSnakeService();
   }
 
   @Override
