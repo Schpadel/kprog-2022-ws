@@ -29,14 +29,14 @@ public class SimpleWorker extends Thread implements Worker {
   public void run() {
     while (running) {
 
-      if (taskQueue.isEmpty()) {
+      Task taskToRun = taskQueue.poll();
+      if (taskToRun == null) {
           waitUntilNotified();
           //Thread.sleep(Worker.WAIT_EMPTY_QUEUE);
           continue;
       }
 
       System.out.println("Thread " + getName() + " woke up and is now working!");
-      Task taskToRun = taskQueue.poll();
       try {
         taskToRun.setState(TaskState.RUNNING);
         taskToRun.getRunnable().run();
