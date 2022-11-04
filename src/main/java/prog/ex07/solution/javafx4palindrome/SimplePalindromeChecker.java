@@ -12,9 +12,13 @@ public class SimplePalindromeChecker implements PalindromeChecker {
   public boolean isPalindrome(final String line) {
     char[] normalizedLine = normalizeLine(line);
 
+    if(line.strip().length() == 0) {
+      return false;
+    }
+
     int reverseCounter = normalizedLine.length - 1;
-    for (int i = 0; i < normalizedLine.length; i++) {
-      if (normalizedLine[i] != normalizedLine[reverseCounter]) {
+    for (char c : normalizedLine) {
+      if (c != normalizedLine[reverseCounter]) {
         return false;
       }
       reverseCounter--;

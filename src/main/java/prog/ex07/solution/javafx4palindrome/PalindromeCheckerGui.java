@@ -16,7 +16,7 @@ public class PalindromeCheckerGui extends FlowPane {
 
   static final String SUCCESS = "SUCCESS";
   static final String FAILURE = "FAILURE";
-  TextField palindromeInput = new TextField("Please enter your text!");
+  TextField palindromeInput = new TextField();
   Label result = new Label();
   Button button = new Button("Check Palindrome!");
 
