@@ -12,7 +12,7 @@ public class SimplePalindromeChecker implements PalindromeChecker {
   public boolean isPalindrome(final String line) {
     char[] normalizedLine = normalizeLine(line);
 
-    if(line.strip().length() == 0) {
+    if (line.strip().length() == 0) {
       return false;
     }
 

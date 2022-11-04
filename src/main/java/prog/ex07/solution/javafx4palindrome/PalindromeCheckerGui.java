@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
+import prog.ex07.exercise.javafx4palindrome.Constants;
 import prog.ex07.exercise.javafx4palindrome.PalindromeChecker;
 
 /**
@@ -42,8 +43,8 @@ public class PalindromeCheckerGui extends FlowPane {
   }
 
   private void evaluateInputPalindrome(PalindromeChecker palindromeChecker) {
-    String resultText = palindromeChecker.isPalindrome(palindromeInput.getText()) ? SUCCESS :
-        FAILURE;
+    String resultText = palindromeChecker.isPalindrome(palindromeInput.getText()) ? Constants.SUCCESS :
+        Constants.FAILURE;
     result.setText(resultText);
   }
 }
