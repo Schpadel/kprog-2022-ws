@@ -43,8 +43,8 @@ public class PalindromeCheckerGui extends FlowPane {
   }
 
   private void evaluateInputPalindrome(PalindromeChecker palindromeChecker) {
-    String resultText = palindromeChecker.isPalindrome(palindromeInput.getText()) ? Constants.SUCCESS :
-        Constants.FAILURE;
+    String resultText = palindromeChecker.isPalindrome(palindromeInput.getText())
+        ? Constants.SUCCESS : Constants.FAILURE;
     result.setText(resultText);
   }
 }
