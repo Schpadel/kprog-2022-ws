@@ -1,5 +1,6 @@
 package livesession.snake.provider;
 
+import java.lang.module.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -34,18 +35,32 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    */
   public SimpleSnakeService() {
     // TODO: What to initialize?
+    try {
+      this.configure(new GameConfiguration(SnakeService.DEFAULT_SIZE, SnakeService.DEFAULT_VELOCITY, SnakeService.DEFAULT_NUMBER_OF_FOOD));
+    } catch (IllegalConfigurationException e) {
+      throw new RuntimeException("An illegal default configuration was set!");
+    }
+
     listeners = new ArrayList<>();
     snake = new SimpleSnake(this);
-    board = new InternalBoard(SnakeService.DEFAULT_SIZE);
-    FoodGenerator generator = new FoodGenerator(this);
-    for (int i = 0; i < SnakeService.DEFAULT_NUMBER_OF_FOOD; i++) {
-      generator.placeFood();
+    board = new InternalBoard(gameConfiguration.getSize());
+    foodGenerator = new FoodGenerator(this);
+    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
+      foodGenerator.placeFood();
     }
+    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
+    gameState = GameState.PREPARED;
+
+
   }
 
   @Override
   public void configure(final GameConfiguration configuration) throws
       IllegalConfigurationException {
+
+    if (gameState != GameState.PREPARED && gameState != GameState.ABORTED) {
+      throw new IllegalStateException("Game can only be configured in the aborted or prepared state!");
+    }
     if (configuration.getNumberOfFood() < 0) {
       throw new IllegalConfigurationException("Number of food should not be < 0!");
     }
@@ -71,11 +86,14 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     // TODO: reset for a new game
     listeners = new ArrayList<>();
     snake = new SimpleSnake(this);
-    board = new InternalBoard(SnakeService.DEFAULT_SIZE);
-    FoodGenerator generator = new FoodGenerator(this);
-    for (int i = 0; i < SnakeService.DEFAULT_NUMBER_OF_FOOD; i++) {
-      generator.placeFood();
+    board = new InternalBoard(gameConfiguration.getSize());
+    foodGenerator = new FoodGenerator(this);
+    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
+      foodGenerator.placeFood();
     }
+    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
+    score = 0;
+    gameState = GameState.PREPARED;
   }
 
   @Override
