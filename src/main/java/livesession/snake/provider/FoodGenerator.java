@@ -20,14 +20,20 @@ public class FoodGenerator {
   Coordinate placeFood() {
     // TODO: place the food randomly.
 
-    while(true) {
+    int numberOfCells = service.getConfiguration().getSize() * service.getConfiguration().getSize();
+    int counter = 0;
+    while(counter < numberOfCells) {
       Coordinate coordinate = getRandomCoordinate();
       if (service.getExternalBoard().getStateFromPosition(coordinate) == BoardState.GRASS) {
         service.getInternalBoard().addFood(coordinate);
         return coordinate;
       }
+      counter++;
+
 
     }
+    // no empty space for food found on entire board!
+    return null;
 
     // TODO: end.
 
