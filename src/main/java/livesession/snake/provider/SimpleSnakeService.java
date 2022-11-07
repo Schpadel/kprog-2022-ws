@@ -44,9 +44,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
       throw new RuntimeException("An illegal default configuration was set!");
     }
 
-    listeners = new ArrayList<>();
-
-
+    reset();
   }
 
   @Override
@@ -69,14 +67,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
 
 
     this.gameConfiguration = configuration;
-
-    board = new InternalBoard(gameConfiguration.getSize());
-    snake = new SimpleSnake(this);
-    foodGenerator = new FoodGenerator(this);
-    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
-      foodGenerator.placeFood();
-    }
-    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
+    reset();
     // TODO: check and save the configuration info.
   }
 
@@ -89,6 +80,13 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public void reset() {
     // TODO: reset for a new game
     listeners = new ArrayList<>();
+    board = new InternalBoard(gameConfiguration.getSize());
+    snake = new SimpleSnake(this);
+    foodGenerator = new FoodGenerator(this);
+    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
+      foodGenerator.placeFood();
+    }
+    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     score = 0;
     gameState = GameState.PREPARED;
   }
