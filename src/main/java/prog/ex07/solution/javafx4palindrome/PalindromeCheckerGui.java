@@ -28,6 +28,7 @@ public class PalindromeCheckerGui extends FlowPane {
     palindromeInput.setOnKeyPressed((event) -> {
       if (event.getCode().equals(KeyCode.ENTER)) {
         evaluateInputPalindrome(palindromeChecker);
+        event.consume();
       }
     });
     this.getChildren().add(palindromeInput);
