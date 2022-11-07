@@ -50,8 +50,6 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     }
     simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     gameState = GameState.PREPARED;
-
-
   }
 
   @Override
@@ -69,7 +67,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     }
 
     if (configuration.getVelocityInMilliSeconds() <= 0) {
-      throw new IllegalConfigurationException("Velocity should not <= 0!");
+      throw new IllegalConfigurationException("Velocity should not be <= 0!");
     }
 
     this.gameConfiguration = configuration;
