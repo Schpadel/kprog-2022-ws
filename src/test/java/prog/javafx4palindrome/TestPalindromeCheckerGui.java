@@ -21,7 +21,8 @@ import prog.ex07.exercise.javafx4palindrome.Constants;
 import prog.ex07.solution.javafx4palindrome.PalindromeCheckerGui;
 import prog.ex07.solution.javafx4palindrome.SimplePalindromeChecker;
 
-public class TestPalindromeCheckerGui extends ApplicationTest {
+public class
+TestPalindromeCheckerGui extends ApplicationTest {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(TestPalindromeCheckerGui.class);
   private PalindromeCheckerGui gui;
@@ -123,6 +124,7 @@ public class TestPalindromeCheckerGui extends ApplicationTest {
   public void testEnterKeystroke() {
     Platform.runLater(() -> textField.setText("--"));
     Platform.runLater(() -> textField.setText("O Genie, der Herr ehre dein Ego!"));
+
     press(KeyCode.ENTER);
     assertEquals(
             "The label did not display the success message", SUCCESS, label.getText());
