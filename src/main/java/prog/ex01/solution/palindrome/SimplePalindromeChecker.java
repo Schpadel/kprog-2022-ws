@@ -11,6 +11,11 @@ import prog.ex01.exercise.palindrome.PalindromeChecker;
 public class SimplePalindromeChecker implements PalindromeChecker {
   @Override
   public boolean isPalindrome(final String line) {
+
+    if (line == null || line.isEmpty()) {
+      return false;
+    }
+
     char[] normalizedLine = normalizeLine(line);
 
     int reverseCounter = normalizedLine.length - 1;
