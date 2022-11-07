@@ -37,7 +37,7 @@ public class ExternalBoard extends BaseBoard {
     BoardState[][] copy = new BoardState[internalBoard.size][];
     int length = internalBoard.board.length;
     for (int i = 0; i < length; i++) {
-      copy = new BoardState[i][internalBoard.board[i].length];
+      copy[i] = new BoardState[internalBoard.board[i].length];
       System.arraycopy(internalBoard.board[i], 0, copy[i], 0, internalBoard.board[i].length);
     }
     this.board = copy;

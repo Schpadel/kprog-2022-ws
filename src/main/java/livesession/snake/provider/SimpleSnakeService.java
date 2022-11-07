@@ -35,6 +35,9 @@ public class SimpleSnakeService implements ExtendedSnakeService {
    */
   public SimpleSnakeService() {
     // TODO: What to initialize?
+
+    gameState = GameState.PREPARED;
+
     try {
       this.configure(new GameConfiguration(SnakeService.DEFAULT_SIZE, SnakeService.DEFAULT_VELOCITY, SnakeService.DEFAULT_NUMBER_OF_FOOD));
     } catch (IllegalConfigurationException e) {
@@ -42,14 +45,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     }
 
     listeners = new ArrayList<>();
-    snake = new SimpleSnake(this);
-    board = new InternalBoard(gameConfiguration.getSize());
-    foodGenerator = new FoodGenerator(this);
-    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
-      foodGenerator.placeFood();
-    }
-    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
-    gameState = GameState.PREPARED;
+
+
   }
 
   @Override
@@ -70,7 +67,16 @@ public class SimpleSnakeService implements ExtendedSnakeService {
       throw new IllegalConfigurationException("Velocity should not be <= 0!");
     }
 
+
     this.gameConfiguration = configuration;
+
+    board = new InternalBoard(gameConfiguration.getSize());
+    snake = new SimpleSnake(this);
+    foodGenerator = new FoodGenerator(this);
+    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
+      foodGenerator.placeFood();
+    }
+    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     // TODO: check and save the configuration info.
   }
 
@@ -83,13 +89,6 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   public void reset() {
     // TODO: reset for a new game
     listeners = new ArrayList<>();
-    snake = new SimpleSnake(this);
-    board = new InternalBoard(gameConfiguration.getSize());
-    foodGenerator = new FoodGenerator(this);
-    for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
-      foodGenerator.placeFood();
-    }
-    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
     score = 0;
     gameState = GameState.PREPARED;
   }
