@@ -14,9 +14,6 @@ import prog.ex07.exercise.javafx4palindrome.PalindromeChecker;
 public class PalindromeCheckerGui extends FlowPane {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(PalindromeCheckerGui.class);
-
-  static final String SUCCESS = "SUCCESS";
-  static final String FAILURE = "FAILURE";
   TextField palindromeInput = new TextField();
   Label result = new Label();
   Button button = new Button("Check Palindrome!");
