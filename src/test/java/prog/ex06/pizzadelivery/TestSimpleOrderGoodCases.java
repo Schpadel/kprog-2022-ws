@@ -7,12 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import prog.ex06.exercise.pizzadelivery.Order;
-import prog.ex06.exercise.pizzadelivery.PizzaSize;
-import prog.ex06.exercise.pizzadelivery.Topping;
-import prog.ex06.solution.pizzadelivery.SimpleOrder;
-import prog.ex06.solution.pizzadelivery.SimplePizza;
-import prog.ex06.solution.pizzadelivery.SimplePizzaDeliveryService;
+import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
+import prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder;
+import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza;
+import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizzaDeliveryService;
 
 public class TestSimpleOrderGoodCases {
 

@@ -7,6 +7,7 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
+import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
 import prog.ex09.solution.editpizzascreen.gui.EditPizzaScreen;
 import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizzaDeliveryService;
 
