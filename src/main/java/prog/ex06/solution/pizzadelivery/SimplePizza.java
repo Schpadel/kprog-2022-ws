@@ -1,34 +1,82 @@
 package prog.ex06.solution.pizzadelivery;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import prog.ex06.exercise.pizzadelivery.Pizza;
+import prog.ex06.exercise.pizzadelivery.PizzaDeliveryService;
 import prog.ex06.exercise.pizzadelivery.PizzaSize;
+import prog.ex06.exercise.pizzadelivery.TooManyToppingsException;
 import prog.ex06.exercise.pizzadelivery.Topping;
 
 /**
  * Simple and straight-forward implementation of the Pizza interface.
  */
 public class SimplePizza implements Pizza {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(SimplePizza.class);
+      org.slf4j.LoggerFactory.getLogger(SimplePizza.class);
+  private static int idCounter = 0;
+  private List<Topping> toppings;
+  private PizzaSize size;
+  private int price;
+  private int id; // must be unique
+
+  /**
+   * Initialize a new pizza with an empty toppings list.
+   *
+   * @param size  of the pizza
+   * @param price of the pizza
+   */
+
+  public SimplePizza(PizzaSize size, int price) {
+    this.id = idCounter;
+    idCounter++;
+    this.toppings = new ArrayList<>();
+    this.size = size;
+    this.price = price;
+
+  }
 
   @Override
   public int getPizzaId() {
-    return 0;
+    return this.id;
   }
 
   @Override
   public List<Topping> getToppings() {
-    return null;
+    return Collections.unmodifiableList(toppings);
   }
 
   @Override
   public PizzaSize getSize() {
-    return null;
+    return this.size;
   }
 
   @Override
   public int getPrice() {
-    return 0;
+    return this.price;
+  }
+
+
+  /**
+   * add a new topping to the pizza.
+   *
+   * @param topping to be added.
+   * @param price   price of the topping.
+   * @throws TooManyToppingsException too many toppings have been added to the pizza.
+   */
+  public void addTopping(Topping topping, int price) throws TooManyToppingsException {
+    if (getToppings().size() >= PizzaDeliveryService.MAX_TOPPINGS_PER_PIZZA) {
+      throw new TooManyToppingsException(
+          topping + " Topping could not be added, because the maximum toppings were reached");
+    }
+    this.toppings.add(topping);
+    this.price += price;
+  }
+
+  public void removeTopping(Topping topping, int price) {
+    this.toppings.remove(topping);
+    this.price -= price;
   }
 }
