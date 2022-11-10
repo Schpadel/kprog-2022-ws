@@ -14,19 +14,21 @@ import java.nio.file.Paths;
  */
 public class FilesDemo {
 
+  public static final String XANADU_TXT = "demofiles/io/xanadu.txt";
+
   /**
    * main method. No args are expected.
    *
    * @param args args are not expected
    */
   public static void main(String[] args) {
-    System.out.println("Readable? " + Files.isReadable(Paths.get("xanadu.txt")));
+    System.out.println("Readable? " + Files.isReadable(Paths.get(XANADU_TXT)));
 
     try {
-      System.out.println("Hidden? " + Files.isHidden(Paths.get("xanadu.txt")));
-      System.out.println("Owner? " + Files.getOwner(Paths.get("xanadu.txt"),
+      System.out.println("Hidden? " + Files.isHidden(Paths.get(XANADU_TXT)));
+      System.out.println("Owner? " + Files.getOwner(Paths.get(XANADU_TXT),
               LinkOption.NOFOLLOW_LINKS));
-      FileStore store = Files.getFileStore(Paths.get("xanadu.txt"));
+      FileStore store = Files.getFileStore(Paths.get(XANADU_TXT));
       long total = store.getTotalSpace() / 1024 / 1024 / 1024;
       System.out.println("Storage overall in GB: " + total);
       long used = (store.getTotalSpace()

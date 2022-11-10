@@ -23,8 +23,8 @@ public class CopyTextFileWithReaderWriter {
    */
   public static void main(String[] args) {
     Charset charset = StandardCharsets.ISO_8859_1;
-    Path pathToSource = Paths.get("xanadu.txt");
-    Path pathToSink = Paths.get("newFile.txt");
+    Path pathToSource = Paths.get("demofiles/io/xanadu.txt");
+    Path pathToSink = Paths.get("demofiles/output/newFile.txt");
     try (BufferedReader reader = Files.newBufferedReader(pathToSource, charset);
          BufferedWriter writer = Files.newBufferedWriter(pathToSink, charset)) {
       String line = null;
