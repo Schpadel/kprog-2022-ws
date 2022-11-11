@@ -60,10 +60,10 @@ public class EditPizzaScreen extends VBox {
     //load initial status of pizza toppings
     observableCurrentToppingList.addAll(currentPizza.getToppings());
 
-    // set IDs
-
+    // set IDs for ASB
     pizzaSizeLabel.setId("pizzaSizeLabel");
     priceLabel.setId("priceLabel");
+
     // build UI Bindings
     pizzaSizeLabel.textProperty().bind(pizzaSizeProperty.asString());
     priceLabel.textProperty().bind(pizzaPriceProperty.asString());
@@ -91,6 +91,7 @@ public class EditPizzaScreen extends VBox {
       service.addTopping(pizzaId, toppingChoiceBox.getValue());
       observableCurrentToppingList.clear();
       observableCurrentToppingList.addAll(currentPizza.getToppings());
+      pizzaPriceProperty.set(currentPizza.getPrice());
       // old solution
       /*
       observableCurrentToppingList.add(toppingChoiceBox.getValue());
@@ -151,7 +152,8 @@ public class EditPizzaScreen extends VBox {
         alert.showAndWait();
       }
 
-      toppings.remove(topping);
+      toppings.clear();
+      toppings.addAll(currentPizza.getToppings());
       pizzaPriceProperty.set(currentPizza.getPrice());
     }
 
