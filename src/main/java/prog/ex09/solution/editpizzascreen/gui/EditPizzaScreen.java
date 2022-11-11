@@ -17,13 +17,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza;
 
 /**
  * JavaFX component to edit a pizza configuration.
@@ -35,7 +33,7 @@ public class EditPizzaScreen extends VBox {
   Label pizzaSizeLabel = new Label();
   SimpleObjectProperty<PizzaSize> pizzaSizeProperty = new SimpleObjectProperty<>();
 
-  Label pizzaPriceLabel = new Label();
+  Label priceLabel = new Label();
   SimpleIntegerProperty pizzaPriceProperty = new SimpleIntegerProperty();
 
   // Choice Box Elements
@@ -59,10 +57,16 @@ public class EditPizzaScreen extends VBox {
     observableToppingChoiceList = FXCollections.observableList(
         new ArrayList<>(service.getToppingsPriceList().keySet()));
     observableCurrentToppingList = FXCollections.observableList(new ArrayList<>());
+    //load initial status of pizza toppings
+    observableCurrentToppingList.addAll(currentPizza.getToppings());
 
+    // set IDs
+
+    pizzaSizeLabel.setId("pizzaSizeLabel");
+    priceLabel.setId("priceLabel");
     // build UI Bindings
     pizzaSizeLabel.textProperty().bind(pizzaSizeProperty.asString());
-    pizzaPriceLabel.textProperty().bind(pizzaPriceProperty.asString());
+    priceLabel.textProperty().bind(pizzaPriceProperty.asString());
 
     toppingChoiceBox.setItems(observableToppingChoiceList);
     addToppingButton.setOnAction(event -> addSelectedTopping(service, pizzaId, currentPizza));
@@ -74,7 +78,7 @@ public class EditPizzaScreen extends VBox {
 
     // add UI Elements
     getChildren().add(pizzaSizeLabel);
-    getChildren().add(pizzaPriceLabel);
+    getChildren().add(priceLabel);
     getChildren().add(toppingChoiceBox);
     getChildren().add(addToppingButton);
     getChildren().add(toppingsOnPizzaListView);
@@ -83,9 +87,15 @@ public class EditPizzaScreen extends VBox {
 
   private void addSelectedTopping(PizzaDeliveryService service, int pizzaId, Pizza currentPizza) {
     try {
+      // Always load from single point of truth the full list again
       service.addTopping(pizzaId, toppingChoiceBox.getValue());
+      observableCurrentToppingList.clear();
+      observableCurrentToppingList.addAll(currentPizza.getToppings());
+      // old solution
+      /*
       observableCurrentToppingList.add(toppingChoiceBox.getValue());
       pizzaPriceProperty.set(currentPizza.getPrice());
+       */
     } catch (Exception e) {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Too many Toppings already added!");
