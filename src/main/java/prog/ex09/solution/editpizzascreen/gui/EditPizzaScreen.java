@@ -63,6 +63,9 @@ public class EditPizzaScreen extends VBox {
     // set IDs for ASB
     pizzaSizeLabel.setId("pizzaSizeLabel");
     priceLabel.setId("priceLabel");
+    toppingChoiceBox.setId("toppingChoiceBox");
+    addToppingButton.setId("addToppingButton");
+    toppingsOnPizzaListView.setId("toppingsOnPizzaListView");
 
     // build UI Bindings
     pizzaSizeLabel.textProperty().bind(pizzaSizeProperty.asString());
