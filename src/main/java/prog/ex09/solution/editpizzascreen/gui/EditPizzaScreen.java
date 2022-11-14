@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,6 +22,7 @@ import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
+import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
 
 /**
@@ -31,21 +33,20 @@ public class EditPizzaScreen extends VBox {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(EditPizzaScreen.class);
 
-  Label pizzaSizeLabel = new Label();
-  SimpleObjectProperty<PizzaSize> pizzaSizeProperty = new SimpleObjectProperty<>();
-
-  Label priceLabel = new Label();
-  SimpleIntegerProperty pizzaPriceProperty = new SimpleIntegerProperty();
+  private Label pizzaSizeLabel;
+  private SimpleObjectProperty<PizzaSize> pizzaSizeProperty;
+  private Label priceLabel;
+  private SimpleIntegerProperty pizzaPriceProperty;
 
   // Choice Box Elements
-  ChoiceBox<Topping> toppingChoiceBox = new ChoiceBox<>();
+  ChoiceBox<Topping> toppingChoiceBox;
   ObservableList<Topping> observableToppingChoiceList;
-  Button addToppingButton = new Button("Add the selected Topping");
+  Button addToppingButton;
 
   //List View Elements
-  ListView<Topping> toppingsOnPizzaListView = new ListView<>();
+  ListView<Topping> toppingsOnPizzaListView;
   ObservableList<Topping> observableCurrentToppingList;
-  Button finishButton = new Button("Finish Configuration");
+  Button finishButton;
 
   /**
    * Start / Create the EditPizza Screen.
@@ -55,6 +56,14 @@ public class EditPizzaScreen extends VBox {
    * @param pizzaId in the order which should be changed
    */
   public EditPizzaScreen(PizzaDeliveryService service, final int orderId, int pizzaId) {
+    pizzaSizeLabel = new Label();
+    pizzaSizeProperty  = new SimpleObjectProperty<>();
+    priceLabel  = new Label();
+    pizzaPriceProperty = new SimpleIntegerProperty();
+    toppingChoiceBox = new ChoiceBox<>();
+    addToppingButton = new Button("Add the selected Topping");
+    finishButton = new Button("Finish Configuration");
+    toppingsOnPizzaListView = new ListView<>();
 
     Order currentOrder = service.getOrder(orderId);
     Pizza currentPizza = currentOrder.getPizzaList().stream()
@@ -88,6 +97,8 @@ public class EditPizzaScreen extends VBox {
     toppingsOnPizzaListView.setItems(observableCurrentToppingList);
     finishButton.setOnAction(event -> Platform.exit());
 
+    observableCurrentToppingList.addListener(
+        (ListChangeListener<? super Topping>) c -> pizzaPriceProperty.set(currentPizza.getPrice()));
     // add UI Elements
     getChildren().add(pizzaSizeLabel);
     getChildren().add(priceLabel);
@@ -105,22 +116,18 @@ public class EditPizzaScreen extends VBox {
       observableCurrentToppingList.addAll(currentPizza.getToppings());
       pizzaPriceProperty.set(currentPizza.getPrice());
 
-      // old solution
-      /*
-      observableCurrentToppingList.add(toppingChoiceBox.getValue());
-      pizzaPriceProperty.set(currentPizza.getPrice());
-       */
-
-    } catch (Exception e) {
+    } catch (TooManyToppingsException e) {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Too many Toppings already added!");
       alert.setHeaderText("Way too many Toppings");
       alert.setContentText(e.getMessage());
       alert.showAndWait();
+    } catch (IllegalArgumentException e) {
+      System.err.println("Can not add NULL Topping, please choose a topping!");
     }
   }
 
-  class ToppingListCell extends ListCell<Topping> {
+  static class ToppingListCell extends ListCell<Topping> {
 
     private final ObservableList<Topping> toppings;
     int pizzaId;
@@ -170,7 +177,9 @@ public class EditPizzaScreen extends VBox {
 
       toppings.clear();
       toppings.addAll(currentPizza.getToppings());
-      pizzaPriceProperty.set(currentPizza.getPrice());
+
+      // Price is now being updated by action listener on observable list
+      //pizzaPriceProperty.set(currentPizza.getPrice());
     }
 
   }
