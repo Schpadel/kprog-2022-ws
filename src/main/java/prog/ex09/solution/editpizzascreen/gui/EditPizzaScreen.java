@@ -27,8 +27,9 @@ import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
  * JavaFX component to edit a pizza configuration.
  */
 public class EditPizzaScreen extends VBox {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(EditPizzaScreen.class);
+      org.slf4j.LoggerFactory.getLogger(EditPizzaScreen.class);
 
   Label pizzaSizeLabel = new Label();
   SimpleObjectProperty<PizzaSize> pizzaSizeProperty = new SimpleObjectProperty<>();
@@ -46,10 +47,18 @@ public class EditPizzaScreen extends VBox {
   ObservableList<Topping> observableCurrentToppingList;
   Button finishButton = new Button("Finish Configuration");
 
+  /**
+   * Start / Create the EditPizza Screen.
+   *
+   * @param service to be used
+   * @param orderId which should be edited
+   * @param pizzaId in the order which should be changed
+   */
   public EditPizzaScreen(PizzaDeliveryService service, final int orderId, int pizzaId) {
 
     Order currentOrder = service.getOrder(orderId);
-    Pizza currentPizza = currentOrder.getPizzaList().stream().filter(pizza -> pizza.getPizzaId() == pizzaId).findFirst().get();
+    Pizza currentPizza = currentOrder.getPizzaList().stream()
+        .filter(pizza -> pizza.getPizzaId() == pizzaId).findFirst().get();
 
     pizzaSizeProperty.set(currentPizza.getSize());
     pizzaPriceProperty.set(currentPizza.getPrice());
@@ -60,7 +69,7 @@ public class EditPizzaScreen extends VBox {
     //load initial status of pizza toppings
     observableCurrentToppingList.addAll(currentPizza.getToppings());
 
-    // set IDs for ASB
+    // set IDs for ASB and FXTest
     pizzaSizeLabel.setId("pizzaSizeLabel");
     priceLabel.setId("priceLabel");
     toppingChoiceBox.setId("toppingChoiceBox");
@@ -95,11 +104,13 @@ public class EditPizzaScreen extends VBox {
       observableCurrentToppingList.clear();
       observableCurrentToppingList.addAll(currentPizza.getToppings());
       pizzaPriceProperty.set(currentPizza.getPrice());
+
       // old solution
       /*
       observableCurrentToppingList.add(toppingChoiceBox.getValue());
       pizzaPriceProperty.set(currentPizza.getPrice());
        */
+
     } catch (Exception e) {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Too many Toppings already added!");
@@ -109,13 +120,15 @@ public class EditPizzaScreen extends VBox {
     }
   }
 
-   class ToppingListCell extends ListCell<Topping> {
+  class ToppingListCell extends ListCell<Topping> {
+
     private final ObservableList<Topping> toppings;
-    private PizzaDeliveryService service;
     int pizzaId;
     Pizza currentPizza;
+    private PizzaDeliveryService service;
 
-    public ToppingListCell(final ObservableList<Topping> toppings, PizzaDeliveryService service, int pizzaId, Pizza currentPizza) {
+    public ToppingListCell(final ObservableList<Topping> toppings, PizzaDeliveryService service,
+        int pizzaId, Pizza currentPizza) {
       this.toppings = toppings;
       this.service = service;
       this.pizzaId = pizzaId;
@@ -136,7 +149,7 @@ public class EditPizzaScreen extends VBox {
         removeButton.setId("remove-" + topping);
         removeButton.setOnAction((event -> removeSelectedTopping(pizzaId, currentPizza, topping)));
         Pane spacer = new Pane();
-        spacer.setMinSize(10,1);
+        spacer.setMinSize(10, 1);
         HBox horizontalBox = new HBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         horizontalBox.getChildren().addAll(verticalBox, spacer, removeButton);

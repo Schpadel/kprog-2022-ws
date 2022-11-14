@@ -45,7 +45,7 @@ public class SimplePizza implements Pizza {
 
   @Override
   public List<Topping> getToppings() {
-    return toppings;//Collections.unmodifiableList(toppings);
+    return Collections.unmodifiableList(toppings);
   }
 
   @Override
