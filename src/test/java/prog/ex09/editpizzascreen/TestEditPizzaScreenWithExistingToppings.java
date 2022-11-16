@@ -39,7 +39,7 @@ public class TestEditPizzaScreenWithExistingToppings extends BaseTestEditPizzaSc
   public void tryToRemoveTheHamTopping() throws InterruptedException {
     Thread.sleep(1000);
     logger.info("Try removing the HAM.");
-    Button removeButtonForHam = lookup("#remove-" + Topping.HAM.toString()).queryButton();
+    Button removeButtonForHam = lookup("#remove-" + Topping.HAM).queryButton();
     Platform.runLater(() -> {
       clickOn(removeButtonForHam);
     });
