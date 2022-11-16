@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import org.junit.Ignore;
 import org.junit.Test;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
 
@@ -18,7 +19,7 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
           org.slf4j.LoggerFactory.getLogger(TestEditPizzaScreenWithEmptyPizza.class);
 
 
-  @Test
+  @Test @Ignore
   public void checkThatSizeLabelHasCorrectSize() throws InterruptedException {
     Thread.sleep(1000);
     Label label = lookup("#pizzaSizeLabel").query();
@@ -31,7 +32,7 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
             "small"));
   }
 
-  @Test
+  @Test @Ignore
   public void checkThatPrizeLabelHasCorrectPrice() throws InterruptedException {
     Thread.sleep(1000);
     Label priceLabel = lookup("#priceLabel").query();
@@ -43,7 +44,7 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
     labelText.contains("500") || labelText.contains("5") );
   }
 
-  @Test
+  @Test @Ignore
   public void checkThatToppingChoiceBoxHasCorrectNumberOfElements() throws InterruptedException {
     Thread.sleep(1000);
     ChoiceBox<Topping> choiceBox = lookup("#toppingChoiceBox").query();
@@ -54,7 +55,7 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
 
   }
 
-  @Test
+  @Test @Ignore
   public void checkThatPizzaToppingListIsEmpty() throws InterruptedException {
     Thread.sleep(1000);
     ListView<Topping> listView = lookup("#toppingsOnPizzaListView").queryListView();
@@ -64,7 +65,7 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
             listView.getItems().size());
   }
 
-  @Test
+  @Test @Ignore
   public void addAToppingAndCheckTheListView() throws InterruptedException {
     Thread.sleep(1000);
     ChoiceBox<Topping> choiceBox = lookup("#toppingChoiceBox").query();
@@ -88,6 +89,5 @@ public class TestEditPizzaScreenWithEmptyPizza extends BaseTestEditPizzaScreen {
             listView);
     assertEquals("The list view with the toppings of the pizza should have one entry", 1,
             listView.getItems().size());
-
   }
 }

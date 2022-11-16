@@ -5,14 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.ScreenController;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
 
-/**
- * Simple launcher for the PizzaDelivery GUI.
- */
 public class PizzaDeliveryLauncher extends Application {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(PizzaDeliveryLauncher.class);
@@ -28,8 +26,10 @@ public class PizzaDeliveryLauncher extends Application {
     SingletonAttributeStore attributeStore = SingletonAttributeStore.getInstance();
     PizzaDeliveryService service = new SimplePizzaDeliveryService();
     attributeStore.setAttribute("PizzaDeliveryService", service);
-    Tab pizzaDeliveryTab = new Tab("PizzaDeliveryService", new Label("Gorgios PizzaDelivery!"));
-    ScreenController controller = new PizzaDeliveryScreenController(pizzaDeliveryTab);
+    Pane paneToBeFilled = new Pane();
+    paneToBeFilled.getChildren().add(new Label("Your advertisement could be here ..."));
+    Tab pizzaDeliveryTab = new Tab("PizzaDeliveryService", paneToBeFilled);
+    ScreenController controller = new PizzaDeliveryScreenController(paneToBeFilled);
     controller.switchTo(null, CreateOrderScreen.SCREEN_NAME);
     root.getTabs().add(pizzaDeliveryTab);
 
