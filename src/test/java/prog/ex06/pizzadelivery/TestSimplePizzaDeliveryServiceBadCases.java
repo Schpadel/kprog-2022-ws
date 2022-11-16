@@ -4,10 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizzaDeliveryService;
+
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.TooManyToppingsException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
+import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
 
 public class TestSimplePizzaDeliveryServiceBadCases {
 

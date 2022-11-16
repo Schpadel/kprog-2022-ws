@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Pizza;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Order;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
+
 
 /**
  * Simple and straight-forward implementation of the Order interface.
@@ -18,7 +18,7 @@ public class SimpleOrder implements Order {
 
   private static int idCounter = 1000;
   private int id; //maybe with atomic Integer class to be thread safe
-  private Map<Integer, prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza> pizzaMap;
+  private Map<Integer, SimplePizza> pizzaMap;
 
   /**
    * Construct a new SimpleOrder.
@@ -39,7 +39,7 @@ public class SimpleOrder implements Order {
     return new ArrayList<>(pizzaMap.values());
   }
 
-  public Map<Integer, prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza> getPizzaMap() {
+  public Map<Integer, SimplePizza> getPizzaMap() {
     return this.pizzaMap;
   }
 

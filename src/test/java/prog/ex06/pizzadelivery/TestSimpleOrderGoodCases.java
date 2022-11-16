@@ -8,9 +8,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizzaDeliveryService;
+import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimpleOrder;
+import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizza;
+import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
 
 public class TestSimpleOrderGoodCases {
 

@@ -2,13 +2,12 @@ package prog.ex10.solution.javafx4pizzadelivery.pizzadelivery;
 
 import java.util.HashMap;
 import java.util.Map;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Order;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.TooManyToppingsException;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.Topping;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder;
-import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Order;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.TooManyToppingsException;
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
+
 
 /**
  * Simple and straight-forward implementation of the PizzaDeliveryService interface.
@@ -18,8 +17,8 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimplePizzaDeliveryService.class);
 
-  private Map<Integer, prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder> orderMap;
-  private Map<Integer, prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza> pizzaMap;
+  private Map<Integer, SimpleOrder> orderMap;
+  private Map<Integer, SimplePizza> pizzaMap;
   private Map<PizzaSize, Integer> pizzaSizePriceMap;
   private Map<Topping, Integer> pizzaToppingPriceMap;
 
@@ -48,7 +47,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
 
   @Override
   public int createOrder() {
-    prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder newOrder = new prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder();
+    SimpleOrder newOrder = new SimpleOrder();
     orderMap.put(newOrder.getOrderId(), newOrder);
     return newOrder.getOrderId();
   }
@@ -59,8 +58,8 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
       throw new IllegalArgumentException("Order ID is unknown to the system!");
     }
 
-    prog.ex09.solution.editpizzascreen.pizzadelivery.SimpleOrder relevantOrder = orderMap.get(orderId);
-    prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza newPizza = new prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza(size, pizzaSizePriceMap.get(size));
+    SimpleOrder relevantOrder = orderMap.get(orderId);
+    SimplePizza newPizza = new SimplePizza(size, pizzaSizePriceMap.get(size));
     relevantOrder.addPizza(newPizza);
     pizzaMap.put(newPizza.getPizzaId(), newPizza);
     return newPizza.getPizzaId();
@@ -88,7 +87,7 @@ public class SimplePizzaDeliveryService implements PizzaDeliveryService {
     if (!pizzaMap.containsKey(pizzaId)) {
       throw new IllegalArgumentException("Pizza ID: " + pizzaId + " was not found!");
     }
-    prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizza pizza = pizzaMap.get(pizzaId);
+    SimplePizza pizza = pizzaMap.get(pizzaId);
     pizza.addTopping(topping, pizzaToppingPriceMap.get(topping));
   }
 
