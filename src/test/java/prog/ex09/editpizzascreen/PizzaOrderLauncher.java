@@ -8,7 +8,8 @@ import javafx.stage.Stage;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaDeliveryService;
 import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
 import prog.ex09.solution.editpizzascreen.gui.EditPizzaScreen;
-import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
+import prog.ex09.solution.editpizzascreen.pizzadelivery.SimplePizzaDeliveryService;
+
 
 public class PizzaOrderLauncher extends Application {
   private static final org.slf4j.Logger logger =

@@ -7,7 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import prog.ex09.exercise.editpizzascreen.pizzadelivery.PizzaSize;
+
+import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
 import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimpleOrder;
 import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizza;
 import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDeliveryService;
