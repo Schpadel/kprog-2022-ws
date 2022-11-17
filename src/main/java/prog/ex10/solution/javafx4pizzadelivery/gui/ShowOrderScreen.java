@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,6 +86,10 @@ public class ShowOrderScreen extends VBox implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    //Maybe rework / find better solution?
+    observableCurrentPizzaList.addListener((ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
+        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
 
   }
 
