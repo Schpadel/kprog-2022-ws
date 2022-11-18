@@ -1,7 +1,6 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import java.util.ArrayList;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -56,7 +55,7 @@ public class EditPizzaScreen extends VBox {
     controller = screenController;
   }
 
-  public void initScreen() {
+  public void updateScreen() {
     this.getChildren().clear();
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getInstance();
     service = (PizzaDeliveryService) singletonAttributeStore.getAttribute("PizzaDeliveryService");

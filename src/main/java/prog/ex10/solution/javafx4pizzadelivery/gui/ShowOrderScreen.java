@@ -72,8 +72,7 @@ public class ShowOrderScreen extends VBox implements Initializable {
     orderPriceProperty = new SimpleIntegerProperty();
     orderIdProperty = new SimpleIntegerProperty();
     availablePizzaSizeList = FXCollections.observableList(new ArrayList<>(service.getPizzaSizePriceList().keySet()));
-    observableCurrentPizzaList = FXCollections.observableList(new ArrayList<>(service.getOrder(
-        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getPizzaList()));
+    observableCurrentPizzaList = FXCollections.observableList(new ArrayList<>());
 
     controller = screenController;
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ShowOrderScreen.fxml"));
@@ -87,10 +86,6 @@ public class ShowOrderScreen extends VBox implements Initializable {
       e.printStackTrace();
     }
 
-    //Maybe rework / find better solution?
-    observableCurrentPizzaList.addListener((ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
-        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
-
   }
 
   public void addPizza() {
@@ -99,7 +94,11 @@ public class ShowOrderScreen extends VBox implements Initializable {
   }
 
   public void orderPizza() {
-
+    try {
+      controller.switchTo(this.SCREEN_NAME, CreateOrderScreen.SCREEN_NAME);
+    } catch (UnknownTransitionException e) {
+      e.printStackTrace();
+    }
   }
 
   public void updateScreen() {
@@ -109,6 +108,12 @@ public class ShowOrderScreen extends VBox implements Initializable {
     observableCurrentPizzaList.addAll(currentOrder.getPizzaList());
     orderPriceProperty.set(currentOrder.getValue());
     orderIdProperty.set(currentOrder.getOrderId());
+
+    //Maybe rework / find better solution?
+    observableCurrentPizzaList.addListener((ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
+        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
+
+
   }
 
   public void cancelOrder() {
@@ -136,11 +141,6 @@ public class ShowOrderScreen extends VBox implements Initializable {
     orderedPizzas.setItems(observableCurrentPizzaList);
     orderedPizzas.setCellFactory(list -> new PizzaListCell(observableCurrentPizzaList,
         service, controller));
-
-    PizzaDeliveryService service = (PizzaDeliveryService) SingletonAttributeStore.getInstance().getAttribute("PizzaDeliveryService");
-    int orderId = (int) SingletonAttributeStore.getInstance().getAttribute("orderId");
-    orderPriceProperty.set(service.getOrder(orderId).getValue());
-
   }
 
   static class PizzaListCell extends ListCell<Pizza> {
