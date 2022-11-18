@@ -112,8 +112,6 @@ public class ShowOrderScreen extends VBox implements Initializable {
     //Maybe rework / find better solution?
     observableCurrentPizzaList.addListener((ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
         (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
-
-
   }
 
   public void cancelOrder() {
@@ -153,7 +151,6 @@ public class ShowOrderScreen extends VBox implements Initializable {
     this.service = service;
     this.controller = controller;
   }
-
   @Override
   protected void updateItem(final Pizza pizza, final boolean empty) {
     super.updateItem(pizza, empty);
@@ -173,7 +170,7 @@ public class ShowOrderScreen extends VBox implements Initializable {
           e.printStackTrace();
         }
       });
-      // TODO: add edit listener
+
       Button removeButton = new Button("remove");
       removeButton.setId("remove-" + pizza);
       removeButton.setOnAction((event -> removeSelectedPizza(pizza.getPizzaId())));

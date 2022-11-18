@@ -41,8 +41,6 @@ public class CreateOrderScreen extends VBox {
     int orderId = service.createOrder();
     SingletonAttributeStore.getInstance().setAttribute("orderId", orderId);
 
-
-
     try {
       controller.switchTo(CreateOrderScreen.SCREEN_NAME, ShowOrderScreen.SCREEN_NAME);
     } catch (UnknownTransitionException e) {

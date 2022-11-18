@@ -1,25 +1,18 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.ScreenController;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
-import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 
 /**
  * Simple and straight-forward implementation of a ScreenController for the PizzaDeliveryService.
  */
-public class PizzaDeliveryScreenController implements ScreenController, Initializable {
+public class PizzaDeliveryScreenController implements ScreenController {
   private static final org.slf4j.Logger logger =
           org.slf4j.LoggerFactory.getLogger(PizzaDeliveryScreenController.class);
   private Pane pane;
-
-  private SimpleIntegerProperty orderPriceProperty;
 
 
   HashMap<String, VBox> allScreens;
@@ -32,6 +25,7 @@ public class PizzaDeliveryScreenController implements ScreenController, Initiali
     EditPizzaScreen editPizzaScreen = new EditPizzaScreen(this);
     ShowOrderScreen showOrderScreen = new ShowOrderScreen(this);
     allScreens.put(ShowOrderScreen.SCREEN_NAME, showOrderScreen);
+    allScreens.put(null, null);
 
     allScreens.put(EditPizzaScreen.SCREEN_NAME, editPizzaScreen);
 
@@ -39,11 +33,10 @@ public class PizzaDeliveryScreenController implements ScreenController, Initiali
 
   }
 
-
   @Override
   public void switchTo(final String fromScreen, final String toScreen)
           throws UnknownTransitionException {
-    if (!allScreens.containsKey(toScreen)) {
+    if (!allScreens.containsKey(fromScreen)) {
       throw new UnknownTransitionException("Screen is unknown", fromScreen, toScreen);
     }
 
@@ -65,23 +58,6 @@ public class PizzaDeliveryScreenController implements ScreenController, Initiali
     }
     pane.getChildren().clear();
     pane.getChildren().add(allScreens.get(toScreen));
-
-  }
-
-
-
-
-
-  /**
-   * Called to initialize a controller after its root element has been completely processed.
-   *
-   * @param location  The location used to resolve relative paths for the root object, or
-   *                  {@code null} if the location is not known.
-   * @param resources The resources used to localize the root object, or {@code null} if the root
-   *                  object was not localized.
-   */
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
 
   }
 }
