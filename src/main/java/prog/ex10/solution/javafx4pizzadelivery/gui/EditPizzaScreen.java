@@ -55,6 +55,9 @@ public class EditPizzaScreen extends VBox {
     controller = screenController;
   }
 
+  /**
+   * Updates the screen and all observable data structures from the current state of the service.
+   */
   public void updateScreen() {
     this.getChildren().clear();
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getInstance();

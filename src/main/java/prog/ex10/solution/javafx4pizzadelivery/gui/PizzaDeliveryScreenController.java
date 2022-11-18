@@ -17,6 +17,12 @@ public class PizzaDeliveryScreenController implements ScreenController {
 
   HashMap<String, VBox> allScreens;
 
+  /**
+   * Constructs a new instance of the PizzaDeliveryScreenController, which manages all Screens
+   * of the PizzaDeliveryService GUI.
+   *
+   * @param pane to be used to display the individual screens.
+   */
   public PizzaDeliveryScreenController(final Pane pane) {
     allScreens = new HashMap<>();
     this.pane = pane;

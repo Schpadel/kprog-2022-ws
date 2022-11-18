@@ -30,12 +30,13 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
 
 /**
- * Screen to show the list of pizzas of an order of the PizzaDeliveryService. It is also possible
- * to add, change and remove pizzas.
+ * Screen to show the list of pizzas of an order of the PizzaDeliveryService. It is also possible to
+ * add, change and remove pizzas.
  */
 public class ShowOrderScreen extends VBox implements Initializable {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(ShowOrderScreen.class);
+      org.slf4j.LoggerFactory.getLogger(ShowOrderScreen.class);
 
   public static final String SCREEN_NAME = "ShowOrderScreen";
 
@@ -56,7 +57,6 @@ public class ShowOrderScreen extends VBox implements Initializable {
   @FXML
   Button cancelButton;
 
-
   // init Properties and observable data structures
 
   SimpleIntegerProperty orderPriceProperty;
@@ -66,12 +66,18 @@ public class ShowOrderScreen extends VBox implements Initializable {
   ObservableList<Pizza> observableCurrentPizzaList;
   PizzaDeliveryScreenController controller;
 
-
+  /**
+   * Constructs a new ShowOrderScreen.
+   *
+   * @param screenController for this screen
+   */
   public ShowOrderScreen(PizzaDeliveryScreenController screenController) {
-    service = (PizzaDeliveryService) SingletonAttributeStore.getInstance().getAttribute("PizzaDeliveryService");
+    service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
+        .getAttribute("PizzaDeliveryService");
     orderPriceProperty = new SimpleIntegerProperty();
     orderIdProperty = new SimpleIntegerProperty();
-    availablePizzaSizeList = FXCollections.observableList(new ArrayList<>(service.getPizzaSizePriceList().keySet()));
+    availablePizzaSizeList = FXCollections.observableList(
+        new ArrayList<>(service.getPizzaSizePriceList().keySet()));
     observableCurrentPizzaList = FXCollections.observableList(new ArrayList<>());
 
     controller = screenController;
@@ -88,11 +94,20 @@ public class ShowOrderScreen extends VBox implements Initializable {
 
   }
 
+  /**
+   * Handler method when the button to add a new pizza is pressed. Adds a new pizza to the order of
+   * the service and calls updateScreen.
+   */
   public void addPizza() {
-    service.addPizza((Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"), availablePizzaSizes.getValue());
+    service.addPizza((Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"),
+        availablePizzaSizes.getValue());
     updateScreen();
   }
 
+  /**
+   * Handler method when the order button is pressed. Orders the pizzas (not implemented in the
+   * service) and returns to the CreateOrderScreen.
+   */
   public void orderPizza() {
     try {
       controller.switchTo(this.SCREEN_NAME, CreateOrderScreen.SCREEN_NAME);
@@ -101,6 +116,9 @@ public class ShowOrderScreen extends VBox implements Initializable {
     }
   }
 
+  /**
+   * Updates the entire screen and fills it with the new values provided by the service.
+   */
   public void updateScreen() {
     Order currentOrder = service.getOrder(
         (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"));
@@ -110,10 +128,14 @@ public class ShowOrderScreen extends VBox implements Initializable {
     orderIdProperty.set(currentOrder.getOrderId());
 
     //Maybe rework / find better solution?
-    observableCurrentPizzaList.addListener((ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
-        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
+    observableCurrentPizzaList.addListener(
+        (ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
+            (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
   }
 
+  /**
+   * Cancels the current order and returns to the CreateOrderScreen.
+   */
   public void cancelOrder() {
     try {
       controller.switchTo(ShowOrderScreen.SCREEN_NAME, CreateOrderScreen.SCREEN_NAME);
@@ -146,59 +168,63 @@ public class ShowOrderScreen extends VBox implements Initializable {
     private final ObservableList<Pizza> pizzas;
     private PizzaDeliveryService service;
     private PizzaDeliveryScreenController controller;
-  public PizzaListCell(final ObservableList<Pizza> pizzas, PizzaDeliveryService service, PizzaDeliveryScreenController controller) {
-    this.pizzas = pizzas;
-    this.service = service;
-    this.controller = controller;
-  }
-  @Override
-  protected void updateItem(final Pizza pizza, final boolean empty) {
-    super.updateItem(pizza, empty);
-    if (empty || pizza == null) {
-      textProperty().setValue(null);
-      setGraphic(null);
-    } else {
-      VBox verticalBox = new VBox();
-      Label nameLabel = new Label(pizza.getSize().toString() + ", " + pizza.getToppings().size() + " Toppings");
-      verticalBox.getChildren().add(nameLabel);
-      Button changeButton = new Button("change");
-      changeButton.setOnAction(event -> {
-        try {
-          SingletonAttributeStore.getInstance().setAttribute("pizzaId", pizza.getPizzaId());
-          controller.switchTo(ShowOrderScreen.SCREEN_NAME, EditPizzaScreen.SCREEN_NAME);
-        } catch (UnknownTransitionException e) {
-          e.printStackTrace();
-        }
-      });
 
-      Button removeButton = new Button("remove");
-      removeButton.setId("remove-" + pizza);
-      removeButton.setOnAction((event -> removeSelectedPizza(pizza.getPizzaId())));
-      Pane spacer = new Pane();
-      spacer.setMinSize(10, 1);
-      HBox horizontalBox = new HBox();
-      HBox.setHgrow(spacer, Priority.ALWAYS);
-      horizontalBox.getChildren().addAll(verticalBox, spacer, changeButton, removeButton);
-      setGraphic(horizontalBox);
-    }
-  }
-
-  private void removeSelectedPizza(int pizzaId) {
-    int orderId = (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId");
-    try {
-      service.removePizza(orderId, pizzaId);
-    } catch (IllegalArgumentException e) {
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Illegal Argument");
-      alert.setHeaderText("Illegal Argument Exception");
-      alert.setContentText(e.getMessage());
-      alert.showAndWait();
+    public PizzaListCell(final ObservableList<Pizza> pizzas, PizzaDeliveryService service,
+        PizzaDeliveryScreenController controller) {
+      this.pizzas = pizzas;
+      this.service = service;
+      this.controller = controller;
     }
 
-    pizzas.clear();
-    pizzas.addAll(service.getOrder(orderId).getPizzaList());
+    @Override
+    protected void updateItem(final Pizza pizza, final boolean empty) {
+      super.updateItem(pizza, empty);
+      if (empty || pizza == null) {
+        textProperty().setValue(null);
+        setGraphic(null);
+      } else {
+        VBox verticalBox = new VBox();
+        Label nameLabel = new Label(
+            pizza.getSize().toString() + ", " + pizza.getToppings().size() + " Toppings");
+        verticalBox.getChildren().add(nameLabel);
+        Button changeButton = new Button("change");
+        changeButton.setOnAction(event -> {
+          try {
+            SingletonAttributeStore.getInstance().setAttribute("pizzaId", pizza.getPizzaId());
+            controller.switchTo(ShowOrderScreen.SCREEN_NAME, EditPizzaScreen.SCREEN_NAME);
+          } catch (UnknownTransitionException e) {
+            e.printStackTrace();
+          }
+        });
+
+        Button removeButton = new Button("remove");
+        removeButton.setId("remove-" + pizza);
+        removeButton.setOnAction((event -> removeSelectedPizza(pizza.getPizzaId())));
+        Pane spacer = new Pane();
+        spacer.setMinSize(10, 1);
+        HBox horizontalBox = new HBox();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        horizontalBox.getChildren().addAll(verticalBox, spacer, changeButton, removeButton);
+        setGraphic(horizontalBox);
+      }
+    }
+
+    private void removeSelectedPizza(int pizzaId) {
+      int orderId = (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId");
+      try {
+        service.removePizza(orderId, pizzaId);
+      } catch (IllegalArgumentException e) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Illegal Argument");
+        alert.setHeaderText("Illegal Argument Exception");
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+      }
+
+      pizzas.clear();
+      pizzas.addAll(service.getOrder(orderId).getPizzaList());
+
+    }
 
   }
-
-}
 }

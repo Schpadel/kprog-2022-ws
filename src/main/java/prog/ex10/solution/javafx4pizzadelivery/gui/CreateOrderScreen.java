@@ -11,21 +11,25 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
  * Screen to create an order in the PizzaDeliveryService.
  */
 public class CreateOrderScreen extends VBox {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
+      org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
 
   public static final String SCREEN_NAME = "CreateOrderScreen";
   private PizzaDeliveryScreenController controller;
 
+
+  /**
+   * Constructs a new CreateOrderScreen and loads the fxml definition.
+   *
+   * @param screenController of this screen
+   */
   public CreateOrderScreen(PizzaDeliveryScreenController screenController) {
 
     this.controller = screenController;
-  }
 
-  public void updateScreen() {
     //loads from the resources folder
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/CreateOrderScreen.fxml"));
-    //fxmlLoader.setRoot(this);
     fxmlLoader.setController(this);
     try {
       Parent root = fxmlLoader.load();
@@ -36,8 +40,20 @@ public class CreateOrderScreen extends VBox {
     }
   }
 
+  /**
+   * Updates the observable structures from the screen and loads the fxml definition.
+   */
+  public void updateScreen() {
+
+  }
+
+  /**
+   * Handler method of the createNewOrder Button, creates a new order and switches to the
+   * ShowOrderScreen.
+   */
   public void createNewOrder() {
-    PizzaDeliveryService service = (PizzaDeliveryService) SingletonAttributeStore.getInstance().getAttribute("PizzaDeliveryService");
+    PizzaDeliveryService service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
+        .getAttribute("PizzaDeliveryService");
     int orderId = service.createOrder();
     SingletonAttributeStore.getInstance().setAttribute("orderId", orderId);
 
