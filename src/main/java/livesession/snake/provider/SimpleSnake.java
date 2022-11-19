@@ -41,12 +41,14 @@ public class SimpleSnake implements Snake {
    */
   public Coordinate advance() throws IllegalPositionException {
     // TODO: advance the snake
+    // TODO: end
     return null;
   }
 
   private BoardState assertNewPositionIsPossible(final Coordinate newHead)
       throws IllegalPositionException {
     // TODO: Check if the position is valid
+    // TODO: end
     return null;
   }
 

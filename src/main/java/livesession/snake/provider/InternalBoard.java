@@ -21,6 +21,8 @@ public class InternalBoard extends BaseBoard {
     super(size);
 
     // TODO: Init board with GRASS and WALLs
+
+    // TODO: end
   }
 
   /**
