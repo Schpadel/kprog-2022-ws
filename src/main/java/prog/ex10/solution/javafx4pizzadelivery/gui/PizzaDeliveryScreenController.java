@@ -3,7 +3,6 @@ package prog.ex10.solution.javafx4pizzadelivery.gui;
 import java.util.HashMap;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.ScreenController;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
@@ -27,7 +26,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
     allScreens = new HashMap<>();
     this.pane = pane;
 
-    CreateOrderScreen createOrderScreen = new CreateOrderScreen(this);
+    CreateOrderScreen createOrderScreen = new CreateOrderScreen(this, new CreateOrderViewModel());
     allScreens.put(CreateOrderScreen.SCREEN_NAME, createOrderScreen);
 
     EditPizzaScreen editPizzaScreen = new EditPizzaScreen(this);

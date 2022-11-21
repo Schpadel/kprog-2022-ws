@@ -1,8 +1,10 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import java.io.IOException;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
@@ -17,15 +19,15 @@ public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
 
   public static final String SCREEN_NAME = "CreateOrderScreen";
   private PizzaDeliveryScreenController controller;
-
+  private CreateOrderViewModel viewModel;
 
   /**
    * Constructs a new CreateOrderScreen and loads the fxml definition.
    *
    * @param screenController of this screen
    */
-  public CreateOrderScreen(PizzaDeliveryScreenController screenController) {
-
+  public CreateOrderScreen(PizzaDeliveryScreenController screenController, CreateOrderViewModel viewModel) {
+    this.viewModel = viewModel;
     this.controller = screenController;
 
     //loads from the resources folder
@@ -53,10 +55,9 @@ public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
    * ShowOrderScreen.
    */
   public void createNewOrder() {
-    PizzaDeliveryService service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
-        .getAttribute("PizzaDeliveryService");
+    PizzaDeliveryService service = viewModel.getService();
     int orderId = service.createOrder();
-    SingletonAttributeStore.getInstance().setAttribute("orderId", orderId);
+    viewModel.setOrderId(orderId);
 
     try {
       controller.switchTo(CreateOrderScreen.SCREEN_NAME, ShowOrderScreen.SCREEN_NAME);
