@@ -128,7 +128,6 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
     orderPriceProperty.set(currentOrder.getValue());
     orderIdProperty.set(currentOrder.getOrderId());
 
-    //Maybe rework / find better solution?
     observableCurrentPizzaList.addListener(
         (ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
             (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
@@ -226,6 +225,5 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
       pizzas.addAll(service.getOrder(orderId).getPizzaList());
 
     }
-
   }
 }

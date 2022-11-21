@@ -15,7 +15,6 @@ public class PizzaDeliveryScreenController implements ScreenController {
           org.slf4j.LoggerFactory.getLogger(PizzaDeliveryScreenController.class);
   private Pane pane;
 
-
   HashMap<String, PizzaDeliveryScreen> allScreens;
 
   /**
@@ -58,9 +57,5 @@ public class PizzaDeliveryScreenController implements ScreenController {
     } else {
       throw new UnknownTransitionException("To Screen is unknown", fromScreen, toScreen);
     }
-
-
-
-
   }
 }
