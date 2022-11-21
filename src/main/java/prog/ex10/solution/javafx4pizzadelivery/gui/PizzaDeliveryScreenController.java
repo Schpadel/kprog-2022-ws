@@ -26,14 +26,18 @@ public class PizzaDeliveryScreenController implements ScreenController {
   public PizzaDeliveryScreenController(final Pane pane) {
     allScreens = new HashMap<>();
     this.pane = pane;
+
     CreateOrderScreen createOrderScreen = new CreateOrderScreen(this);
     allScreens.put(CreateOrderScreen.SCREEN_NAME, createOrderScreen);
+
     EditPizzaScreen editPizzaScreen = new EditPizzaScreen(this);
+    allScreens.put(EditPizzaScreen.SCREEN_NAME, editPizzaScreen);
+
     ShowOrderScreen showOrderScreen = new ShowOrderScreen(this);
     allScreens.put(ShowOrderScreen.SCREEN_NAME, showOrderScreen);
-    allScreens.put(null, null);
 
-    allScreens.put(EditPizzaScreen.SCREEN_NAME, editPizzaScreen);
+    // allow transition from null screen
+    allScreens.put(null, null);
 
     pane.getChildren().add(createOrderScreen);
 

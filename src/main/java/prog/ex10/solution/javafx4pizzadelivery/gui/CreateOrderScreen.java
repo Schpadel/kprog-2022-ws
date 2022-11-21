@@ -44,7 +44,7 @@ public class CreateOrderScreen extends VBox {
    * Updates the observable structures from the screen and loads the fxml definition.
    */
   public void updateScreen() {
-
+    // no structures for this screen
   }
 
   /**
