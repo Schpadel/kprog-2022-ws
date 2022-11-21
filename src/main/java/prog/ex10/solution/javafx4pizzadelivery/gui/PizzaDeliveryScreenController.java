@@ -1,6 +1,7 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import java.util.HashMap;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.ScreenController;
@@ -15,7 +16,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
   private Pane pane;
 
 
-  HashMap<String, VBox> allScreens;
+  HashMap<String, PizzaDeliveryScreen> allScreens;
 
   /**
    * Constructs a new instance of the PizzaDeliveryScreenController, which manages all Screens
@@ -50,24 +51,16 @@ public class PizzaDeliveryScreenController implements ScreenController {
       throw new UnknownTransitionException("Screen is unknown", fromScreen, toScreen);
     }
 
-    switch (toScreen) {
-      case EditPizzaScreen.SCREEN_NAME:
-        EditPizzaScreen editScreen = (EditPizzaScreen) allScreens.get(toScreen);
-        editScreen.updateScreen();
-        break;
-      case ShowOrderScreen.SCREEN_NAME:
-        ShowOrderScreen orderScreen = (ShowOrderScreen) allScreens.get(toScreen);
-        orderScreen.updateScreen();
-        break;
-      case CreateOrderScreen.SCREEN_NAME:
-        CreateOrderScreen createOrderScreen = (CreateOrderScreen) allScreens.get(toScreen);
-        createOrderScreen.updateScreen();
-        break;
-      default:
-        throw new UnknownTransitionException("Screen is unknown", fromScreen, toScreen);
+    if (allScreens.containsKey(toScreen)) {
+      allScreens.get(toScreen).updateScreen();
+      pane.getChildren().clear();
+      pane.getChildren().add((Node) allScreens.get(toScreen));
+    } else {
+      throw new UnknownTransitionException("To Screen is unknown", fromScreen, toScreen);
     }
-    pane.getChildren().clear();
-    pane.getChildren().add(allScreens.get(toScreen));
+
+
+
 
   }
 }

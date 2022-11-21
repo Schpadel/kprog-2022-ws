@@ -29,7 +29,7 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Topping;
 /**
  * Screen to edit the toppings on a pizza of the PizzaDeliveryService.
  */
-public class EditPizzaScreen extends VBox {
+public class EditPizzaScreen extends VBox implements PizzaDeliveryScreen {
 
   public static final String SCREEN_NAME = "EditPizzaScreen";
   private static final org.slf4j.Logger logger =
@@ -58,6 +58,7 @@ public class EditPizzaScreen extends VBox {
   /**
    * Updates the screen and all observable data structures from the current state of the service.
    */
+  @Override
   public void updateScreen() {
     this.getChildren().clear();
     SingletonAttributeStore singletonAttributeStore = SingletonAttributeStore.getInstance();

@@ -10,7 +10,7 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
 /**
  * Screen to create an order in the PizzaDeliveryService.
  */
-public class CreateOrderScreen extends VBox {
+public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
@@ -43,6 +43,7 @@ public class CreateOrderScreen extends VBox {
   /**
    * Updates the observable structures from the screen and loads the fxml definition.
    */
+  @Override
   public void updateScreen() {
     // no structures for this screen
   }

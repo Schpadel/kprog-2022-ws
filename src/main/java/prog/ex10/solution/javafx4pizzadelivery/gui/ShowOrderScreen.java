@@ -33,7 +33,7 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
  * Screen to show the list of pizzas of an order of the PizzaDeliveryService. It is also possible to
  * add, change and remove pizzas.
  */
-public class ShowOrderScreen extends VBox implements Initializable {
+public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliveryScreen {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ShowOrderScreen.class);
@@ -119,6 +119,7 @@ public class ShowOrderScreen extends VBox implements Initializable {
   /**
    * Updates the entire screen and fills it with the new values provided by the service.
    */
+  @Override
   public void updateScreen() {
     Order currentOrder = service.getOrder(
         (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"));
