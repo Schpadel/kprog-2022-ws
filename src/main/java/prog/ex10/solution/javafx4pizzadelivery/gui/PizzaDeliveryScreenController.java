@@ -45,7 +45,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
   public void switchTo(final String fromScreen, final String toScreen)
       throws UnknownTransitionException {
     if (!allScreens.containsKey(fromScreen)) {
-      throw new UnknownTransitionException("Screen is unknown", fromScreen, toScreen);
+      throw new UnknownTransitionException("From Screen is unknown", fromScreen, toScreen);
     }
 
     if (allScreens.containsKey(toScreen)) {
