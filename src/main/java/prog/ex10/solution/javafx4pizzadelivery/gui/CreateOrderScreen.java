@@ -1,8 +1,11 @@
 package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -12,12 +15,13 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryServic
 /**
  * Screen to create an order in the PizzaDeliveryService.
  */
-public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
-
-  private static final org.slf4j.Logger logger =
-      org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
+public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen, Initializable {
 
   public static final String SCREEN_NAME = "CreateOrderScreen";
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(CreateOrderScreen.class);
+  @FXML
+  Button createNewOrderButton;
   private PizzaDeliveryScreenController controller;
   private CreateOrderViewModel viewModel;
 
@@ -26,7 +30,8 @@ public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
    *
    * @param screenController of this screen
    */
-  public CreateOrderScreen(PizzaDeliveryScreenController screenController, CreateOrderViewModel viewModel) {
+  public CreateOrderScreen(PizzaDeliveryScreenController screenController,
+      CreateOrderViewModel viewModel) {
     this.viewModel = viewModel;
     this.controller = screenController;
 
@@ -43,7 +48,7 @@ public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
   }
 
   /**
-   * Updates the observable structures from the screen and loads the fxml definition.
+   * Updates the observable structures in the view model.
    */
   @Override
   public void updateScreen() {
@@ -64,5 +69,18 @@ public class CreateOrderScreen extends VBox implements PizzaDeliveryScreen {
     } catch (UnknownTransitionException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Called to initialize a controller after its root element has been completely processed.
+   *
+   * @param location  The location used to resolve relative paths for the root object, or
+   *                  {@code null} if the location is not known.
+   * @param resources The resources used to localize the root object, or {@code null} if the root
+   *                  object was not localized.
+   */
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    createNewOrderButton.setOnAction(event -> createNewOrder());
   }
 }

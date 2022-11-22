@@ -7,8 +7,9 @@ import prog.ex10.exercise.javafx4pizzadelivery.gui.AttributeStore;
  * Simple and straight-forward singleton based implementation of an AttributeStore.
  */
 public class SingletonAttributeStore implements AttributeStore {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(SingletonAttributeStore.class);
+      org.slf4j.LoggerFactory.getLogger(SingletonAttributeStore.class);
 
   private static final SingletonAttributeStore self = new SingletonAttributeStore();
   private static HashMap<String, Object> attributes;

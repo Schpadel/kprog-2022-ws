@@ -61,12 +61,12 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
    *
    * @param screenController for this screen
    */
-  public ShowOrderScreen(PizzaDeliveryScreenController screenController, ShowOrderScreenViewModel showOrderScreenViewModel) {
+  public ShowOrderScreen(PizzaDeliveryScreenController screenController,
+      ShowOrderScreenViewModel showOrderScreenViewModel) {
     this.showOrderScreenViewModel = showOrderScreenViewModel;
     this.controller = screenController;
     service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
         .getAttribute("PizzaDeliveryService");
-
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ShowOrderScreen.fxml"));
     fxmlLoader.setController(this);
@@ -92,7 +92,8 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
   }
 
   /**
-   * Updates the entire screen and fills it with the new values provided by the viewModel / service.
+   * Updates the entire screen and fills it with the new values provided by the viewModel /
+   * service.
    */
   @Override
   public void updateScreen() {
@@ -127,7 +128,8 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
     orderedPizzas.setCellFactory(list -> new PizzaListCell(
         showOrderScreenViewModel.getObservableCurrentPizzaList(),
         service, controller));
-    addPizzaButton.setOnAction(event -> showOrderScreenViewModel.addPizza(availablePizzaSizes.getValue()));
+    addPizzaButton.setOnAction(
+        event -> showOrderScreenViewModel.addPizza(availablePizzaSizes.getValue()));
     orderButton.setOnAction(event -> orderPizza());
     cancelButton.setOnAction(event -> cancelOrder());
 

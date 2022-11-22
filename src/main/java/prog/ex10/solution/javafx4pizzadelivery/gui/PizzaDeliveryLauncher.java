@@ -15,8 +15,9 @@ import prog.ex10.solution.javafx4pizzadelivery.pizzadelivery.SimplePizzaDelivery
  * Launches the PizzaDeliveryService order application.
  */
 public class PizzaDeliveryLauncher extends Application {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(PizzaDeliveryLauncher.class);
+      org.slf4j.LoggerFactory.getLogger(PizzaDeliveryLauncher.class);
 
   @Override
   public void start(final Stage stage) throws Exception {
@@ -24,7 +25,6 @@ public class PizzaDeliveryLauncher extends Application {
     TabPane root = new TabPane();
     Tab welcomeTab = new Tab("Welcome", new Label("Your advertisement could be here."));
     root.getTabs().add(welcomeTab);
-
 
     SingletonAttributeStore attributeStore = SingletonAttributeStore.getInstance();
     PizzaDeliveryService service = new SimplePizzaDeliveryService();

@@ -10,7 +10,11 @@ import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
 
+/**
+ * View model for ShowOrderScreen. Manages all observable data structures + access.
+ */
 public class ShowOrderScreenViewModel {
+
   PizzaDeliveryService service;
   SimpleIntegerProperty orderPriceProperty;
   SimpleIntegerProperty orderIdProperty;
@@ -18,8 +22,12 @@ public class ShowOrderScreenViewModel {
   ObservableList<PizzaSize> availablePizzaSizeList;
   ObservableList<Pizza> observableCurrentPizzaList;
 
+  /**
+   * Constructs a new ShowOrderScreenVieModel and initializes all observable data structures.
+   */
   public ShowOrderScreenViewModel() {
-    service = (PizzaDeliveryService) SingletonAttributeStore.getInstance().getAttribute("PizzaDeliveryService");
+    service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
+        .getAttribute("PizzaDeliveryService");
     orderPriceProperty = new SimpleIntegerProperty();
     orderIdProperty = new SimpleIntegerProperty();
     availablePizzaSizeList = FXCollections.observableList(
@@ -27,6 +35,9 @@ public class ShowOrderScreenViewModel {
     observableCurrentPizzaList = FXCollections.observableList(new ArrayList<>());
   }
 
+  /**
+   * Refreshes the observable data structures to represent the state of the service.
+   */
   public void refreshDataFromService() {
     Order currentOrder = service.getOrder(
         (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"));
