@@ -24,6 +24,9 @@ public class SingletonAttributeStore implements AttributeStore {
 
   @Override
   public void setAttribute(final String name, final Object object) throws IllegalArgumentException {
+    if (name == null) {
+      throw new IllegalArgumentException("Name should not be null!");
+    }
     if (name.trim().length() == 0) {
       throw new IllegalArgumentException("Name should not be empty!");
     }
@@ -32,6 +35,9 @@ public class SingletonAttributeStore implements AttributeStore {
 
   @Override
   public Object getAttribute(final String name) throws IllegalArgumentException {
+    if (name == null) {
+      throw new IllegalArgumentException("Name should not be null!");
+    }
     if (name.trim().length() == 0) {
       throw new IllegalArgumentException("Name should not be empty!");
     }
