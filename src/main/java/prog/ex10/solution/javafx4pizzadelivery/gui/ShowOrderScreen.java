@@ -2,11 +2,7 @@ package prog.ex10.solution.javafx4pizzadelivery.gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
-import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Order;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.Pizza;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaDeliveryService;
 import prog.ex10.exercise.javafx4pizzadelivery.pizzadelivery.PizzaSize;
@@ -42,6 +37,7 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
 
   private PizzaDeliveryService service;
 
+  // all FXML UI Elements
   @FXML
   Label priceValue;
   @FXML
@@ -53,36 +49,26 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
   @FXML
   Button orderButton;
   @FXML
-  Button addPizza;
+  Button addPizzaButton;
   @FXML
   Button cancelButton;
 
-  // init Properties and observable data structures
-
-  SimpleIntegerProperty orderPriceProperty;
-  SimpleIntegerProperty orderIdProperty;
-
-  ObservableList<PizzaSize> availablePizzaSizeList;
-  ObservableList<Pizza> observableCurrentPizzaList;
   PizzaDeliveryScreenController controller;
+  ShowOrderScreenViewModel showOrderScreenViewModel;
 
   /**
    * Constructs a new ShowOrderScreen.
    *
    * @param screenController for this screen
    */
-  public ShowOrderScreen(PizzaDeliveryScreenController screenController) {
+  public ShowOrderScreen(PizzaDeliveryScreenController screenController, ShowOrderScreenViewModel showOrderScreenViewModel) {
+    this.showOrderScreenViewModel = showOrderScreenViewModel;
+    this.controller = screenController;
     service = (PizzaDeliveryService) SingletonAttributeStore.getInstance()
         .getAttribute("PizzaDeliveryService");
-    orderPriceProperty = new SimpleIntegerProperty();
-    orderIdProperty = new SimpleIntegerProperty();
-    availablePizzaSizeList = FXCollections.observableList(
-        new ArrayList<>(service.getPizzaSizePriceList().keySet()));
-    observableCurrentPizzaList = FXCollections.observableList(new ArrayList<>());
 
-    controller = screenController;
+
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ShowOrderScreen.fxml"));
-    //fxmlLoader.setRoot(this);
     fxmlLoader.setController(this);
     try {
       Parent root = fxmlLoader.load();
@@ -91,17 +77,6 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-  }
-
-  /**
-   * Handler method when the button to add a new pizza is pressed. Adds a new pizza to the order of
-   * the service and calls updateScreen.
-   */
-  public void addPizza() {
-    service.addPizza((Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"),
-        availablePizzaSizes.getValue());
-    updateScreen();
   }
 
   /**
@@ -117,20 +92,11 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
   }
 
   /**
-   * Updates the entire screen and fills it with the new values provided by the service.
+   * Updates the entire screen and fills it with the new values provided by the viewModel / service.
    */
   @Override
   public void updateScreen() {
-    Order currentOrder = service.getOrder(
-        (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId"));
-    observableCurrentPizzaList.clear();
-    observableCurrentPizzaList.addAll(currentOrder.getPizzaList());
-    orderPriceProperty.set(currentOrder.getValue());
-    orderIdProperty.set(currentOrder.getOrderId());
-
-    observableCurrentPizzaList.addListener(
-        (ListChangeListener<? super Pizza>) c -> orderPriceProperty.set(service.getOrder(
-            (Integer) SingletonAttributeStore.getInstance().getAttribute("orderId")).getValue()));
+    showOrderScreenViewModel.refreshDataFromService();
   }
 
   /**
@@ -144,7 +110,6 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
     }
   }
 
-
   /**
    * Called to initialize a controller after its root element has been completely processed.
    *
@@ -155,12 +120,17 @@ public class ShowOrderScreen extends VBox implements Initializable, PizzaDeliver
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    priceValue.textProperty().bind(orderPriceProperty.asString());
-    orderId.textProperty().bind(orderIdProperty.asString());
-    availablePizzaSizes.setItems(availablePizzaSizeList);
-    orderedPizzas.setItems(observableCurrentPizzaList);
-    orderedPizzas.setCellFactory(list -> new PizzaListCell(observableCurrentPizzaList,
+    priceValue.textProperty().bind(showOrderScreenViewModel.getOrderPriceProperty().asString());
+    orderId.textProperty().bind(showOrderScreenViewModel.getOrderIdProperty().asString());
+    availablePizzaSizes.setItems(showOrderScreenViewModel.getAvailablePizzaSizeList());
+    orderedPizzas.setItems(showOrderScreenViewModel.getObservableCurrentPizzaList());
+    orderedPizzas.setCellFactory(list -> new PizzaListCell(
+        showOrderScreenViewModel.getObservableCurrentPizzaList(),
         service, controller));
+    addPizzaButton.setOnAction(event -> showOrderScreenViewModel.addPizza(availablePizzaSizes.getValue()));
+    orderButton.setOnAction(event -> orderPizza());
+    cancelButton.setOnAction(event -> cancelOrder());
+
   }
 
   static class PizzaListCell extends ListCell<Pizza> {

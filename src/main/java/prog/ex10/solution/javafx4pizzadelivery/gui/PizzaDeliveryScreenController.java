@@ -32,7 +32,7 @@ public class PizzaDeliveryScreenController implements ScreenController {
     EditPizzaScreen editPizzaScreen = new EditPizzaScreen(this);
     allScreens.put(EditPizzaScreen.SCREEN_NAME, editPizzaScreen);
 
-    ShowOrderScreen showOrderScreen = new ShowOrderScreen(this);
+    ShowOrderScreen showOrderScreen = new ShowOrderScreen(this, new ShowOrderScreenViewModel());
     allScreens.put(ShowOrderScreen.SCREEN_NAME, showOrderScreen);
 
     // allow transition from null screen

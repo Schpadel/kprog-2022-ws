@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="58.0" layoutY="14.0" text="Order" />
       <Label fx:id="orderId" layoutX="96.0" layoutY="14.0" text="Label" />
@@ -14,7 +14,7 @@
       <Label layoutX="288.0" layoutY="14.0" text="Cent" />
       <Button fx:id="cancelButton" layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel" />
       <ChoiceBox fx:id="availablePizzaSizes" layoutX="58.0" layoutY="55.0" prefWidth="150.0" />
-      <Button fx:id="addPizza" layoutX="246.0" layoutY="55.0" mnemonicParsing="false" text="Add Pizza" onAction="#addPizza" />
+      <Button fx:id="addPizzaButton" layoutX="246.0" layoutY="55.0" mnemonicParsing="false" text="Add Pizza" />
       <ListView fx:id="orderedPizzas" layoutX="58.0" layoutY="100.0" prefHeight="200.0" prefWidth="400.0" />
       <Button fx:id="orderButton" layoutX="536.0" layoutY="274.0" mnemonicParsing="false" onAction="#orderPizza" text="Order" />
    </children>
