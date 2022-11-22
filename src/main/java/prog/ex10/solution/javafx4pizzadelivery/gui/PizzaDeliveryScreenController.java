@@ -39,8 +39,6 @@ public class PizzaDeliveryScreenController implements ScreenController {
     // allow transition from null screen
     allScreens.put(null, null);
 
-    pane.getChildren().add(createOrderScreen);
-
   }
 
   @Override
