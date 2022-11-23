@@ -27,7 +27,7 @@ public class SingletonAttributeStore implements AttributeStore {
     if (name == null) {
       throw new IllegalArgumentException("Name should not be null!");
     }
-    if (name.trim().length() == 0) {
+    if (name.isBlank()) {
       throw new IllegalArgumentException("Name should not be empty!");
     }
     attributes.put(name, object);
@@ -38,7 +38,7 @@ public class SingletonAttributeStore implements AttributeStore {
     if (name == null) {
       throw new IllegalArgumentException("Name should not be null!");
     }
-    if (name.trim().length() == 0) {
+    if (name.isBlank()) {
       throw new IllegalArgumentException("Name should not be empty!");
     }
     return attributes.get(name);
