@@ -17,6 +17,7 @@ public class BaseBoard implements Board {
 
   /**
    * Creates a board with the given size.
+   *
    * @param size size of the board to be created
    * @throws IllegalArgumentException if the size is smaller than the minimal board size.
    */
@@ -62,5 +63,6 @@ public class BaseBoard implements Board {
 
   protected void assertPositionIsOnBoard(int row, int column) {
     // TODO implement it throwing an IllegalArgumentException with the position.
+    // TODO end
   }
 }
