@@ -74,6 +74,8 @@ public class SimpleSnake implements Snake {
     position.removeLast(); //move forward
 
     return nextCoordinate;
+    // TODO: end
+
   }
 
   private BoardState assertNewPositionIsPossible(final Coordinate newHead)
@@ -85,7 +87,8 @@ public class SimpleSnake implements Snake {
     if (this.service.getExternalBoard().getStateFromPosition(newHead) == BoardState.SNAKE) {
       throw new IllegalPositionException(newHead, BoardState.SNAKE);
     }
-    return null;
+    // TODO: end
+    return this.board.getStateFromPosition(newHead);
   }
 
   @Override

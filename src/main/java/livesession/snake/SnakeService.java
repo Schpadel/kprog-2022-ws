@@ -1,9 +1,12 @@
 package livesession.snake;
 
+/**
+ * Interface of a simple SnakeService.
+ */
 public interface SnakeService {
-  final int DEFAULT_SIZE = 20;
-  final int DEFAULT_VELOCITY = 500;
-  final int DEFAULT_NUMBER_OF_FOOD = 1;
+  int DEFAULT_SIZE = 20;
+  int DEFAULT_VELOCITY = 500;
+  int DEFAULT_NUMBER_OF_FOOD = 1;
 
   /**
    * Resets the game. The new game state is PREPARED. Reset means reset, no matter in which
@@ -13,6 +16,7 @@ public interface SnakeService {
 
   /**
    * Starts the game if the GameState is PREPARED. The new game state is RUNNING.
+   *
    * @throws IllegalStateException if the GameState was not PREPARED.
    */
   void start() throws IllegalStateException;
@@ -79,6 +83,7 @@ public interface SnakeService {
 
   /**
    * Returns the actual configuration.
+   *
    * @return actual GameConfiguration
    */
   GameConfiguration getConfiguration();
