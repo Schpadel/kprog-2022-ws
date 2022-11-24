@@ -231,6 +231,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     logger.debug("foodEaten: " + coordinate);
     // TODO: what has to be done when one food has been eaten?
     this.getInternalBoard().removeFood(coordinate);
+    this.foodGenerator.placeFood();
+    updateScore(BoardState.FOOD);
     // TODO: end.
   }
 
