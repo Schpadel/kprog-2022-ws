@@ -45,11 +45,10 @@ public class SimpleGameLoop extends Thread implements GameLoop {
       timer.schedule(new TimerTask() {
         @Override
         public void run() {
+          logger.info("Advancing snake in Timer!");
           service.triggeredByGameLoop();
         }
       }, service.getConfiguration().getVelocityInMilliSeconds());
-
-
 
       try {
         Thread.sleep(sleepTime);
