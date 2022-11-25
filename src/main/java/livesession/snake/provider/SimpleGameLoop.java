@@ -41,14 +41,7 @@ public class SimpleGameLoop extends Thread implements GameLoop {
       // only move if velocity criteria
       logger.info("Advancing snake via GameLoop!");
 
-
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          logger.info("Advancing snake in Timer!");
-          service.triggeredByGameLoop();
-        }
-      }, service.getConfiguration().getVelocityInMilliSeconds());
+      service.triggeredByGameLoop();
 
       try {
         Thread.sleep(sleepTime);
