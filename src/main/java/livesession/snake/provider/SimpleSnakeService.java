@@ -92,7 +92,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     for (int i = 0; i < gameConfiguration.getNumberOfFood(); i++) {
       foodGenerator.placeFood();
     }
-    simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds());
+    // simpleGameLoop = new SimpleGameLoop(this, gameConfiguration.getVelocityInMilliSeconds()); TODO: checken ob hier notwendig
     score = 0;
     gameState = GameState.PREPARED;
     // TODO: end.
