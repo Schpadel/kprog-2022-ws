@@ -68,7 +68,9 @@ public class SimpleGameLoop extends Thread implements GameLoop {
   @Override
   public void resumeGame() {
     this.shouldBePaused = false;
-    service.notify();
+    synchronized (service) {
+      service.notify();
+    }
   }
 
   @Override

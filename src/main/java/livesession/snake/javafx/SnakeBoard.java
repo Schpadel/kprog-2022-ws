@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +31,14 @@ public class SnakeBoard extends GridPane implements Initializable {
   private Label gameStateLabel;
   @FXML
   private GridPane gameField;
+  @FXML
+  private Button startButton;
+  @FXML
+  private Button pauseButton;
+  @FXML
+  private Button resumeButton;
+  @FXML
+  private Button abortButton;
 
 
 
@@ -103,10 +112,13 @@ public class SnakeBoard extends GridPane implements Initializable {
     scoreLabel.textProperty().bind(viewModel.scoreProperty().asString());
     gameStateLabel.textProperty().bind(viewModel.currentGameStateProperty().asString());
     viewModel.currentBoardProperty().addListener(observable -> updateBoard());
-
+    resumeButton.setOnAction(event -> viewModel.continueGame());
+    abortButton.setOnAction(event -> viewModel.abortGame());
+    startButton.setOnAction(event -> viewModel.startGame());
+    pauseButton.setOnAction(event -> viewModel.pauseGame());
   }
 
-  // rework later to only update changed cells
+  // rework later to only update changed cells, setState only calls UI update if state of cell really changed!
   public void updateBoard() {
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
       for (int col = 0; col < viewModel.getSizeOfBoard(); col++) {

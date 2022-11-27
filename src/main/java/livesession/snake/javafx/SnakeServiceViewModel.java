@@ -62,7 +62,7 @@ public class SnakeServiceViewModel implements SnakeListener {
   }
 
   public void continueGame() {
-    service.start(); // does start work to continue the game?
+    service.resume();
 
   }
 
