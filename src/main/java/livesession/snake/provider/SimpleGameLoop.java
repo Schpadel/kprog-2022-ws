@@ -34,7 +34,6 @@ public class SimpleGameLoop extends Thread implements GameLoop {
     while (!stopped) {
       checkIfPaused();
 
-      // only move if velocity criteria
       logger.info("Advancing snake via GameLoop!");
 
       service.triggeredByGameLoop();

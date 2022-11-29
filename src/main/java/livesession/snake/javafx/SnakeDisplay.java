@@ -3,6 +3,8 @@ package livesession.snake.javafx;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,16 +40,20 @@ public class SnakeDisplay extends GridPane implements Initializable {
 
     snakeBoard = new SnakeBoard(viewModel);
 
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SnakeBoard.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SnakeDisplay.fxml"));
     fxmlLoader.setRoot(this);
     fxmlLoader.setController(this);
 
-    this.addRow(this.getRowCount() + 1, snakeBoard);
+
     try {
       fxmlLoader.load();
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    this.addRow(this.getRowCount() + 1, snakeBoard);
+
+    Platform.runLater(() -> snakeBoard.requestFocus());
   }
 
 
@@ -63,9 +69,16 @@ public class SnakeDisplay extends GridPane implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     scoreLabel.textProperty().bind(viewModel.scoreProperty().asString());
     gameStateLabel.textProperty().bind(viewModel.currentGameStateProperty().asString());
-    resumeButton.setOnAction(event -> viewModel.continueGame());
-    abortButton.setOnAction(event -> viewModel.abortGame());
-    startButton.setOnAction(event -> viewModel.startGame());
-    pauseButton.setOnAction(event -> viewModel.pauseGame());
+
+
+    resumeButton.setOnAction(event -> handleAction( method -> viewModel.continueGame()));
+    abortButton.setOnAction(event -> handleAction(method -> viewModel.abortGame()));
+    startButton.setOnAction(event -> handleAction(method -> viewModel.startGame()));
+    pauseButton.setOnAction(event -> handleAction(method -> viewModel.pauseGame()));
+  }
+
+  public void handleAction(Consumer<SnakeServiceViewModel> viewModelConsumer) {
+    this.snakeBoard.requestFocus();
+    viewModelConsumer.accept(viewModel);
   }
 }
