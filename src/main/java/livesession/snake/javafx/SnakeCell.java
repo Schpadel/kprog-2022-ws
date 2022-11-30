@@ -41,8 +41,8 @@ public class SnakeCell extends HBox {
     stateLabel.autosize();
      */
     this.setStyle(displayStates.get(state));
-    this.setPrefHeight(25);
-    this.setPrefWidth(25);
+    this.setPrefHeight(20);
+    this.setPrefWidth(20);
 
   }
 }

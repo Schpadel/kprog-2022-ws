@@ -3,66 +3,121 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<fx:root alignment="TOP_CENTER" prefHeight="900.0" prefWidth="900.0" type="GridPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-   </rowConstraints>
+<fx:root alignment="TOP_CENTER" prefHeight="900.0" prefWidth="900.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" prefHeight="23.0" prefWidth="1098.0" GridPane.columnSpan="2147483647">
+      <VBox fx:id="UIContainer" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label text="Score: " />
-            <Label fx:id="scoreLabel" text="Label">
+            <HBox fx:id="GameControl" alignment="TOP_CENTER">
+               <children>
+                  <Label text="Score: " />
+                  <Label fx:id="scoreLabel" text="Label">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Game State">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="gameStateLabel" text="Label">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="resumeButton" mnemonicParsing="false" text="Resume">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="startButton" mnemonicParsing="false" text="Start">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="abortButton" mnemonicParsing="false" text="Abort">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </padding>
-            </Label>
-            <Label text="Game State">
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Label>
-            <Label fx:id="gameStateLabel" text="Label">
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </Label>
-            <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="resumeButton" mnemonicParsing="false" text="Resume">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="startButton" mnemonicParsing="false" text="Start">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="abortButton" mnemonicParsing="false" text="Abort">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox fx:id="pauseMenu" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="559.0">
+               <children>
+                  <Label text="Game Paused">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="pauseMenuContinueButton" alignment="CENTER" mnemonicParsing="false" text="Resume">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="pauseMenuAbortButton" mnemonicParsing="false" text="Quit">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox fx:id="gameOverMenu" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="559.0">
+               <children>
+                  <Label text="Game Over">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="gameOverTryAgainButton" alignment="CENTER" mnemonicParsing="false" text="Try again">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="gameOverBackToMenu" mnemonicParsing="false" text="Back to menu">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>

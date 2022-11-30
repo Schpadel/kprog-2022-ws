@@ -74,6 +74,7 @@ public class SimpleGameLoop extends Thread implements GameLoop {
 
   @Override
   public void stopGame() {
+    resumeGame();
     this.stopped = true;
   }
 }

@@ -5,15 +5,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import livesession.snake.BoardState;
 import livesession.snake.GameState;
+import livesession.snake.Snake;
 
 public class SnakeBoard extends GridPane {
 
   private SnakeServiceViewModel viewModel;
   private SnakeCell[][] snakeCells;
+  private SnakeDisplay snakeDisplay;
 
-  public SnakeBoard(SnakeServiceViewModel viewModel) {
+  public SnakeBoard(SnakeServiceViewModel viewModel, SnakeDisplay snakeDisplay) {
     this.viewModel = viewModel;
-
+    this.snakeDisplay = snakeDisplay;
     snakeCells = new SnakeCell[viewModel.getSizeOfBoard()][viewModel.getSizeOfBoard()];
 
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
@@ -54,12 +56,12 @@ public class SnakeBoard extends GridPane {
 
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
       if(key.getCode()==KeyCode.ESCAPE && viewModel.getCurrentGameState() == GameState.RUNNING) {
-        viewModel.pauseGame();
+        snakeDisplay.handleAction(method -> viewModel.pauseGame() );
       }
     });
   }
 
-  // rework later to only update changed cells, setState only calls UI update if state of cell really changed!
+  // only calls UI update if state of cell really changed!
   public void updateBoard() {
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
       for (int col = 0; col < viewModel.getSizeOfBoard(); col++) {
@@ -67,5 +69,4 @@ public class SnakeBoard extends GridPane {
       }
     }
   }
-
 }

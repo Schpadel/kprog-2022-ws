@@ -5,6 +5,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import livesession.snake.Board;
 import livesession.snake.GameState;
 import livesession.snake.Reason;
@@ -19,7 +21,7 @@ public class SnakeServiceViewModel implements SnakeListener {
 
   private GameState currentGameState;
   private ObjectProperty<Board> board;
-
+  private ObjectProperty<Reason> gameEndedProperty;
 
   public SnakeServiceViewModel(ExtendedSnakeService service) {
     this.service = service;
@@ -27,8 +29,15 @@ public class SnakeServiceViewModel implements SnakeListener {
     score = new SimpleIntegerProperty();
     currentGameStateProperty = new SimpleObjectProperty<>();
     board = new SimpleObjectProperty<>();
+    gameEndedProperty = new SimpleObjectProperty<>();
+  }
 
+  public Reason getGameEndedProperty() {
+    return gameEndedProperty.get();
+  }
 
+  public ObjectProperty<Reason> gameEndedPropertyProperty() {
+    return gameEndedProperty;
   }
 
   public int getScore() {
@@ -68,6 +77,13 @@ public class SnakeServiceViewModel implements SnakeListener {
 
   }
 
+  public void resetGame() {
+    service.abort();
+    service.reset();
+    service.addListener(this);
+    service.start();
+  }
+
   public void abortGame() {
     service.abort();
   }
@@ -94,6 +110,7 @@ public class SnakeServiceViewModel implements SnakeListener {
   @Override
   public void gameEnded(Reason reason) {
     //TODO: Implement gameEnded Property to inform UI the game has ended with reason --> show UI End Screen
+    gameEndedProperty.setValue(reason);
   }
 
   @Override
