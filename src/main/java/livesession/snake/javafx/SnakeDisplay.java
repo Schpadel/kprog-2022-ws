@@ -68,7 +68,7 @@ public class SnakeDisplay extends GridPane implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     scoreLabel.textProperty().bind(viewModel.scoreProperty().asString());
-    gameStateLabel.textProperty().bind(viewModel.currentGameStateProperty().asString());
+    gameStateLabel.textProperty().bind(viewModel.currentGameStatePropertyProperty().asString());
 
 
     resumeButton.setOnAction(event -> handleAction( method -> viewModel.continueGame()));
@@ -80,5 +80,33 @@ public class SnakeDisplay extends GridPane implements Initializable {
   public void handleAction(Consumer<SnakeServiceViewModel> viewModelConsumer) {
     this.snakeBoard.requestFocus();
     viewModelConsumer.accept(viewModel);
+
+    switch(viewModel.getCurrentGameState()) {
+      case PAUSED:
+        pauseButton.setDisable(true);
+        pauseButton.setVisible(false);
+        break;
+      case RUNNING:
+        pauseButton.setDisable(false);
+        pauseButton.setVisible(true);
+        startButton.setDisable(true);
+        startButton.setVisible(false);
+        break;
+      case PREPARED:
+        pauseButton.setDisable(true);
+        pauseButton.setVisible(false);
+        resumeButton.setDisable(true);
+        resumeButton.setVisible(false);
+        break;
+      case ABORTED:
+        pauseButton.setDisable(true);
+        pauseButton.setVisible(false);
+        resumeButton.setDisable(true);
+        resumeButton.setVisible(false);
+        startButton.setDisable(true);
+        startButton.setVisible(false);
+        break;
+    }
+
   }
 }

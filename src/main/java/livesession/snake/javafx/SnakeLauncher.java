@@ -24,7 +24,7 @@ public class SnakeLauncher extends Application {
 
     // Start service early to test
     // service.start();
-    service.configure(new GameConfiguration(20, 100, 10));
+    service.configure(new GameConfiguration(50, 250, 10));
     SnakeServiceViewModel viewModel = new SnakeServiceViewModel(service);
     paneToBeFilled.getChildren().add(new SnakeDisplay(viewModel));
 

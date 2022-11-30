@@ -15,7 +15,9 @@ public class SnakeServiceViewModel implements SnakeListener {
 
  private ExtendedSnakeService service;
   private IntegerProperty score;
-  private ObjectProperty<GameState> currentGameState;
+  private ObjectProperty<GameState> currentGameStateProperty;
+
+  private GameState currentGameState;
   private ObjectProperty<Board> board;
 
 
@@ -23,7 +25,7 @@ public class SnakeServiceViewModel implements SnakeListener {
     this.service = service;
     service.addListener(this);
     score = new SimpleIntegerProperty();
-    currentGameState = new SimpleObjectProperty<>();
+    currentGameStateProperty = new SimpleObjectProperty<>();
     board = new SimpleObjectProperty<>();
 
 
@@ -42,11 +44,11 @@ public class SnakeServiceViewModel implements SnakeListener {
   }
 
   public GameState getCurrentGameState() {
-    return currentGameState.get();
+    return currentGameState;
   }
 
-  public ObjectProperty<GameState> currentGameStateProperty() {
-    return currentGameState;
+  public ObjectProperty<GameState> currentGameStatePropertyProperty() {
+    return currentGameStateProperty;
   }
 
   public ObjectProperty<Board> currentBoardProperty() {
@@ -85,12 +87,13 @@ public class SnakeServiceViewModel implements SnakeListener {
 
   @Override
   public void newGameState(GameState state) {
-    Platform.runLater(() -> currentGameState.set(state));
+    currentGameState = state;
+    Platform.runLater(() -> currentGameStateProperty.set(state));
   }
 
   @Override
   public void gameEnded(Reason reason) {
-    
+    //TODO: Implement gameEnded Property to inform UI the game has ended with reason --> show UI End Screen
   }
 
   @Override

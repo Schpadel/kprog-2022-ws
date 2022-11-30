@@ -4,6 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import livesession.snake.BoardState;
+import livesession.snake.GameState;
 
 public class SnakeBoard extends GridPane {
 
@@ -40,19 +41,19 @@ public class SnakeBoard extends GridPane {
 
   private void addKeyEvents() {
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.A) {
+      if(key.getCode()==KeyCode.A && viewModel.getCurrentGameState() == GameState.RUNNING) {
         viewModel.snakeTurnLeft();
       }
     });
 
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.D) {
+      if(key.getCode()==KeyCode.D && viewModel.getCurrentGameState() == GameState.RUNNING) {
         viewModel.snakeTurnRight();
       }
     });
 
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.ESCAPE) {
+      if(key.getCode()==KeyCode.ESCAPE && viewModel.getCurrentGameState() == GameState.RUNNING) {
         viewModel.pauseGame();
       }
     });
