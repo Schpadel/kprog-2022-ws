@@ -2,7 +2,6 @@ package livesession.snake.javafx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import livesession.snake.GameConfiguration;
@@ -22,15 +21,12 @@ public class SnakeLauncher extends Application {
     SimpleSnakeService service = new SimpleSnakeService();
     Pane paneToBeFilled = new Pane();
 
-    // Start service early to test
-    // service.start();
-    service.configure(new GameConfiguration(50, 250, 10));
-    SnakeServiceViewModel viewModel = new SnakeServiceViewModel(service);
-    paneToBeFilled.getChildren().add(new SnakeDisplay(viewModel));
-
+    SnakeScreenController snakeScreenController = new SnakeScreenController(paneToBeFilled);
     stage.setResizable(true);
-    stage.setWidth(900);
-    stage.setHeight(900);
+    stage.setWidth(1250);
+    stage.setHeight(950);
+
+    snakeScreenController.switchTo(null, SnakeMenu.SCREEN_NAME);
 
     stage.setTitle("KPROG JavaFX wonderful GUIs");
     stage.setScene(new Scene(paneToBeFilled));

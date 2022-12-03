@@ -16,8 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
-public class SnakeDisplay extends StackPane implements Initializable {
+public class SnakeDisplay extends StackPane implements Initializable, SnakeScreen {
 
   private SnakeServiceViewModel viewModel;
 
@@ -25,6 +26,9 @@ public class SnakeDisplay extends StackPane implements Initializable {
 
   @FXML
   private VBox UIContainer;
+
+  @FXML
+  private HBox boardContainer;
   @FXML
   private HBox pauseMenu;
   @FXML
@@ -53,16 +57,28 @@ public class SnakeDisplay extends StackPane implements Initializable {
   @FXML
   private Button abortButton;
 
-  public SnakeDisplay(SnakeServiceViewModel viewModel) {
+  public static final String SCREEN_NAME = "SnakeDisplay";
+  private SnakeScreenController controller;
+
+  public SnakeDisplay(SnakeServiceViewModel viewModel, SnakeScreenController controller) {
 
     this.viewModel = viewModel;
+    this.controller = controller;
+    this.snakeBoard = new SnakeBoard(viewModel, this);
+    resetSnakeDisplay();
 
-    snakeBoard = new SnakeBoard(viewModel, this);
+    viewModel.gameEndedProperty().addListener((observable, oldValue, newValue) -> showGameOverMenu());
+    viewModel.gameConfigProperty().addListener((observable, oldValue, newValue) -> resetSnakeDisplay());
+  }
+
+  public void resetSnakeDisplay() {
+    this.getChildren().clear();
+
+    snakeBoard.reset();
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/SnakeDisplay.fxml"));
     fxmlLoader.setRoot(this);
     fxmlLoader.setController(this);
-
 
     try {
       fxmlLoader.load();
@@ -70,13 +86,11 @@ public class SnakeDisplay extends StackPane implements Initializable {
       e.printStackTrace();
     }
 
-    // GridPane only: this.addRow(this.getRowCount() + 1, snakeBoard);
     snakeBoard.setAlignment(Pos.CENTER);
+
     pauseMenu.setVisible(false);
     gameOverMenu.setVisible(false);
-    UIContainer.getChildren().add(snakeBoard);
-
-    viewModel.gameEndedPropertyProperty().addListener(observable -> showGameOverMenu());
+    boardContainer.getChildren().add(snakeBoard);
 
     Platform.runLater(() -> snakeBoard.requestFocus());
   }
@@ -101,6 +115,7 @@ public class SnakeDisplay extends StackPane implements Initializable {
     gameStateLabel.textProperty().bind(viewModel.currentGameStatePropertyProperty().asString());
 
 
+
     resumeButton.setOnAction(event -> handleAction( method -> viewModel.continueGame()));
     abortButton.setOnAction(event -> handleAction(method -> viewModel.abortGame()));
     startButton.setOnAction(event -> handleAction(method -> viewModel.startGame()));
@@ -112,10 +127,24 @@ public class SnakeDisplay extends StackPane implements Initializable {
 
     //Game Over Menu Buttons
     gameOverTryAgainButton.setOnAction(event -> tryAgain());
+    gameOverBackToMenu.setOnAction(event -> backToMenu());
+  }
+
+  private void backToMenu() {
+    try {
+      gameOverMenu.setVisible(false);
+      UIContainer.setEffect(null);
+      startButton.setVisible(true);
+      startButton.setDisable(false);
+      controller.switchTo(SnakeDisplay.SCREEN_NAME, SnakeMenu.SCREEN_NAME);
+    } catch (UnknownTransitionException e) {
+      e.printStackTrace();
+    }
   }
 
   private void tryAgain() {
     viewModel.resetGame();
+    viewModel.updateScore(0);
     snakeBoard.requestFocus();
     gameOverMenu.setVisible(false);
     UIContainer.setEffect(null);
@@ -137,6 +166,8 @@ public class SnakeDisplay extends StackPane implements Initializable {
         pauseButton.setVisible(true);
         startButton.setDisable(true);
         startButton.setVisible(false);
+        resumeButton.setDisable(true);
+        resumeButton.setVisible(false);
         pauseMenu.setVisible(false);
         UIContainer.setEffect(null);
         break;

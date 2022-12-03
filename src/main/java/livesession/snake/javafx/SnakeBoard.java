@@ -5,7 +5,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import livesession.snake.BoardState;
 import livesession.snake.GameState;
-import livesession.snake.Snake;
 
 public class SnakeBoard extends GridPane {
 
@@ -16,12 +15,20 @@ public class SnakeBoard extends GridPane {
   public SnakeBoard(SnakeServiceViewModel viewModel, SnakeDisplay snakeDisplay) {
     this.viewModel = viewModel;
     this.snakeDisplay = snakeDisplay;
+
+    //register changeListener
+    viewModel.currentBoardProperty().addListener(observable -> updateBoard());
+    addKeyEvents();
+  }
+
+  public void reset() {
+    this.getChildren().clear();
     snakeCells = new SnakeCell[viewModel.getSizeOfBoard()][viewModel.getSizeOfBoard()];
 
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
       for (int col = 0; col < viewModel.getSizeOfBoard(); col++) {
         SnakeCell cell = new SnakeCell();
-        cell.setState(BoardState.GRASS);
+        cell.setState(null);
         snakeCells[row][col] = cell;
       }
     }
@@ -34,29 +41,26 @@ public class SnakeBoard extends GridPane {
 
     this.setFocusTraversable(true);
 
-    addKeyEvents();
 
-    //register changeListener
-    viewModel.currentBoardProperty().addListener(observable -> updateBoard());
 
   }
 
   private void addKeyEvents() {
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.A && viewModel.getCurrentGameState() == GameState.RUNNING) {
+      if (key.getCode() == KeyCode.A && viewModel.getCurrentGameState() == GameState.RUNNING) {
         viewModel.snakeTurnLeft();
       }
     });
 
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.D && viewModel.getCurrentGameState() == GameState.RUNNING) {
+      if (key.getCode() == KeyCode.D && viewModel.getCurrentGameState() == GameState.RUNNING) {
         viewModel.snakeTurnRight();
       }
     });
 
     this.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-      if(key.getCode()==KeyCode.ESCAPE && viewModel.getCurrentGameState() == GameState.RUNNING) {
-        snakeDisplay.handleAction(method -> viewModel.pauseGame() );
+      if (key.getCode() == KeyCode.ESCAPE && viewModel.getCurrentGameState() == GameState.RUNNING) {
+        snakeDisplay.handleAction(method -> viewModel.pauseGame());
       }
     });
   }
@@ -65,7 +69,8 @@ public class SnakeBoard extends GridPane {
   public void updateBoard() {
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
       for (int col = 0; col < viewModel.getSizeOfBoard(); col++) {
-        snakeCells[row][col].setState(viewModel.currentBoardProperty().get().getStateFromPosition(row,col));
+        snakeCells[row][col].setState(
+            viewModel.currentBoardProperty().get().getStateFromPosition(row, col));
       }
     }
   }

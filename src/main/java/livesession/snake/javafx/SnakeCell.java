@@ -21,6 +21,7 @@ public class SnakeCell extends HBox {
     displayStates.put(BoardState.SNAKE, "-fx-background-color: black");
     displayStates.put(BoardState.FOOD, "-fx-background-color: red");
     displayStates.put(BoardState.WALL, "-fx-background-color: orange");
+    displayStates.put(null, "-fx-background-color: white");
     //stateLabel = new Label("Empty");
     //this.getChildren().add(stateLabel);
     this.setStyle("-fx-background-color: green");
@@ -31,15 +32,11 @@ public class SnakeCell extends HBox {
   public void setState(BoardState state) {
     if (this.state != state) {
       this.state = state;
-      Platform.runLater(() -> updateUIDisplay() );
+      Platform.runLater(() -> updateUiDisplay());
     }
   }
 
-  private void updateUIDisplay() {
-    /*
-    stateLabel.setText(state.name());
-    stateLabel.autosize();
-     */
+  private void updateUiDisplay() {
     this.setStyle(displayStates.get(state));
     this.setPrefHeight(20);
     this.setPrefWidth(20);
