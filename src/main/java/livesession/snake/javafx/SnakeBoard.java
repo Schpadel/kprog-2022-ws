@@ -3,7 +3,6 @@ package livesession.snake.javafx;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import livesession.snake.BoardState;
 import livesession.snake.GameState;
 
 public class SnakeBoard extends GridPane {

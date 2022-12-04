@@ -9,9 +9,6 @@ import livesession.snake.BoardState;
 public class SnakeCell extends HBox {
   private BoardState state;
 
-  //for testing
-  private Label stateLabel;
-
   private HashMap<BoardState, String> displayStates;
 
 
@@ -22,8 +19,6 @@ public class SnakeCell extends HBox {
     displayStates.put(BoardState.FOOD, "-fx-background-color: red");
     displayStates.put(BoardState.WALL, "-fx-background-color: orange");
     displayStates.put(null, "-fx-background-color: white");
-    //stateLabel = new Label("Empty");
-    //this.getChildren().add(stateLabel);
     this.setStyle("-fx-background-color: green");
 
 

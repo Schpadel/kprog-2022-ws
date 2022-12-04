@@ -3,8 +3,6 @@ package livesession.snake.javafx;
 import java.util.HashMap;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import livesession.snake.GameConfiguration;
-import livesession.snake.IllegalConfigurationException;
 import livesession.snake.provider.SimpleSnakeService;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
