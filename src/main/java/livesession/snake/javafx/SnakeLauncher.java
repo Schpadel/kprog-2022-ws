@@ -20,11 +20,11 @@ public class SnakeLauncher extends Application {
     SimpleSnakeService service = new SimpleSnakeService();
     Pane paneToBeFilled = new Pane();
 
-    SnakeScreenController snakeScreenController = new SnakeScreenController(paneToBeFilled);
+
     stage.setResizable(true);
     stage.setWidth(1250);
     stage.setHeight(950);
-
+    SnakeScreenController snakeScreenController = new SnakeScreenController(paneToBeFilled);
     snakeScreenController.switchTo(null, SnakeMenu.SCREEN_NAME);
 
     stage.setTitle("KPROG JavaFX wonderful GUIs");

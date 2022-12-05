@@ -14,6 +14,9 @@ import livesession.snake.SnakeListener;
 import livesession.snake.provider.ExtendedSnakeService;
 import livesession.snake.provider.SimpleSnakeService;
 
+/**
+ * View-model for the snake game gui implementation.
+ */
 public class SnakeServiceViewModel implements SnakeListener {
 
   private ExtendedSnakeService service;
@@ -33,6 +36,11 @@ public class SnakeServiceViewModel implements SnakeListener {
     return gameConfig;
   }
 
+  /**
+   * Constructs a new instance of this view-model with a provided service.
+   *
+   * @param service to be used as model
+   */
   public SnakeServiceViewModel(SimpleSnakeService service) {
     this.service = service;
     service.addListener(this);
@@ -88,6 +96,9 @@ public class SnakeServiceViewModel implements SnakeListener {
 
   }
 
+  /**
+   * aborts and then resets the model.
+   */
   public void resetGame() {
     service.abort();
     service.reset();
@@ -95,6 +106,14 @@ public class SnakeServiceViewModel implements SnakeListener {
 
   }
 
+  /**
+   * sets a new configuration for the model.
+   *
+   * @param size to be used in the new config
+   * @param velocity to be used in the new config
+   * @param numberOfFood to be used in the new config
+   * @throws IllegalConfigurationException if a value is not allowed
+   */
   public void configureGame(int size, int velocity, int numberOfFood)
       throws IllegalConfigurationException {
 

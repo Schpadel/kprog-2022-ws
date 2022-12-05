@@ -4,19 +4,19 @@ import java.util.HashMap;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import livesession.snake.provider.SimpleSnakeService;
-import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
+/**
+ * Simple and straight-forward implementation of a ScreenController for the Snake game.
+ */
 public class SnakeScreenController {
 
   HashMap<String, SnakeScreen> allScreens;
-  /**
-   * Simple and straight-forward implementation of a ScreenController for the PizzaDeliveryService.
-   */
+
   private Pane pane;
 
   /**
-   * Constructs a new instance of the PizzaDeliveryScreenController, which manages all Screens of
-   * the PizzaDeliveryService GUI.
+   * Constructs a new instance of the SnakeScreenController, which manages all Screens of
+   * the Snake Game GUI.
    *
    * @param pane to be used to display the individual screens.
    */
@@ -41,7 +41,13 @@ public class SnakeScreenController {
 
   }
 
-
+  /**
+   * switches to the requested screen from the provided screen.
+   *
+   * @param fromScreen to switch away from
+   * @param toScreen to switch to
+   * @throws UnknownTransitionException When either screen is not known to the controller.
+   */
   public void switchTo(final String fromScreen, final String toScreen)
       throws UnknownTransitionException {
     if (!allScreens.containsKey(fromScreen)) {

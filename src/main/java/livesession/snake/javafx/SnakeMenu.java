@@ -9,14 +9,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
+
+/**
+ * Class to show and manage the snake game menu.
+ */
 public class SnakeMenu extends VBox implements Initializable, SnakeScreen {
 
 
   private SnakeScreenController controller;
 
-  public final static String SCREEN_NAME = "SnakeMenu";
+  public static final String SCREEN_NAME = "SnakeMenu";
 
   @FXML
   private Button playButton;
@@ -25,7 +28,11 @@ public class SnakeMenu extends VBox implements Initializable, SnakeScreen {
   @FXML
   private Button quitButton;
 
-
+  /**
+   * Construct a new instance of SnakeMenu.
+   *
+   * @param controller to be used for this menu
+   */
   public SnakeMenu(SnakeScreenController controller) {
 
     this.controller = controller;
@@ -53,6 +60,9 @@ public class SnakeMenu extends VBox implements Initializable, SnakeScreen {
     configureButton.setOnAction(event -> configureGame());
   }
 
+  /**
+   * Button handler method, starts the game by switching to SnakeDisplay.
+   */
   public void playGame() {
     try {
       controller.switchTo(SCREEN_NAME, SnakeDisplay.SCREEN_NAME);
@@ -61,6 +71,9 @@ public class SnakeMenu extends VBox implements Initializable, SnakeScreen {
     }
   }
 
+  /**
+   * Button handler method, allows to configure the game by switching to SnakeConfigureMenu.
+   */
   public void configureGame() {
     try {
       controller.switchTo(SCREEN_NAME, SnakeConfigureMenu.SCREEN_NAME);

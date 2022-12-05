@@ -11,9 +11,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import livesession.snake.IllegalConfigurationException;
-import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
+/**
+ * SnakeConfigurationMenu Class, shows and manges the configuration menu for the game.
+ */
 public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScreen {
   public static final String SCREEN_NAME = "ConfigureMenu";
 
@@ -29,6 +30,12 @@ public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScre
   @FXML
   private Button doneButton;
 
+  /**
+   * Constructs a new instance of SnakeConfigurationMenu.
+   *
+   * @param controller to be used for this config menu screen
+   * @param snakeServiceViewModel to be used for this config menu screen
+   */
   public SnakeConfigureMenu(SnakeScreenController controller,
       SnakeServiceViewModel snakeServiceViewModel) {
     this.controller = controller;
@@ -45,9 +52,16 @@ public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScre
 
   }
 
+  /**
+   * Event handler for the configure action, called when the done button is pressed. Calls configure
+   * Game in the assigned viewModel.
+   */
   public void configure() {
     try {
-      snakeServiceViewModel.configureGame(Integer.parseInt(sizeInput.textProperty().get()), Integer.parseInt(speedInput.textProperty().get()), Integer.parseInt(numberOfFoodInput.textProperty().get()));
+      snakeServiceViewModel.configureGame(
+          Integer.parseInt(sizeInput.textProperty().get()),
+          Integer.parseInt(speedInput.textProperty().get()),
+          Integer.parseInt(numberOfFoodInput.textProperty().get()));
       controller.switchTo(SCREEN_NAME, SnakeMenu.SCREEN_NAME);
     } catch (Exception e) {
       //TODO: Implement pop-up with wrong exception warning
