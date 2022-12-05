@@ -49,7 +49,6 @@ public class SnakeScreenController {
     }
 
     if (allScreens.containsKey(toScreen)) {
-      //allScreens.get(toScreen).updateScreen();
       pane.getChildren().clear();
       pane.getChildren().add((Node) allScreens.get(toScreen));
     } else {

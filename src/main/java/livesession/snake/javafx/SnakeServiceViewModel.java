@@ -92,7 +92,7 @@ public class SnakeServiceViewModel implements SnakeListener {
     service.abort();
     service.reset();
     service.addListener(this);
-    service.start();
+
   }
 
   public void configureGame(int size, int velocity, int numberOfFood)

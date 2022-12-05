@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -13,7 +15,7 @@ import livesession.snake.IllegalConfigurationException;
 import prog.ex10.exercise.javafx4pizzadelivery.gui.UnknownTransitionException;
 
 public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScreen {
-  public final static String SCREEN_NAME = "ConfigureMenu";
+  public static final String SCREEN_NAME = "ConfigureMenu";
 
   private SnakeScreenController controller;
   private SnakeServiceViewModel snakeServiceViewModel;
@@ -27,7 +29,8 @@ public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScre
   @FXML
   private Button doneButton;
 
-  public SnakeConfigureMenu(SnakeScreenController controller, SnakeServiceViewModel snakeServiceViewModel) {
+  public SnakeConfigureMenu(SnakeScreenController controller,
+      SnakeServiceViewModel snakeServiceViewModel) {
     this.controller = controller;
     this.snakeServiceViewModel = snakeServiceViewModel;
 
@@ -45,9 +48,13 @@ public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScre
   public void configure() {
     try {
       snakeServiceViewModel.configureGame(Integer.parseInt(sizeInput.textProperty().get()), Integer.parseInt(speedInput.textProperty().get()), Integer.parseInt(numberOfFoodInput.textProperty().get()));
-    } catch (IllegalConfigurationException e) {
+      controller.switchTo(SCREEN_NAME, SnakeMenu.SCREEN_NAME);
+    } catch (Exception e) {
       //TODO: Implement pop-up with wrong exception warning
-      e.printStackTrace();
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setHeaderText("Configuration exception occurred! Please enter only numbers, ty!");
+      alert.setContentText(e.getMessage());
+      alert.showAndWait();
     }
   }
 
@@ -61,14 +68,6 @@ public class SnakeConfigureMenu extends VBox implements Initializable, SnakeScre
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    doneButton.setOnAction(event -> {
-      try {
-        configure();
-        controller.switchTo(SCREEN_NAME, SnakeMenu.SCREEN_NAME);
-      } catch (UnknownTransitionException e) {
-        throw new RuntimeException(e);
-      }
-    });
-
+    doneButton.setOnAction(event -> configure());
   }
 }

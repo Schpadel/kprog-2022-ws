@@ -2,16 +2,20 @@ package livesession.snake.javafx;
 
 import java.util.HashMap;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import livesession.snake.BoardState;
 
+/**
+ * A single Cell which is used to display the state of the snake game.
+ */
 public class SnakeCell extends HBox {
   private BoardState state;
 
   private HashMap<BoardState, String> displayStates;
 
-
+  /**
+   * Constructs a new Instance of a SnakeCell.
+   */
   public SnakeCell() {
     displayStates = new HashMap<>();
     displayStates.put(BoardState.GRASS, "-fx-background-color: green");
@@ -24,6 +28,12 @@ public class SnakeCell extends HBox {
 
   }
 
+  /**
+   * Sets a new state for the cell. If the state is different to the current state, the UiDisplay
+   * is being updated.
+   *
+   * @param state new state for this cell.
+   */
   public void setState(BoardState state) {
     if (this.state != state) {
       this.state = state;

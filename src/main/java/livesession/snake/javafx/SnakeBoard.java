@@ -5,12 +5,22 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import livesession.snake.GameState;
 
+/**
+ * Class to model the board of the snake game as a GridPane with SnakeCells as Elements.
+ */
 public class SnakeBoard extends GridPane {
 
   private SnakeServiceViewModel viewModel;
   private SnakeCell[][] snakeCells;
   private SnakeDisplay snakeDisplay;
 
+  /**
+   * Create a new SnakeBoard instance, assign viewmodel and SnakeDisplay for this board.
+   * Add all key events.
+   *
+   * @param viewModel to be used for this board
+   * @param snakeDisplay to be used for this board.
+   */
   public SnakeBoard(SnakeServiceViewModel viewModel, SnakeDisplay snakeDisplay) {
     this.viewModel = viewModel;
     this.snakeDisplay = snakeDisplay;
@@ -20,6 +30,10 @@ public class SnakeBoard extends GridPane {
     addKeyEvents();
   }
 
+  /**
+   * Reset the size and state of this snakeBoard. Called by the constructor and when a new
+   * GameConfiguration is set.
+   */
   public void reset() {
     this.getChildren().clear();
     snakeCells = new SnakeCell[viewModel.getSizeOfBoard()][viewModel.getSizeOfBoard()];
@@ -64,7 +78,10 @@ public class SnakeBoard extends GridPane {
     });
   }
 
-  // only calls UI update if state of cell really changed!
+  /**
+   * Updates each cell in the board, setState only calls for a UI Change when there is a new state
+   * available.
+   */
   public void updateBoard() {
     for (int row = 0; row < viewModel.getSizeOfBoard(); row++) {
       for (int col = 0; col < viewModel.getSizeOfBoard(); col++) {
