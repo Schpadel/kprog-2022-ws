@@ -15,7 +15,7 @@ public class SnakeBoard extends GridPane {
   private SnakeDisplay snakeDisplay;
 
   /**
-   * Create a new SnakeBoard instance, assign viewmodel and SnakeDisplay for this board.
+   * Create a new SnakeBoard instance, assign view-model and SnakeDisplay for this board.
    * Add all key events.
    *
    * @param viewModel to be used for this board
