@@ -1,9 +1,12 @@
 package prog.ex11.solution.saveandload.pizzadelivery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import prog.ex11.exercise.saveandload.pizzadelivery.Order;
 import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
 
@@ -11,7 +14,7 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
 /**
  * Simple and straight-forward implementation of the Order interface.
  */
-public class SimpleOrder implements Order {
+public class SimpleOrder implements Order, Serializable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleOrder.class);
@@ -75,5 +78,20 @@ public class SimpleOrder implements Order {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    String pizzaContent = "";
+
+
+    for(Entry<Integer, SimplePizza> current : pizzaMap.entrySet()) {
+      pizzaContent += ", " + current.getKey() + ":" + current.getValue().toString();
+    }
+
+    return "SimpleOrder{" +
+        "id=" + id +
+        ", pizzaContent=" + pizzaContent +
+        '}';
   }
 }

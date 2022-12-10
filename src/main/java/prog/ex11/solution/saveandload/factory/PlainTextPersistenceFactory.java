@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 import prog.ex11.exercise.saveandload.factory.PersistenceFactory;
 import prog.ex11.exercise.saveandload.factory.WrongOrderFormatException;
@@ -55,7 +56,7 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
 
     SimpleOrder loadedOrder = new SimpleOrder();
 
-    if(tokenizer.countTokens() < 3) {
+    if(tokenizer.countTokens() != 3) {
       throw new WrongOrderFormatException("Order header information too short!");
     }
     try {
@@ -71,16 +72,29 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
       StringTokenizer pizzaToken = new StringTokenizer(input, ";");
 
       // setup order
-      int pizzaId = Integer.parseInt(pizzaToken.nextToken());
-      int pizzaValue = Integer.parseInt(pizzaToken.nextToken());
-      PizzaSize loadedSize = PizzaSize.valueOf(pizzaToken.nextToken());
-      SimplePizza loadedPizza = new SimplePizza(loadedSize, 0);
+      int pizzaId;
+      int pizzaValue;
+      try {
+        pizzaId = Integer.parseInt(pizzaToken.nextToken());
+        pizzaValue = Integer.parseInt(pizzaToken.nextToken());
+      } catch (Exception e) {
+        throw new WrongOrderFormatException("Order ID need to be of type int!");
+      }
+
+      SimplePizza loadedPizza;
+      String loadedSize = pizzaToken.nextToken();
+      if(Arrays.stream(PizzaSize.values()).anyMatch((t) -> t.name().equals(loadedSize))) {
+         loadedPizza = new SimplePizza(PizzaSize.valueOf(loadedSize), 0);
+      }else{
+        throw new WrongOrderFormatException("Pizza Size: " +  loadedSize + " not available at this serivce!");
+      }
+
 
       // add Toppings
       String currentTopping;
       while(pizzaToken.hasMoreTokens()) {
         currentTopping = pizzaToken.nextToken();
-        if (!service.getToppingsPriceList().containsKey(currentTopping)) {
+        if (!toppingExists(currentTopping)) {
           throw new WrongOrderFormatException("Topping: " + currentTopping + " not available at this service!");
         }
         try {
@@ -97,5 +111,9 @@ public class PlainTextPersistenceFactory implements PersistenceFactory {
 
     return loadedOrder;
 
+  }
+
+  private boolean toppingExists(String currentTopping) {
+    return Arrays.stream(Topping.values()).anyMatch((t) -> t.name().equals(currentTopping));
   }
 }

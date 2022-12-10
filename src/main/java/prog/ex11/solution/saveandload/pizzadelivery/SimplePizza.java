@@ -1,5 +1,6 @@
 package prog.ex11.solution.saveandload.pizzadelivery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import prog.ex11.exercise.saveandload.pizzadelivery.Topping;
 /**
  * Simple and straight-forward implementation of the Pizza interface.
  */
-public class SimplePizza implements Pizza {
+public class SimplePizza implements Pizza, Serializable {
 
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimplePizza.class);
@@ -89,5 +90,15 @@ public class SimplePizza implements Pizza {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return "SimplePizza{" +
+        "toppings=" + toppings +
+        ", size=" + size +
+        ", price=" + price +
+        ", id=" + id +
+        '}';
   }
 }
