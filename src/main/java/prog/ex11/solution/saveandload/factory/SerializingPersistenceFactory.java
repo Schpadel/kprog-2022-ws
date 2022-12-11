@@ -37,7 +37,7 @@ public class SerializingPersistenceFactory implements PersistenceFactory {
     try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
       loadedOrder = (SimpleOrder) inputStream.readObject();
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      throw new WrongOrderFormatException("Order in file differs to Order Type in this service!", e);
     }
     return loadedOrder;
   }
