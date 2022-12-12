@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import prog.ex11.exercise.saveandload.pizzadelivery.Order;
 import prog.ex11.exercise.saveandload.pizzadelivery.Pizza;
 
@@ -84,14 +83,11 @@ public class SimpleOrder implements Order, Serializable {
   public String toString() {
     String pizzaContent = "";
 
-
-    for(Entry<Integer, SimplePizza> current : pizzaMap.entrySet()) {
+    for (Entry<Integer, SimplePizza> current : pizzaMap.entrySet()) {
       pizzaContent += ", " + current.getKey() + ":" + current.getValue().toString();
     }
 
-    return "SimpleOrder{" +
-        "id=" + id +
-        ", pizzaContent=" + pizzaContent +
-        '}';
+    return "SimpleOrder{"
+        + "id=" + id + ", pizzaContent=" + pizzaContent + '}';
   }
 }

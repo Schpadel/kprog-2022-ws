@@ -2,7 +2,6 @@ package prog.ex11.solution.saveandload.factory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -20,16 +19,18 @@ import prog.ex11.solution.saveandload.pizzadelivery.SimpleOrder;
 import prog.ex11.solution.saveandload.pizzadelivery.SimplePizza;
 
 /**
- * Simple and straight-forward implementation of the PersistenceFactory interface.
- * This implementation uses Data Stream to write and read primitive types in binary.
+ * Simple and straight-forward implementation of the PersistenceFactory interface. This
+ * implementation uses Data Stream to write and read primitive types in binary.
  */
 public class BinaryPersistenceFactory implements PersistenceFactory {
+
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(BinaryPersistenceFactory.class);
+      org.slf4j.LoggerFactory.getLogger(BinaryPersistenceFactory.class);
 
   @Override
   public void save(final File file, final Order order) throws IOException {
-    try (DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+    try (DataOutputStream out = new DataOutputStream(
+        new BufferedOutputStream(new FileOutputStream(file)))) {
 
       out.writeInt(order.getOrderId());
       out.writeInt(order.getValue());
@@ -54,7 +55,8 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
   public Order load(final File file) throws IOException, WrongOrderFormatException {
     SimpleOrder loadedOrder = new SimpleOrder();
 
-    try (DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+    try (DataInputStream in = new DataInputStream(
+        new BufferedInputStream(new FileInputStream(file)))) {
       int orderId = in.readInt();
       loadedOrder.setId(orderId);
       int orderValue = in.readInt();
@@ -66,9 +68,10 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
         int price = in.readInt();
         PizzaSize loadedPizzaSize;
         try {
-           loadedPizzaSize = PizzaSize.values()[in.readInt()];
+          loadedPizzaSize = PizzaSize.values()[in.readInt()];
         } catch (ArrayIndexOutOfBoundsException e) {
-          throw new WrongOrderFormatException("Pizza Size in File does not exists in this service!", e);
+          throw new WrongOrderFormatException("Pizza Size in File does not exists in this service!",
+              e);
         }
         SimplePizza loadedPizza = new SimplePizza(loadedPizzaSize, price);
         loadedPizza.setId(loadedPizzaId);
@@ -77,13 +80,14 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
           try {
             loadedPizza.addTopping(Topping.values()[in.readInt()], 0);
           } catch (TooManyToppingsException e) {
-            throw new WrongOrderFormatException("Too many Toppings loaded from file for this service!", e);
+            throw new WrongOrderFormatException(
+                "Too many Toppings loaded from file for this service!", e);
           }
         }
 
         loadedOrder.addPizza(loadedPizza);
       }
-      
+
     }
 
     return loadedOrder;

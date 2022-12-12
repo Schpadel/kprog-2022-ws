@@ -94,11 +94,7 @@ public class SimplePizza implements Pizza, Serializable {
 
   @Override
   public String toString() {
-    return "SimplePizza{" +
-        "toppings=" + toppings +
-        ", size=" + size +
-        ", price=" + price +
-        ", id=" + id +
-        '}';
+    return "SimplePizza{" + "toppings=" + toppings + ", size=" + size + ", price=" + price
+        + ", id=" + id + '}';
   }
 }
