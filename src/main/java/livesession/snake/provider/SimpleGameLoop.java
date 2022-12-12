@@ -30,14 +30,12 @@ public class SimpleGameLoop extends Thread implements GameLoop {
   @Override
   public void run() {
 
-
     while (!stopped) {
       checkIfPaused();
 
       logger.info("Advancing snake via GameLoop!");
 
       service.triggeredByGameLoop();
-
 
       try {
         Thread.sleep(sleepTime);

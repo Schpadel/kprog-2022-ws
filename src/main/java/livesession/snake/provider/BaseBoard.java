@@ -8,6 +8,7 @@ import livesession.snake.Coordinate;
  * Simple and straight-forward implementation of the Board interface.
  */
 public class BaseBoard implements Board {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(BaseBoard.class);
 
@@ -30,7 +31,7 @@ public class BaseBoard implements Board {
   /**
    * Checks if the requested size of the board is valid.
    *
-   * @param size requested size
+   * @param size             requested size
    * @param minimalBoardSize official minimal size
    */
   protected void assertSizeIsGreaterThan(final int size, final int minimalBoardSize) {

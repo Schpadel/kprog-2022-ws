@@ -1,19 +1,17 @@
 package livesession.snake.provider;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Direction;
-import livesession.snake.Reason;
 import livesession.snake.Snake;
 
 /**
  * Simple and straight-forward implementation of the Snake interface.
  */
 public class SimpleSnake implements Snake {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnake.class);
   private final InternalBoard board;
@@ -56,8 +54,6 @@ public class SimpleSnake implements Snake {
       position.add(newElement);
       this.service.foodEaten(nextCoordinate);
     }
-
-
 
     // Snake moves into a wall
     if (board.getStateFromPosition(nextCoordinate) == BoardState.WALL) {

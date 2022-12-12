@@ -8,6 +8,7 @@ import livesession.snake.Coordinate;
  * Simple FoodGenerator class for the snake game.
  */
 public class FoodGenerator {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(FoodGenerator.class);
 
@@ -30,7 +31,7 @@ public class FoodGenerator {
 
     int numberOfCells = service.getConfiguration().getSize() * service.getConfiguration().getSize();
     int counter = 0;
-    while(counter < numberOfCells) {
+    while (counter < numberOfCells) {
       Coordinate coordinate = getRandomCoordinate();
       if (service.getExternalBoard().getStateFromPosition(coordinate) == BoardState.GRASS) {
         service.getInternalBoard().addFood(coordinate);

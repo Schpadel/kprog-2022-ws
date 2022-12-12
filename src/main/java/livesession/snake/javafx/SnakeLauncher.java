@@ -23,7 +23,7 @@ public class SnakeLauncher extends Application {
 
     stage.setResizable(true);
     stage.setWidth(1250);
-    stage.setHeight(950);
+    stage.setHeight(800);
     SnakeScreenController snakeScreenController = new SnakeScreenController(paneToBeFilled);
     snakeScreenController.switchTo(null, SnakeMenu.SCREEN_NAME);
 

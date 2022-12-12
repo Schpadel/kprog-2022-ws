@@ -1,8 +1,5 @@
 package livesession.snake.provider;
 
-import java.util.Arrays;
-import java.util.List;
-import livesession.snake.Board;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 import livesession.snake.Snake;
@@ -12,6 +9,7 @@ import livesession.snake.Snake;
  * This is a copy of the internal board. So the UI code cannot manipulate the internal board.
  */
 public class ExternalBoard extends BaseBoard {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(ExternalBoard.class);
 
@@ -19,7 +17,7 @@ public class ExternalBoard extends BaseBoard {
    * Creates the external board based on the contents of the internal board.
    *
    * @param internalBoard internal board the contents is copied from
-   * @param snake actual snake
+   * @param snake         actual snake
    */
   public ExternalBoard(InternalBoard internalBoard, final SimpleSnake snake) {
     super(internalBoard.size());

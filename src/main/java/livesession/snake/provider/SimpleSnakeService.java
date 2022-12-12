@@ -1,7 +1,6 @@
 package livesession.snake.provider;
 
 
-import java.lang.module.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,6 +19,7 @@ import livesession.snake.SnakeService;
  * Simple and straight-forward implementation of the ExtendedSnakeService interface.
  */
 public class SimpleSnakeService implements ExtendedSnakeService {
+
   private static final org.slf4j.Logger logger =
       org.slf4j.LoggerFactory.getLogger(SimpleSnakeService.class);
   private GameConfiguration gameConfiguration;
@@ -34,8 +34,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
   private List<SnakeListener> listeners;
 
   /**
-   * Default constructor. The game uses then default values for configuration.
-   * The default values are defined in the SnakeService interface.
+   * Default constructor. The game uses then default values for configuration. The default values
+   * are defined in the SnakeService interface.
    */
   public SimpleSnakeService() {
     // TODO: What to initialize?
@@ -43,7 +43,8 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     gameState = GameState.PREPARED;
 
     try {
-      this.configure(new GameConfiguration(SnakeService.DEFAULT_SIZE, SnakeService.DEFAULT_VELOCITY, SnakeService.DEFAULT_NUMBER_OF_FOOD));
+      this.configure(new GameConfiguration(SnakeService.DEFAULT_SIZE, SnakeService.DEFAULT_VELOCITY,
+          SnakeService.DEFAULT_NUMBER_OF_FOOD));
     } catch (IllegalConfigurationException e) {
       throw new RuntimeException("An illegal default configuration was set!");
     }
@@ -56,19 +57,21 @@ public class SimpleSnakeService implements ExtendedSnakeService {
       IllegalConfigurationException {
 
     if (gameState != GameState.PREPARED && gameState != GameState.ABORTED) {
-      throw new IllegalStateException("Game can only be configured in the aborted or prepared state!");
+      throw new IllegalStateException(
+          "Game can only be configured in the aborted or prepared state!");
     }
     if (configuration.getNumberOfFood() < 0) {
       throw new IllegalConfigurationException("Number of food should not be < 0!");
     }
     if (configuration.getSize() < Board.MINIMAL_BOARD_SIZE) {
-      throw new IllegalConfigurationException("Board size is too small! Minimal size: " + Board.MINIMAL_BOARD_SIZE + " actual size: " +configuration.getSize());
+      throw new IllegalConfigurationException(
+          "Board size is too small! Minimal size: " + Board.MINIMAL_BOARD_SIZE + " actual size: "
+              + configuration.getSize());
     }
 
     if (configuration.getVelocityInMilliSeconds() <= 0) {
       throw new IllegalConfigurationException("Velocity should not be <= 0!");
     }
-
 
     this.gameConfiguration = configuration;
     reset();
@@ -164,6 +167,7 @@ public class SimpleSnakeService implements ExtendedSnakeService {
     logger.debug("removeListener: " + listener);
     return listeners.remove(listener);
   }
+
   @Override
   public Snake getSnake() {
     return snake;

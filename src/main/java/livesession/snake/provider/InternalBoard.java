@@ -1,6 +1,5 @@
 package livesession.snake.provider;
 
-import java.util.Arrays;
 import livesession.snake.BoardState;
 import livesession.snake.Coordinate;
 
@@ -9,8 +8,9 @@ import livesession.snake.Coordinate;
  * not the position of the snake itself</b>.
  */
 public class InternalBoard extends BaseBoard {
-    private static final org.slf4j.Logger logger =
-            org.slf4j.LoggerFactory.getLogger(InternalBoard.class);
+
+  private static final org.slf4j.Logger logger =
+      org.slf4j.LoggerFactory.getLogger(InternalBoard.class);
 
   /**
    * Creates an internal board with the given size.
@@ -18,8 +18,8 @@ public class InternalBoard extends BaseBoard {
    * @param size size of the board including walls at the border of the board.
    */
   public InternalBoard(final int size) {
-      super(size);
-      // TODO: Init board with GRASS and WALLs
+    super(size);
+    // TODO: Init board with GRASS and WALLs
 
     for (int row = 0; row < board.length; row++) {
       for (int col = 0; col < board[row].length; col++) {
