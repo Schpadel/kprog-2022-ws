@@ -47,8 +47,6 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
         }
       }
     }
-
-
   }
 
   @Override
@@ -82,14 +80,13 @@ public class BinaryPersistenceFactory implements PersistenceFactory {
           } catch (TooManyToppingsException e) {
             throw new WrongOrderFormatException(
                 "Too many Toppings loaded from file for this service!", e);
+          } catch (IndexOutOfBoundsException e) {
+            throw new WrongOrderFormatException("Topping unknown to this service!");
           }
         }
-
         loadedOrder.addPizza(loadedPizza);
       }
-
     }
-
     return loadedOrder;
   }
 }
