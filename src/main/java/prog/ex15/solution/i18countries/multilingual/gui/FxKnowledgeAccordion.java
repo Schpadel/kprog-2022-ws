@@ -11,13 +11,13 @@ import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
 /**
  * JavaFX component presenting the content of a CountryKnowledgeContainer.
  */
-public class FxKnowledgePresenter extends Accordion {
+public class FxKnowledgeAccordion extends Accordion {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(FxKnowledgePresenter.class);
+          org.slf4j.LoggerFactory.getLogger(FxKnowledgeAccordion.class);
 
   CountryKnowledgeContainer countryKnowledgeContainer;
 
-  public FxKnowledgePresenter(final CountryKnowledgeContainer countryKnowledgeContainer) {
+  public FxKnowledgeAccordion(final CountryKnowledgeContainer countryKnowledgeContainer) {
     this.countryKnowledgeContainer = countryKnowledgeContainer;
     fillAccordion();
   }

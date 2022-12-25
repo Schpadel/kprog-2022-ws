@@ -9,9 +9,9 @@ import prog.ex15.monolingual.StupidKnowledgeGenerator;
 /**
  * Main to launch the WelcomeToMyCountry content in a separate application.
  */
-public class MonolingualWelcomeLauncher extends Application {
+public class MultilingualWelcomeLauncher extends Application {
   private static final org.slf4j.Logger logger =
-          org.slf4j.LoggerFactory.getLogger(MonolingualWelcomeLauncher.class);
+          org.slf4j.LoggerFactory.getLogger(MultilingualWelcomeLauncher.class);
 
   @Override
   public void start(final Stage stage) throws Exception {

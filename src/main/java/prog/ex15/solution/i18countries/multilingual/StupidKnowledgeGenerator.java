@@ -1,4 +1,4 @@
-package prog.ex15.monolingual;
+package prog.ex15.solution.i18countries.multilingual;
 
 
 import prog.ex15.exercise.i18ncountries.Category;
