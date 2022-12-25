@@ -7,6 +7,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
+import prog.ex15.solution.i18countries.I18NKnowledgeGenerator;
+import prog.ex15.solution.i18countries.SingletonConfiguration;
 
 /**
  * JavaFX component presenting the content of a CountryKnowledgeContainer.
@@ -19,6 +21,14 @@ public class FxKnowledgeAccordion extends Accordion {
 
   public FxKnowledgeAccordion(final CountryKnowledgeContainer countryKnowledgeContainer) {
     this.countryKnowledgeContainer = countryKnowledgeContainer;
+    fillAccordion();
+    SingletonConfiguration.getInstance().addPropertyChangeListener(evt -> refreshAccordion());
+  }
+
+  private void refreshAccordion() {
+    I18NKnowledgeGenerator i18NKnowledgeGenerator = new I18NKnowledgeGenerator();
+    this.countryKnowledgeContainer = i18NKnowledgeGenerator.fillContainer();
+    logger.info("Refreshed knowledgeContainer!");
     fillAccordion();
   }
 
