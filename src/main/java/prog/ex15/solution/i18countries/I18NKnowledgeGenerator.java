@@ -1,6 +1,12 @@
 package prog.ex15.solution.i18countries;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
@@ -22,11 +28,18 @@ public class I18NKnowledgeGenerator implements KnowledgeGenerator {
     ResourceBundle currentTypicalBundle = instance.getTypicalBundle();
     ResourceBundle currentMessageBundle = instance.getMessageBundle();
 
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(instance.getLocale());
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(instance.getLocale());
+
     container.addKnowledge(Category.TRAFFIC, MessageFormat.format(currentMessageBundle.getString("traffic.maximum.speed.highways"), currentTypicalBundle.getObject(TypicalCountry.VELOCITY), currentTypicalBundle.getString(TypicalCountry.VELOCITY_UNIT)));
-    container.addKnowledge(Category.FOOD, "Our most prominent food is Fish and Chips.");
+    container.addKnowledge(Category.FOOD, MessageFormat.format(currentMessageBundle.getString("food.most.prominent.food"), currentTypicalBundle.getString(TypicalCountry.MOST_FAMOUS_MEAL)));
+    LocalDate holiday_date = (LocalDate) currentTypicalBundle.getObject(TypicalCountry.MOST_IMPORTANT_HOLIDAY_DATE);
     container.addKnowledge(Category.HOLIDAYS,
-        "Our most important holiday is  Brexit Day (Joke) on January, the 1, 2022.");
-    container.addKnowledge(Category.STATISTICS, "Our population is 66.500.000");
+        MessageFormat.format(currentMessageBundle.getString("holiday.most.important.holiday"), currentTypicalBundle.getString(TypicalCountry.MOST_IMPORTANT_HOLIDAY_NAME), holiday_date.format(dateTimeFormatter)));
+
+    int population = (int) currentTypicalBundle.getObject(TypicalCountry.POPULATION);
+    container.addKnowledge(Category.STATISTICS, MessageFormat.format(currentMessageBundle.getString("statistics.population"),
+        numberFormat.format(population)));
     return container;
   }
 }

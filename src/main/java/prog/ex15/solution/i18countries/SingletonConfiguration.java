@@ -30,7 +30,7 @@ public class SingletonConfiguration implements Configuration {
   public SingletonConfiguration() {
     this.country2LocaleMap = new HashMap<>();
     country2LocaleMap.put(Country.ENGLAND, new Locale("en", "EN"));
-    country2LocaleMap.put(Country.DENMARK, new Locale("da", "DK"));
+    country2LocaleMap.put(Country.DENMARK, new Locale("dk", "DK"));
     country2LocaleMap.put(Country.GERMANY, Locale.GERMANY);
     country2LocaleMap.put(Country.NETHERLANDS, new Locale("nl", "NL"));
     this.listenerArrayList = new ArrayList<>();

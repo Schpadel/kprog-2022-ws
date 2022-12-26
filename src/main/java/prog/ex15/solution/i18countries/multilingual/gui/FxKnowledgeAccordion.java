@@ -36,7 +36,7 @@ public class FxKnowledgeAccordion extends Accordion {
     this.getPanes().clear();
     for (Category category : Category.values()) {
       TitledPane titledPane = new TitledPane();
-      titledPane.setText(category.toString());
+      titledPane.setText(SingletonConfiguration.getInstance().getMessageBundle().getString("categories." + category.toString()));
       List<String> knowledgeList = countryKnowledgeContainer.getKnowledge(category);
       VBox box = new VBox();
       for (String string : knowledgeList) {
