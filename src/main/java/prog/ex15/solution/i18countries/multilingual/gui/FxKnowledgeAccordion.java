@@ -7,7 +7,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
-import prog.ex15.solution.i18countries.I18NKnowledgeGenerator;
+import prog.ex15.solution.i18countries.I18nKnowledgeGenerator;
 import prog.ex15.solution.i18countries.SingletonConfiguration;
 
 /**
@@ -26,7 +26,7 @@ public class FxKnowledgeAccordion extends Accordion {
   }
 
   private void refreshAccordion() {
-    I18NKnowledgeGenerator i18NKnowledgeGenerator = new I18NKnowledgeGenerator();
+    I18nKnowledgeGenerator i18NKnowledgeGenerator = new I18nKnowledgeGenerator();
     this.countryKnowledgeContainer = i18NKnowledgeGenerator.fillContainer();
     logger.info("Refreshed knowledgeContainer!");
     fillAccordion();
