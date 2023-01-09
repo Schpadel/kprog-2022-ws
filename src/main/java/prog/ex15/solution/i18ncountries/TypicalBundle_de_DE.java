@@ -5,7 +5,7 @@ import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
 //TODO: fix inheritance and implementation of interface!
-public class TypicalBundle_de_DE extends ListResourceBundle implements TypicalCountry {
+public class TypicalBundle_de_DE extends ListResourceBundle {
   private Object[][] contents = {
       {TypicalCountry.VELOCITY, 130},
       {TypicalCountry.VELOCITY_UNIT, "km/h"},
@@ -20,23 +20,4 @@ public class TypicalBundle_de_DE extends ListResourceBundle implements TypicalCo
     return contents;
   }
 
-  @Override
-  public void setVelocity(int velocity, String unit) {
-
-  }
-
-  @Override
-  public void setPopulation(int population) {
-
-  }
-
-  @Override
-  public void setMostFamousMeal(String mostFamousMeal) {
-
-  }
-
-  @Override
-  public void setMostImportantHoliday(LocalDate date, String holidayName) {
-
-  }
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
-public class TypicalBundle extends ListResourceBundle implements TypicalCountry {
+public class TypicalBundle extends ListResourceBundle {
 
   private Object[][] contents = {
       {TypicalCountry.VELOCITY, 70},
@@ -19,24 +19,4 @@ public class TypicalBundle extends ListResourceBundle implements TypicalCountry 
     return contents;
   }
 
-  @Override
-  public void setVelocity(int velocity, String unit) {
-    Object currentVelocity = getObject(TypicalCountry.VELOCITY);
-    currentVelocity = velocity;
-  }
-
-  @Override
-  public void setPopulation(int population) {
-
-  }
-
-  @Override
-  public void setMostFamousMeal(String mostFamousMeal) {
-
-  }
-
-  @Override
-  public void setMostImportantHoliday(LocalDate date, String holidayName) {
-
-  }
 }

@@ -1,9 +1,10 @@
 package prog.ex15.solution.i18ncountries;
 
 import java.time.LocalDate;
+import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
-public class TypicalBundle_nl_NL extends TypicalBundle {
+public class TypicalBundle_nl_NL extends ListResourceBundle {
   private Object[][] contents = {
       {TypicalCountry.VELOCITY, 120},
       {TypicalCountry.VELOCITY_UNIT, "km/h"},
