@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries;
+package prog.ex15.solution.i18ncountries;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import prog.ex15.exercise.i18ncountries.Configuration;
 import prog.ex15.exercise.i18ncountries.Country;
 
@@ -41,7 +40,7 @@ public class SingletonConfiguration implements Configuration {
   }
 
   private void loadBundles() {
-    currentTypicalBundle = ResourceBundle.getBundle("prog.ex15.solution.i18countries.multilingual.listresourcebundle.CountryBundle",
+    currentTypicalBundle = ResourceBundle.getBundle("prog.ex15.solution.i18ncountries.TypicalBundle",
         currentLocale);
     currentMessageBundle = ResourceBundle.getBundle("bundles/i18ncountries", currentLocale);
   }

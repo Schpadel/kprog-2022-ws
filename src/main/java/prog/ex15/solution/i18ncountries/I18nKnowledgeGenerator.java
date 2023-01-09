@@ -1,12 +1,10 @@
-package prog.ex15.solution.i18countries;
+package prog.ex15.solution.i18ncountries;
 
-import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Date;
 import java.util.ResourceBundle;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
@@ -28,7 +26,8 @@ public class I18nKnowledgeGenerator implements KnowledgeGenerator {
     ResourceBundle currentTypicalBundle = instance.getTypicalBundle();
     ResourceBundle currentMessageBundle = instance.getMessageBundle();
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(instance.getLocale());
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+        .withLocale(instance.getLocale());
     NumberFormat numberFormat = NumberFormat.getNumberInstance(instance.getLocale());
 
     container.addKnowledge(Category.TRAFFIC, MessageFormat.format(currentMessageBundle.getString("traffic.maximum.speed.highways"), currentTypicalBundle.getObject(TypicalCountry.VELOCITY), currentTypicalBundle.getString(TypicalCountry.VELOCITY_UNIT)));

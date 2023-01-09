@@ -1,11 +1,11 @@
-package prog.ex15.solution.i18countries.multilingual.listresourcebundle;
+package prog.ex15.solution.i18ncountries;
 
 import java.time.LocalDate;
 import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
 //TODO: fix inheritance and implementation of interface!
-public class CountryBundle_de_DE extends ListResourceBundle implements TypicalCountry {
+public class TypicalBundle_de_DE extends ListResourceBundle implements TypicalCountry {
   private Object[][] contents = {
       {TypicalCountry.VELOCITY, 130},
       {TypicalCountry.VELOCITY_UNIT, "km/h"},

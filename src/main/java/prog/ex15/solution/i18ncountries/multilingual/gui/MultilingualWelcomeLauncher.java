@@ -1,11 +1,10 @@
-package prog.ex15.solution.i18countries.multilingual.gui;
+package prog.ex15.solution.i18ncountries.multilingual.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
-import prog.ex15.monolingual.StupidKnowledgeGenerator;
-import prog.ex15.solution.i18countries.I18nKnowledgeGenerator;
+import prog.ex15.solution.i18ncountries.I18nKnowledgeGenerator;
 
 /**
  * Main to launch the WelcomeToMyCountry content in a separate application.

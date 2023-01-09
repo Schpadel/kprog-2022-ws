@@ -23,5 +23,5 @@ module kprog.main {
   exports prog.ex15.monolingual.gui;
   opens examples.javafx.fxml to javafx.fxml;
   opens prog.ex10.solution.javafx4pizzadelivery.gui to javafx.fxml;
-  exports prog.ex15.solution.i18countries.multilingual.gui to javafx.graphics;
+  exports prog.ex15.solution.i18ncountries.multilingual.gui to javafx.graphics;
 }

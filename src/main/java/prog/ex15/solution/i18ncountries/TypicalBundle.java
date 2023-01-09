@@ -1,10 +1,10 @@
-package prog.ex15.solution.i18countries.multilingual.listresourcebundle;
+package prog.ex15.solution.i18ncountries;
 
 import java.time.LocalDate;
 import java.util.ListResourceBundle;
 import prog.ex15.exercise.i18ncountries.TypicalCountry;
 
-public class CountryBundle extends ListResourceBundle implements TypicalCountry {
+public class TypicalBundle extends ListResourceBundle implements TypicalCountry {
 
   private Object[][] contents = {
       {TypicalCountry.VELOCITY, 70},

@@ -1,4 +1,4 @@
-package prog.ex15.solution.i18countries.multilingual.gui;
+package prog.ex15.solution.i18ncountries.multilingual.gui;
 
 import java.util.List;
 import javafx.scene.control.Accordion;
@@ -7,8 +7,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import prog.ex15.exercise.i18ncountries.Category;
 import prog.ex15.exercise.i18ncountries.CountryKnowledgeContainer;
-import prog.ex15.solution.i18countries.I18nKnowledgeGenerator;
-import prog.ex15.solution.i18countries.SingletonConfiguration;
+import prog.ex15.solution.i18ncountries.I18nKnowledgeGenerator;
+import prog.ex15.solution.i18ncountries.SingletonConfiguration;
 
 /**
  * JavaFX component presenting the content of a CountryKnowledgeContainer.
@@ -19,6 +19,12 @@ public class FxKnowledgeAccordion extends Accordion {
 
   CountryKnowledgeContainer countryKnowledgeContainer;
 
+  /**
+   * Construct new FxKnowledgeAccordion from container.
+   *
+   * @param countryKnowledgeContainer to be used for construction
+   */
+
   public FxKnowledgeAccordion(final CountryKnowledgeContainer countryKnowledgeContainer) {
     this.countryKnowledgeContainer = countryKnowledgeContainer;
     fillAccordion();
@@ -26,8 +32,8 @@ public class FxKnowledgeAccordion extends Accordion {
   }
 
   private void refreshAccordion() {
-    I18nKnowledgeGenerator i18NKnowledgeGenerator = new I18nKnowledgeGenerator();
-    this.countryKnowledgeContainer = i18NKnowledgeGenerator.fillContainer();
+    I18nKnowledgeGenerator i18nKnowledgeGenerator = new I18nKnowledgeGenerator();
+    this.countryKnowledgeContainer = i18nKnowledgeGenerator.fillContainer();
     logger.info("Refreshed knowledgeContainer!");
     fillAccordion();
   }
@@ -36,7 +42,8 @@ public class FxKnowledgeAccordion extends Accordion {
     this.getPanes().clear();
     for (Category category : Category.values()) {
       TitledPane titledPane = new TitledPane();
-      titledPane.setText(SingletonConfiguration.getInstance().getMessageBundle().getString("categories." + category.toString()));
+      titledPane.setText(SingletonConfiguration.getInstance()
+          .getMessageBundle().getString("categories." + category.toString()));
       List<String> knowledgeList = countryKnowledgeContainer.getKnowledge(category);
       VBox box = new VBox();
       for (String string : knowledgeList) {
