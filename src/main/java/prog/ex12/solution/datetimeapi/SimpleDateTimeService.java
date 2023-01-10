@@ -1,16 +1,23 @@
 package prog.ex12.solution.datetimeapi;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import prog.ex12.exercise.datetimeapi.DateTimeService;
 import prog.ex12.exercise.datetimeapi.EventInTime;
 import prog.ex12.exercise.datetimeapi.NoDateTimeServiceStateException;
@@ -96,9 +103,11 @@ public class SimpleDateTimeService implements DateTimeService {
     int validLength = 0;
     for (Character current : event.toCharArray()) {
       if (Character.isAlphabetic(current) || Character.isDigit(current) || Character.isSpaceChar(current)) {
-        validLength++;
-        if (validLength >= 2) {
-          break;
+        if (Character.isAlphabetic(current) || Character.isDigit(current)) {
+          validLength++;
+          if (validLength >= 2) {
+            break;
+          }
         }
       }else{
         throw new IllegalArgumentException("Name of the event is invalid!"
@@ -134,11 +143,47 @@ public class SimpleDateTimeService implements DateTimeService {
 
   @Override
   public void load(final File file) throws IOException, NoDateTimeServiceStateException {
+    BufferedReader reader = new BufferedReader(new FileReader(file));
 
-  }
 
-  @Override
+    String eventInfo;
+
+
+    while ((eventInfo = reader.readLine()) != null) {
+
+      StringTokenizer tokenizer = new StringTokenizer(eventInfo, ";");
+
+      if (tokenizer.countTokens() != 3) {
+        throw new NoDateTimeServiceStateException("Invalid count of entries per line in file: "
+            + file.getAbsolutePath());
+      }
+
+      int eventId;
+      try {
+        eventId = Integer.parseInt(tokenizer.nextToken());
+      } catch (Exception e) {
+        throw new NoDateTimeServiceStateException("Invalid event id in entry!");
+      }
+      String name = tokenizer.nextToken();
+      LocalDate eventDate;
+      try {
+         eventDate = LocalDate.parse(tokenizer.nextToken(), DateTimeFormatter.ISO_DATE);
+      } catch (DateTimeParseException e) {
+        throw new NoDateTimeServiceStateException("Invalid date in entry! ");
+      }
+      events.put(eventId, new EventInTime(eventId, name, eventDate));
+    }
+
+    }
+    @Override
   public void save(final File file) throws IOException {
+    try (BufferedWriter buff = new BufferedWriter(new FileWriter(file))) {
 
+      for (EventInTime currentEvent : events.values()) {
+        buff.write(String.format("%s;%s;%s", currentEvent.getEventId(), currentEvent.getName(),
+            currentEvent.getLocalDate().format(DateTimeFormatter.ISO_DATE)));
+        buff.write(String.format("%n"));
+      }
+    }
   }
 }
