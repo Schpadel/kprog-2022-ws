@@ -3,6 +3,7 @@ module kprog.main {
   requires org.slf4j;
   requires javafx.controls;
   requires javafx.fxml;
+  requires java.rmi;
   exports environment.testprograms;
   exports examples.javafx.bidirectional;
   exports examples.javafx.firststeps;
@@ -20,6 +21,8 @@ module kprog.main {
   exports examples.designpattern.singleton;
   exports prog.javafx.main;
   exports prog.ex10.solution.javafx4pizzadelivery.gui;
+  exports prog.ex15.monolingual.gui;
+  exports examples.rmi.shapes;
   opens examples.javafx.fxml to javafx.fxml;
   opens prog.ex10.solution.javafx4pizzadelivery.gui to javafx.fxml;
 }
